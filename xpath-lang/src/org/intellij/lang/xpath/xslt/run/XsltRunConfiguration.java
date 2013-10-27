@@ -15,6 +15,17 @@
  */
 package org.intellij.lang.xpath.xslt.run;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.consulo.module.extension.ModuleExtensionProvider;
+import org.consulo.module.extension.ModuleExtensionProviderEP;
+import org.intellij.lang.xpath.xslt.XsltSupport;
+import org.intellij.lang.xpath.xslt.associations.FileAssociationsManager;
+import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.diagnostic.logging.DebuggerLogConsoleManager;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
@@ -35,7 +46,11 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectBundle;
-import com.intellij.openapi.projectRoots.*;
+import com.intellij.openapi.projectRoots.JavaSdkType;
+import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.projectRoots.SdkModificator;
+import com.intellij.openapi.projectRoots.SdkTable;
+import com.intellij.openapi.projectRoots.SimpleJavaSdkType;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.DefaultJDOMExternalizer;
@@ -51,16 +66,6 @@ import com.intellij.psi.xml.XmlDocument;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.SystemProperties;
-import org.consulo.java.module.extension.JavaModuleExtension;
-import org.intellij.lang.xpath.xslt.XsltSupport;
-import org.intellij.lang.xpath.xslt.associations.FileAssociationsManager;
-import org.jdom.Element;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class XsltRunConfiguration extends RunConfigurationBase implements LocatableConfiguration, ModuleRunConfiguration, RunConfigurationWithSuppressedDefaultDebugAction {
     private static final String NAME = "XSLT Configuration";
@@ -453,20 +458,29 @@ public final class XsltRunConfiguration extends RunConfigurationBase implements 
   
     @Nullable
     public Sdk getEffectiveJDK() {
-        if (!XsltRunSettingsEditor.ALLOW_CHOOSING_SDK) {
+        if (!XsltRunSettingsEditor.ALLOW_CHOOSING_SDK)
+		{
             return getDefaultSdk(); 
         }
-        if (myJdkChoice == JdkChoice.JDK) {
+        if (myJdkChoice == JdkChoice.JDK)
+		{
             return myJdk != null ? SdkTable.getInstance().findSdk(myJdk) : null;
         }
         Sdk jdk = null;
         final Module module = getEffectiveModule();
-        if (module != null) {
-          jdk = ModuleUtilCore.getSdk(module, JavaModuleExtension.class);
+        if (module != null)
+		{
+			ModuleExtensionProvider java = ModuleExtensionProviderEP.findProvider("java");
+			if(java == null)
+			{
+				return getDefaultSdk();
+			}
+			jdk = ModuleUtilCore.getSdk(module, java.getImmutableClass());
         }
 
         // EA-33419
-        if (jdk == null || !(jdk.getSdkType() instanceof JavaSdkType)) {
+        if (jdk == null || !(jdk.getSdkType() instanceof JavaSdkType))
+		{
           return getDefaultSdk();
         }
         return jdk;

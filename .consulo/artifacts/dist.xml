@@ -1,0 +1,41 @@
+<component name="ArtifactManager">
+  <artifact name="dist">
+    <output-path>$PROJECT_DIR$/out/artifacts/dist</output-path>
+    <root id="root">
+      <element id="directory" name="xpath">
+        <element id="directory" name="lib">
+          <element id="zip-archive" name="xpath-intelliLang.jar">
+            <element id="module-output" name="xpath-intellilang" />
+          </element>
+          <element id="zip-archive" name="xpath.jar">
+            <element id="module-output" name="xpath-lang" />
+            <element id="module-production-resource-output" name="xpath-lang" />
+            <element id="module-production-resource-output" name="consulo-xpath" />
+          </element>
+          <element id="zip-archive" name="xpath-view.jar">
+            <element id="module-output" name="xpath-view" />
+            <element id="module-production-resource-output" name="xpath-view" />
+          </element>
+          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/lib/rmi-stubs.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/d-rmi-stubs.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/saxon.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/saxon9he.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/serializer.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/xalan.jar" />
+          <element id="zip-archive" name="xslt-debugger.jar">
+            <element id="module-output" name="xslt-debugger-engine-impl" />
+            <element id="module-output" name="xslt-debugger-engine-api" />
+            <element id="module-output" name="xslt-debugger-impl" />
+            <element id="module-production-resource-output" name="xslt-debugger-impl" />
+          </element>
+          <element id="zip-archive" name="xslt-rt.jar">
+            <element id="module-output" name="xslt-rt" />
+          </element>
+          <element id="zip-archive" name="xslt-debugger-rt.jar">
+            <element id="module-output" name="xslt-debugger-rt" />
+          </element>
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
