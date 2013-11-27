@@ -15,6 +15,9 @@
  */
 package org.intellij.lang.xpath;
 
+import org.intellij.lang.xpath.psi.impl.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.LanguageVersion;
 import com.intellij.lang.ParserDefinition;
@@ -27,49 +30,53 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
-import org.jetbrains.annotations.NotNull;
-
-import org.intellij.lang.xpath.psi.impl.*;
-import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings({"NullableProblems"})
 public class XPathParserDefinition implements ParserDefinition {
 
-    @NotNull
-    public Lexer createLexer(@NotNull Project project, @NotNull LanguageVersion languageVersion) {
+    @Override
+	@NotNull
+    public Lexer createLexer(@Nullable Project project, @NotNull LanguageVersion languageVersion) {
         return XPathLexer.create(false);
     }
 
-    @NotNull
+    @Override
+	@NotNull
     public IFileElementType getFileNodeType() {
         return XPathElementTypes.FILE;
     }
 
-    @NotNull
+    @Override
+	@NotNull
     public TokenSet getWhitespaceTokens(@NotNull LanguageVersion languageVersion) {
         return TokenSet.create(XPathTokenTypes.WHITESPACE);
     }
 
-    @NotNull
+    @Override
+	@NotNull
     public TokenSet getCommentTokens(LanguageVersion languageVersion) {
         return TokenSet.EMPTY;
     }
 
-    @NotNull
+    @Override
+	@NotNull
     public TokenSet getStringLiteralElements(LanguageVersion languageVersion) {
         return TokenSet.create(XPathTokenTypes.STRING_LITERAL);
     }
 
-    @NotNull
-    public PsiParser createParser(@NotNull Project project, @NotNull LanguageVersion languageVersion) {
+    @Override
+	@NotNull
+    public PsiParser createParser(@Nullable Project project, @NotNull LanguageVersion languageVersion) {
         return new XPathParser();
     }
 
-    public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
+    @Override
+	public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
         return SpaceRequirements.MUST_NOT;
     }
 
-    @NotNull
+    @Override
+	@NotNull
     public final PsiElement createElement(ASTNode node) {
       final IElementType type = node.getElementType();
 
@@ -117,6 +124,7 @@ public class XPathParserDefinition implements ParserDefinition {
     return null;
   }
 
+  @Override
   public PsiFile createFile(FileViewProvider viewProvider) {
         return new XPathFile(viewProvider, XPathFileType.XPATH);
     }

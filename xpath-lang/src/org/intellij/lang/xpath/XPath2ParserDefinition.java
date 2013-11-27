@@ -15,6 +15,9 @@
  */
 package org.intellij.lang.xpath;
 
+import org.intellij.lang.xpath.psi.impl.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.LanguageVersion;
 import com.intellij.lang.PsiParser;
@@ -26,8 +29,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
-import org.intellij.lang.xpath.psi.impl.*;
-import org.jetbrains.annotations.NotNull;
 
 /*
 * Created by IntelliJ IDEA.
@@ -37,10 +38,11 @@ import org.jetbrains.annotations.NotNull;
 public class XPath2ParserDefinition extends XPathParserDefinition {
   @NotNull
   @Override
-  public Lexer createLexer(@NotNull Project project, @NotNull LanguageVersion languageVersion) {
+  public Lexer createLexer(@Nullable Project project, @NotNull LanguageVersion languageVersion) {
     return XPathLexer.create(true);
   }
 
+  @Override
   @NotNull
   public IFileElementType getFileNodeType() {
     return XPath2ElementTypes.FILE;
@@ -48,7 +50,7 @@ public class XPath2ParserDefinition extends XPathParserDefinition {
 
   @NotNull
   @Override
-  public PsiParser createParser(@NotNull Project project, @NotNull LanguageVersion languageVersion) {
+  public PsiParser createParser(@Nullable Project project, @NotNull LanguageVersion languageVersion) {
     return new XPath2Parser();
   }
 
@@ -96,6 +98,7 @@ public class XPath2ParserDefinition extends XPathParserDefinition {
     return null;
   }
 
+  @Override
   public PsiFile createFile(FileViewProvider viewProvider) {
     return new XPathFile(viewProvider, XPathFileType.XPATH2);
   }
