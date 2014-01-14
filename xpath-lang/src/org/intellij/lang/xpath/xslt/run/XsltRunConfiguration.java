@@ -19,8 +19,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.consulo.module.extension.ModuleExtensionProvider;
-import org.consulo.module.extension.ModuleExtensionProviderEP;
+import org.consulo.module.extension.ModuleExtension;
+import org.consulo.module.extension.ModuleExtensionWithSdk;
 import org.intellij.lang.xpath.xslt.XsltSupport;
 import org.intellij.lang.xpath.xslt.associations.FileAssociationsManager;
 import org.jdom.Element;
@@ -42,7 +42,6 @@ import com.intellij.openapi.fileTypes.FileTypes;
 import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectBundle;
@@ -51,6 +50,7 @@ import com.intellij.openapi.projectRoots.Sdk;
 import com.intellij.openapi.projectRoots.SdkModificator;
 import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SimpleJavaSdkType;
+import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.util.DefaultJDOMExternalizer;
@@ -470,13 +470,13 @@ public final class XsltRunConfiguration extends RunConfigurationBase implements 
         final Module module = getEffectiveModule();
         if (module != null)
 		{
-			ModuleExtensionProvider java = ModuleExtensionProviderEP.findProvider("java");
-			if(java == null)
+			ModuleRootManager moduleRootManager = ModuleRootManager.getInstance(module);
+			ModuleExtension maybeJavaExtension = moduleRootManager.getExtension("java");
+			if(maybeJavaExtension instanceof ModuleExtensionWithSdk)
 			{
-				return getDefaultSdk();
+				jdk = ((ModuleExtensionWithSdk) maybeJavaExtension).getSdk();
 			}
-			jdk = ModuleUtilCore.getSdk(module, java.getImmutableClass());
-        }
+		}
 
         // EA-33419
         if (jdk == null || !(jdk.getSdkType() instanceof JavaSdkType))
