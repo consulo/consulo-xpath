@@ -16,6 +16,17 @@
 
 package org.intellij.plugins.xpathView.search;
 
+import java.util.Collections;
+
+import org.intellij.plugins.xpathView.Config;
+import org.intellij.plugins.xpathView.XPathAppComponent;
+import org.intellij.plugins.xpathView.XPathEvalAction;
+import org.intellij.plugins.xpathView.XPathProjectComponent;
+import org.intellij.plugins.xpathView.support.XPathSupport;
+import org.intellij.plugins.xpathView.ui.InputExpressionDialog;
+import org.jaxen.JaxenException;
+import org.jaxen.XPathSyntaxException;
+import org.jetbrains.annotations.NotNull;
 import com.intellij.find.FindProgressIndicator;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -26,18 +37,12 @@ import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.Factory;
-import com.intellij.usages.*;
-import org.intellij.plugins.xpathView.Config;
-import org.intellij.plugins.xpathView.XPathAppComponent;
-import org.intellij.plugins.xpathView.XPathEvalAction;
-import org.intellij.plugins.xpathView.XPathProjectComponent;
-import org.intellij.plugins.xpathView.support.XPathSupport;
-import org.intellij.plugins.xpathView.ui.InputExpressionDialog;
-import org.jaxen.JaxenException;
-import org.jaxen.XPathSyntaxException;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Collections;
+import com.intellij.usages.FindUsagesProcessPresentation;
+import com.intellij.usages.UsageSearcher;
+import com.intellij.usages.UsageTarget;
+import com.intellij.usages.UsageView;
+import com.intellij.usages.UsageViewManager;
+import com.intellij.usages.UsageViewPresentation;
 
 public class FindByXPathAction extends AnAction {
 
@@ -90,7 +95,7 @@ public class FindByXPathAction extends AnAction {
 
         presentation.setOpenInNewTab(settings.OPEN_NEW_TAB);
 
-        final FindUsagesProcessPresentation processPresentation = new FindUsagesProcessPresentation();
+        final FindUsagesProcessPresentation processPresentation = new FindUsagesProcessPresentation(new UsageViewPresentation());
         processPresentation.setProgressIndicatorFactory(new Factory<ProgressIndicator>() {
             public ProgressIndicator create() {
                 return new FindProgressIndicator(project, scope.getName());

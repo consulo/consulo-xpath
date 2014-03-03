@@ -15,6 +15,25 @@
  */
 package org.intellij.plugins.xpathView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import javax.swing.SwingUtilities;
+
+import org.intellij.plugins.xpathView.eval.EvalExpressionDialog;
+import org.intellij.plugins.xpathView.support.XPathSupport;
+import org.intellij.plugins.xpathView.ui.InputExpressionDialog;
+import org.intellij.plugins.xpathView.util.CachedVariableContext;
+import org.intellij.plugins.xpathView.util.HighlighterUtil;
+import org.intellij.plugins.xpathView.util.MyPsiUtil;
+import org.jaxen.JaxenException;
+import org.jaxen.XPath;
+import org.jaxen.XPathSyntaxException;
+import org.jaxen.saxpath.SAXPathException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.find.FindProgressIndicator;
 import com.intellij.ide.projectView.PresentationData;
 import com.intellij.lang.Language;
@@ -46,27 +65,16 @@ import com.intellij.psi.templateLanguages.TemplateLanguageFileViewProvider;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.usageView.UsageInfo;
-import com.intellij.usages.*;
+import com.intellij.usages.FindUsagesProcessPresentation;
+import com.intellij.usages.Usage;
+import com.intellij.usages.UsageInfo2UsageAdapter;
+import com.intellij.usages.UsageSearcher;
+import com.intellij.usages.UsageTarget;
+import com.intellij.usages.UsageView;
+import com.intellij.usages.UsageViewManager;
+import com.intellij.usages.UsageViewPresentation;
 import com.intellij.util.Processor;
 import icons.XpathIcons;
-import org.intellij.plugins.xpathView.eval.EvalExpressionDialog;
-import org.intellij.plugins.xpathView.support.XPathSupport;
-import org.intellij.plugins.xpathView.ui.InputExpressionDialog;
-import org.intellij.plugins.xpathView.util.CachedVariableContext;
-import org.intellij.plugins.xpathView.util.HighlighterUtil;
-import org.intellij.plugins.xpathView.util.MyPsiUtil;
-import org.jaxen.JaxenException;
-import org.jaxen.XPath;
-import org.jaxen.XPathSyntaxException;
-import org.jaxen.saxpath.SAXPathException;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * <p>This class implements the core action to enter, evaluate and display the results of an XPath expression.</p>
@@ -311,7 +319,7 @@ public class XPathEvalAction extends XPathAction {
 
         presentation.setOpenInNewTab(XPathAppComponent.getInstance().getConfig().OPEN_NEW_TAB);
 
-        final FindUsagesProcessPresentation processPresentation = new FindUsagesProcessPresentation();
+        final FindUsagesProcessPresentation processPresentation = new FindUsagesProcessPresentation(new UsageViewPresentation());
         processPresentation.setProgressIndicatorFactory(new Factory<ProgressIndicator>() {
             @Override
             public ProgressIndicator create() {
