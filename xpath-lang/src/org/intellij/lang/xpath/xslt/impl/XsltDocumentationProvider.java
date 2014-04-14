@@ -15,15 +15,22 @@
  */
 package org.intellij.lang.xpath.xslt.impl;
 
-import com.intellij.lang.documentation.DocumentationProvider;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.light.LightElement;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.*;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.xml.util.XmlUtil;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.lang.ref.SoftReference;
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.transform.Templates;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
 import org.intellij.lang.xpath.completion.ElementProvider;
 import org.intellij.lang.xpath.completion.FunctionLookup;
 import org.intellij.lang.xpath.psi.XPathFunction;
@@ -39,21 +46,24 @@ import org.jdom.xpath.XPath;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.xml.transform.Templates;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.lang.ref.SoftReference;
-import java.net.URL;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.intellij.lang.documentation.DocumentationProvider;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiNamedElement;
+import com.intellij.psi.PsiWhiteSpace;
+import com.intellij.psi.impl.light.LightElement;
+import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlComment;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlText;
+import com.intellij.util.IncorrectOperationException;
+import com.intellij.xml.util.XmlUtil;
 
 public class XsltDocumentationProvider implements DocumentationProvider {
     private SoftReference<Templates> myTemplates;
@@ -199,7 +209,7 @@ public class XsltDocumentationProvider implements DocumentationProvider {
                     final String prefix = tag.getNamespacePrefix();
                     if (prefix.length() == 0) {
                         return new DocElement(mgr, psiElement, "element", (String)object);
-                    } else if (StringUtil.startsWithConcatenationOf(((String)object), prefix, ":")) {
+                    } else if (StringUtil.startsWithConcatenation(((String)object), prefix, ":")) {
                       return new DocElement(mgr, psiElement, "element", ((String)object).substring(prefix.length() + 1));
                     }
                 }
