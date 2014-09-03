@@ -15,38 +15,47 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.swing.Icon;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import icons.XpathIcons;
-import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
+public final class XPathFileType extends LanguageFileType
+{
+	public static final XPathFileType XPATH = new XPathFileType(new XPathLanguage());
+	public static final XPathFileType XPATH2 = new XPathFileType(new XPath2Language());
 
-public final class XPathFileType extends LanguageFileType {
+	private XPathFileType(Language language)
+	{
+		super(language);
+	}
 
-    public static final XPathFileType XPATH = new XPathFileType(new XPathLanguage());
-    public static final XPathFileType XPATH2 = new XPathFileType(new XPath2Language());
+	@Override
+	@NotNull
+	public String getName()
+	{
+		return getLanguage().getID();
+	}
 
-    private XPathFileType(Language language) {
-        super(language);
-    }
+	@Override
+	@NotNull
+	public String getDescription()
+	{
+		return "XPath";
+	}
 
-    @NotNull
-    public String getName() {
-        return getLanguage().getID();
-    }
+	@Override
+	@NotNull
+	public String getDefaultExtension()
+	{
+		return getLanguage().getID().toLowerCase();
+	}
 
-    @NotNull
-    public String getDescription() {
-        return "XPath";
-    }
-
-    @NotNull
-    public String getDefaultExtension() {
-        return getLanguage().getID().toLowerCase();
-    }
-
-    public Icon getIcon() {
-        return XpathIcons.Xpath;
-    }
+	@Override
+	public Icon getIcon()
+	{
+		return XpathIcons.Xpath;
+	}
 }
