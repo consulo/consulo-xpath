@@ -67,8 +67,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.SystemProperties;
 
-public final class XsltRunConfiguration extends RunConfigurationBase implements LocatableConfiguration, ModuleRunConfiguration,
-		RunConfigurationWithSuppressedDefaultDebugAction
+public final class XsltRunConfiguration extends RunConfigurationBase implements LocatableConfiguration, ModuleRunConfiguration
 {
 	private static final String NAME = "XSLT Configuration";
 
