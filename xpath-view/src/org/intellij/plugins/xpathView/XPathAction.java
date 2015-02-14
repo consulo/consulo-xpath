@@ -15,10 +15,15 @@
  */
 package org.intellij.plugins.xpathView;
 
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.lang.dtd.DTDLanguage;
+import com.intellij.openapi.actionSystem.ActionPlaces;
+import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
@@ -79,7 +84,7 @@ public abstract class XPathAction extends AnAction {
         // this is also true for DTD documents...
         if (!(psiFile instanceof XmlFile)) {
             return false;
-        } else if (psiFile.getLanguage() == StdFileTypes.DTD.getLanguage()) {
+        } else if (psiFile.getLanguage() == DTDLanguage.INSTANCE) {
             return false;
         }
 
