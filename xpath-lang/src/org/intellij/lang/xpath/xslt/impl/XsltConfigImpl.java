@@ -15,28 +15,34 @@
  */
 package org.intellij.lang.xpath.xslt.impl;
 
-import com.intellij.ide.projectView.ProjectView;
-import com.intellij.lang.Language;
-import com.intellij.lang.LanguageFormatting;
-import com.intellij.openapi.actionSystem.ActionManager;
-import com.intellij.openapi.components.ApplicationComponent;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.fileTypes.StdFileTypes;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
-import com.intellij.openapi.util.DefaultJDOMExternalizer;
-import com.intellij.openapi.util.InvalidDataException;
-import com.intellij.openapi.util.JDOMExternalizable;
-import com.intellij.openapi.util.WriteExternalException;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+
 import org.intellij.lang.xpath.xslt.XsltConfig;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import java.awt.*;
+import com.intellij.ide.projectView.ProjectView;
+import com.intellij.lang.Language;
+import com.intellij.lang.LanguageFormatting;
+import com.intellij.lang.xml.XMLLanguage;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.util.DefaultJDOMExternalizer;
+import com.intellij.openapi.util.InvalidDataException;
+import com.intellij.openapi.util.JDOMExternalizable;
+import com.intellij.openapi.util.WriteExternalException;
 
 class XsltConfigImpl extends XsltConfig implements JDOMExternalizable, ApplicationComponent {
 
@@ -52,7 +58,7 @@ class XsltConfigImpl extends XsltConfig implements JDOMExternalizable, Applicati
 
     @SuppressWarnings({ "StringEquality" })
     public void initComponent() {
-      final Language xmlLang = StdFileTypes.XML.getLanguage();
+      final Language xmlLang = XMLLanguage.INSTANCE;
 
 //            intentionManager.addAction(new DeleteUnusedParameterFix());
 //            intentionManager.addAction(new DeleteUnusedVariableFix());

@@ -15,18 +15,22 @@
  */
 package org.intellij.lang.xpath.xslt.quickfix;
 
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInsight.template.TemplateBuilderImpl;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.ide.DataManager;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Condition;
 import com.intellij.psi.PsiElement;
@@ -36,10 +40,6 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.LocalTimeCounter;
 import com.intellij.util.containers.ContainerUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public abstract class AbstractFix implements IntentionAction {
   @NotNull
@@ -62,7 +62,7 @@ public abstract class AbstractFix implements IntentionAction {
 
   protected static TemplateBuilderImpl createTemplateBuilder(XmlTag xmlTag) {
     final PsiFile psiFile = PsiFileFactory.getInstance(xmlTag.getProject())
-      .createFileFromText("dummy.xml", StdFileTypes.XML, xmlTag.getText(), LocalTimeCounter.currentTime(), true, false);
+      .createFileFromText("dummy.xml", XmlFileType.INSTANCE, xmlTag.getText(), LocalTimeCounter.currentTime(), true, false);
     return new TemplateBuilderImpl(psiFile);
   }
 

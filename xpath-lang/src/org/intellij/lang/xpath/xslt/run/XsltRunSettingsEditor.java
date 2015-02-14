@@ -15,13 +15,40 @@
  */
 package org.intellij.lang.xpath.xslt.run;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Vector;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+
+import org.intellij.lang.xpath.xslt.XsltSupport;
+import org.intellij.lang.xpath.xslt.associations.FileAssociationsManager;
+import org.intellij.lang.xpath.xslt.associations.impl.AnyXMLDescriptor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
-import com.intellij.openapi.fileTypes.*;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.fileTypes.FileTypeManager;
+import com.intellij.openapi.fileTypes.LanguageFileType;
+import com.intellij.openapi.fileTypes.SyntaxHighlighter;
+import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import com.intellij.openapi.fileTypes.impl.FileTypeRenderer;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
@@ -29,8 +56,8 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.projectRoots.JavaSdkType;
-import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.projectRoots.SdkTable;
 import com.intellij.openapi.projectRoots.SdkType;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.ComboBox;
@@ -44,7 +71,14 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.ui.*;
+import com.intellij.ui.AnActionButton;
+import com.intellij.ui.AnActionButtonRunnable;
+import com.intellij.ui.ComboboxWithBrowseButton;
+import com.intellij.ui.DocumentAdapter;
+import com.intellij.ui.ListCellRendererWrapper;
+import com.intellij.ui.PanelWithAnchor;
+import com.intellij.ui.RawCommandLineEditor;
+import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.table.JBTable;
@@ -52,26 +86,9 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.ui.PlatformColors;
 import com.intellij.util.ui.UIUtil;
-import org.intellij.lang.xpath.xslt.XsltSupport;
-import org.intellij.lang.xpath.xslt.associations.FileAssociationsManager;
-import org.intellij.lang.xpath.xslt.associations.impl.AnyXMLDescriptor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.io.File;
-import java.util.*;
-import java.util.List;
 
 class XsltRunSettingsEditor extends SettingsEditor<XsltRunConfiguration> {
-  static final boolean ALLOW_CHOOSING_SDK = !(StdFileTypes.JAVA instanceof PlainTextFileType);
+  static final boolean ALLOW_CHOOSING_SDK = true;
   private final Project myProject;
 
   private Editor myEditor;
@@ -354,11 +371,6 @@ class XsltRunSettingsEditor extends SettingsEditor<XsltRunConfiguration> {
 
       final FileType[] fileTypes = FileTypeManager.getInstance().getRegisteredFileTypes();
       for (FileType fileType : fileTypes) {
-        // get rid of file types useless for highlighting
-        if (fileType == StdFileTypes.CLASS ||
-            fileType == StdFileTypes.GUI_DESIGNER_FORM) {
-          continue;
-        }
 
         try {
           if (fileType instanceof LanguageFileType) {

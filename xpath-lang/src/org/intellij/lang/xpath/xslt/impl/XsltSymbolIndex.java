@@ -16,8 +16,23 @@
 
 package org.intellij.lang.xpath.xslt.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.intellij.lang.xpath.xslt.XsltSupport;
+import org.intellij.lang.xpath.xslt.psi.XsltElement;
+import org.intellij.lang.xpath.xslt.psi.XsltElementFactory;
+import org.intellij.lang.xpath.xslt.psi.XsltParameter;
+import org.intellij.lang.xpath.xslt.psi.XsltTemplate;
+import org.intellij.lang.xpath.xslt.psi.XsltVariable;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.navigation.NavigationItem;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.ArchiveFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -28,20 +43,17 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
-import com.intellij.util.indexing.*;
+import com.intellij.util.indexing.DataIndexer;
+import com.intellij.util.indexing.FileBasedIndex;
+import com.intellij.util.indexing.FileBasedIndexExtension;
+import com.intellij.util.indexing.FileContent;
+import com.intellij.util.indexing.ID;
 import com.intellij.util.io.DataExternalizer;
 import com.intellij.util.io.EnumDataDescriptor;
 import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.text.CharArrayUtil;
 import com.intellij.util.xml.NanoXmlUtil;
-import org.intellij.lang.xpath.xslt.XsltSupport;
-import org.intellij.lang.xpath.xslt.psi.*;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.*;
 
 /*
 * Created by IntelliJ IDEA.
@@ -153,7 +165,7 @@ public class XsltSymbolIndex extends FileBasedIndexExtension<String, XsltSymbolI
                 if (file.getFileSystem() instanceof ArchiveFileSystem) {
                   return false; // there is lots and lots of custom XML inside zip files
                 }
-                return file.getFileType() == StdFileTypes.XML;
+                return file.getFileType() == XmlFileType.INSTANCE;
             }
         };
     }

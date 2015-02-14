@@ -15,35 +15,41 @@
  */
 package org.intellij.lang.xpath.xslt.associations;
 
-import com.intellij.psi.PsiFile;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
-import com.intellij.openapi.project.Project;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public abstract class FileAssociationsManager {
-    public static final FileType[] XML_FILES = new FileType[]{ StdFileTypes.XML, StdFileTypes.XHTML };
-    public static final List<FileType> XML_FILES_LIST = Arrays.asList(XML_FILES);
+import com.intellij.ide.highlighter.XHtmlFileType;
+import com.intellij.ide.highlighter.XmlFileType;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiFile;
 
-    public abstract void removeAssociations(PsiFile file);
+public abstract class FileAssociationsManager
+{
+	public static final FileType[] XML_FILES = new FileType[]{
+			XmlFileType.INSTANCE,
+			XHtmlFileType.INSTANCE
+	};
+	public static final List<FileType> XML_FILES_LIST = Arrays.asList(XML_FILES);
 
-    public abstract void removeAssociation(PsiFile file, PsiFile assoc);
+	public abstract void removeAssociations(PsiFile file);
 
-    public abstract void addAssociation(PsiFile file, PsiFile assoc);
+	public abstract void removeAssociation(PsiFile file, PsiFile assoc);
 
-    public abstract void addAssociation(PsiFile file, VirtualFile assoc);
+	public abstract void addAssociation(PsiFile file, PsiFile assoc);
 
-    public abstract Map<VirtualFile, VirtualFile[]> getAssociations();
+	public abstract void addAssociation(PsiFile file, VirtualFile assoc);
 
-    public abstract PsiFile[] getAssociationsFor(PsiFile file);
+	public abstract Map<VirtualFile, VirtualFile[]> getAssociations();
 
-    public abstract PsiFile[] getAssociationsFor(PsiFile file, FileType... fileTypes);
+	public abstract PsiFile[] getAssociationsFor(PsiFile file);
 
-    public static FileAssociationsManager getInstance(Project project) {
-        return project.getComponent(FileAssociationsManager.class);
-    }
+	public abstract PsiFile[] getAssociationsFor(PsiFile file, FileType... fileTypes);
+
+	public static FileAssociationsManager getInstance(Project project)
+	{
+		return project.getComponent(FileAssociationsManager.class);
+	}
 }

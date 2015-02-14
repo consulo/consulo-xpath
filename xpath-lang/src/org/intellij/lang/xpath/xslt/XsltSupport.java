@@ -15,31 +15,43 @@
  */
 package org.intellij.lang.xpath.xslt;
 
-import com.intellij.openapi.fileTypes.StdFileTypes;
+import gnu.trove.THashMap;
+import gnu.trove.THashSet;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.swing.Icon;
+
+import org.intellij.lang.xpath.XPathFile;
+import org.intellij.lang.xpath.xslt.impl.XsltChecker;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.impl.PsiFileEx;
 import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.psi.util.*;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
+import com.intellij.psi.util.ParameterizedCachedValue;
+import com.intellij.psi.util.ParameterizedCachedValueProvider;
+import com.intellij.psi.util.PsiUtilCore;
+import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlAttributeValue;
+import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlFile;
+import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlToken;
+import com.intellij.psi.xml.XmlTokenType;
 import com.intellij.ui.LayeredIcon;
 import com.intellij.util.SmartList;
 import com.intellij.util.xml.NanoXmlUtil;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
 import icons.XpathIcons;
-import org.intellij.lang.xpath.XPathFile;
-import org.intellij.lang.xpath.xslt.impl.XsltChecker;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class XsltSupport {
 
@@ -225,7 +237,7 @@ public class XsltSupport {
     }
 
     public static boolean isXsltFile(@NotNull PsiFile psiFile) {
-        if (psiFile.getFileType() != StdFileTypes.XML) return false;
+        if (psiFile.getFileType() != XmlFileType.INSTANCE) return false;
 
         if (!(psiFile instanceof XmlFile)) return false;
 

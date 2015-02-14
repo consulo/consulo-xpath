@@ -29,17 +29,26 @@ import org.jetbrains.annotations.Nullable;
 import com.intellij.diagnostic.logging.DebuggerLogConsoleManager;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
-import com.intellij.execution.configurations.*;
+import com.intellij.execution.configurations.AdditionalTabComponentManager;
+import com.intellij.execution.configurations.ConfigurationFactory;
+import com.intellij.execution.configurations.LocatableConfiguration;
+import com.intellij.execution.configurations.ModuleRunConfiguration;
+import com.intellij.execution.configurations.RunConfiguration;
+import com.intellij.execution.configurations.RunConfigurationBase;
+import com.intellij.execution.configurations.RunProfileState;
+import com.intellij.execution.configurations.RuntimeConfigurationError;
+import com.intellij.execution.configurations.RuntimeConfigurationException;
 import com.intellij.execution.filters.RegexpFilter;
 import com.intellij.execution.filters.TextConsoleBuilder;
 import com.intellij.execution.filters.TextConsoleBuilderFactory;
 import com.intellij.execution.process.ProcessEvent;
 import com.intellij.execution.process.ProcessHandler;
 import com.intellij.execution.runners.ExecutionEnvironment;
+import com.intellij.ide.highlighter.HtmlFileType;
+import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.fileTypes.PlainTextFileType;
-import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.options.SettingsEditor;
@@ -98,7 +107,7 @@ public final class XsltRunConfiguration extends RunConfigurationBase implements 
 	@NotNull
 	private JdkChoice myJdkChoice = JdkChoice.FROM_MODULE;
 	@Nullable
-	private FileType myFileType = StdFileTypes.XML;
+	private FileType myFileType = XmlFileType.INSTANCE;
 
 	public String myOutputFile; // intentionally untracked. should it be?
 	public boolean myOpenOutputFile;
@@ -663,11 +672,11 @@ public final class XsltRunConfiguration extends RunConfigurationBase implements 
 			final String method = output.getAttributeValue("method");
 			if("xml".equals(method))
 			{
-				setFileType(StdFileTypes.XML);
+				setFileType(XmlFileType.INSTANCE);
 			}
 			else if("html".equals(method))
 			{
-				setFileType(StdFileTypes.HTML);
+				setFileType(HtmlFileType.INSTANCE);
 			}
 			else if("text".equals(method))
 			{
