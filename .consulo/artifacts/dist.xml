@@ -16,24 +16,6 @@
             <element id="module-output" name="xpath-view" />
             <element id="module-production-resource-output" name="xpath-view" />
           </element>
-          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/lib/rmi-stubs.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/d-rmi-stubs.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/saxon.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/saxon9he.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/serializer.jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/xslt-debugger-engine-api/xslt-debugger-engine-impl/lib/xalan.jar" />
-          <element id="zip-archive" name="xslt-debugger.jar">
-            <element id="module-output" name="xslt-debugger-engine-impl" />
-            <element id="module-output" name="xslt-debugger-engine-api" />
-            <element id="module-output" name="xslt-debugger-impl" />
-            <element id="module-production-resource-output" name="xslt-debugger-impl" />
-          </element>
-          <element id="zip-archive" name="xslt-rt.jar">
-            <element id="module-output" name="xslt-rt" />
-          </element>
-          <element id="zip-archive" name="xslt-debugger-rt.jar">
-            <element id="module-output" name="xslt-debugger-rt" />
-          </element>
         </element>
       </element>
     </root>

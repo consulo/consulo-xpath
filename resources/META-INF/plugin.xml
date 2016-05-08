@@ -1,31 +1,16 @@
 <idea-plugin version="2" xmlns:xi="http://www.w3.org/2001/XInclude">
   <!-- Plugin name -->
   <id>XPathView</id>
-  <name>XPathView + XSLT Support &amp; Debugger</name>
+  <name>XPathView</name>
 
   <!-- Description -->
   <description><![CDATA[
     The XPath part of the plugin provides a possibility to evaluate XPath expressions against any XML document
     opened in IDEA. It can also generate and show an XPath expression that matches the current node.
-    <p>
-    The XSLT part adds syntax highlighting, analysis, completion, navigation and refactoring of XPath
-    expressions and named templates for XSLT documents.</p>
-
-    Xalan Support. To debug with Xalan instead of SAXON, a supported Xalan version (2.7.x) should be present in the
-    classpath or "-Dxslt.transformer.type=xalan" should be added as VM argument for the run configuration. Debugging
-    with SAXON can be forced by adding "-Dxslt.transformer.type=saxon".
   ]]>
   </description>
-  <version>4</version>
+  <version>SNAPSHOT</version>
   <vendor email="sascha.weinreuter@cit.de">Sascha Weinreuter</vendor>
-
-  <change-notes>
-    <![CDATA[
-      * Basic XPath 2.0 / XSLT 2.0 Support<br>
-  ]]>
-  </change-notes>
-
-  <xi:include href="/META-INF/Xslt-Debugger.xml" xpointer="xpointer(/idea-plugin/*)"/>
 
   <depends>com.intellij.xml</depends>
   <depends optional="true" config-file="org.intellij.intellilang.xml">org.intellij.intelliLang</depends>
