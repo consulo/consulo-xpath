@@ -1,15 +1,14 @@
 package org.intellij.lang.xpath.context;
 
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.extensions.ExtensionPointName;
+import org.intellij.lang.xpath.XPathFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import org.intellij.lang.xpath.XPathFile;
+import com.intellij.openapi.extensions.ExtensionPointName;
+import com.intellij.openapi.extensions.Extensions;
 
 public abstract class ContextProviderExtension {
     public static final ExtensionPointName<ContextProviderExtension> EXTENSION_POINT_NAME =
-            ExtensionPointName.create("XPathView.xpath.contextProviderExtension");
+            ExtensionPointName.create("com.intellij.xpath.contextProviderExtension");
 
     protected abstract boolean accepts(XPathFile file);
 

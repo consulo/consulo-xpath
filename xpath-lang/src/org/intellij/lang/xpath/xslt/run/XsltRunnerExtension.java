@@ -16,6 +16,10 @@
 
 package org.intellij.lang.xpath.xslt.run;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.diagnostic.logging.AdditionalTabComponent;
 import com.intellij.execution.CantRunException;
 import com.intellij.execution.configurations.AdditionalTabComponentManager;
@@ -26,10 +30,6 @@ import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.UserDataHolder;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -37,7 +37,7 @@ import java.util.List;
  * Date: 14.06.2007
  */
 public abstract class XsltRunnerExtension {
-    public static final ExtensionPointName<XsltRunnerExtension> EXTENSION_POINT_NAME = ExtensionPointName.create("XPathView.xsltRunnerExtension");
+    public static final ExtensionPointName<XsltRunnerExtension> EXTENSION_POINT_NAME = ExtensionPointName.create("com.intellij.xpath.xsltRunnerExtension");
 
     
     public abstract ProcessListener createProcessListener(Project project, UserDataHolder extensionData);

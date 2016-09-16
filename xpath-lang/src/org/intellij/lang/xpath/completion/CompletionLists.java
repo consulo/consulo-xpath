@@ -15,15 +15,17 @@
  */
 package org.intellij.lang.xpath.completion;
 
-import com.intellij.codeInsight.completion.CompletionInitializationContext;
-import com.intellij.ide.IconDescriptorUpdaters;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.*;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.PlatformIcons;
-import com.intellij.util.containers.ContainerUtil;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.xml.namespace.QName;
+
 import org.intellij.lang.xpath.XPathFile;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.context.ContextProvider;
@@ -31,10 +33,28 @@ import org.intellij.lang.xpath.context.NamespaceContext;
 import org.intellij.lang.xpath.context.VariableContext;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.context.functions.Function;
-import org.intellij.lang.xpath.psi.*;
-
-import javax.xml.namespace.QName;
-import java.util.*;
+import org.intellij.lang.xpath.psi.PrefixedName;
+import org.intellij.lang.xpath.psi.QNameElement;
+import org.intellij.lang.xpath.psi.XPathAxisSpecifier;
+import org.intellij.lang.xpath.psi.XPathElement;
+import org.intellij.lang.xpath.psi.XPathLocationPath;
+import org.intellij.lang.xpath.psi.XPathNodeTest;
+import org.intellij.lang.xpath.psi.XPathToken;
+import org.intellij.lang.xpath.psi.XPathType;
+import org.intellij.lang.xpath.psi.XPathVariable;
+import com.intellij.codeInsight.completion.CompletionInitializationContext;
+import com.intellij.openapi.util.Comparing;
+import com.intellij.openapi.util.Pair;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiNamedElement;
+import com.intellij.psi.PsiRecursiveElementVisitor;
+import com.intellij.psi.PsiWhiteSpace;
+import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.util.PlatformIcons;
+import com.intellij.util.containers.ContainerUtil;
+import consulo.ide.IconDescriptorUpdaters;
 
 public class CompletionLists {
   public static final String INTELLIJ_IDEA_RULEZ = CompletionInitializationContext.DUMMY_IDENTIFIER_TRIMMED;

@@ -15,22 +15,22 @@
  */
 package org.intellij.lang.xpath.context.functions;
 
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.util.Pair;
-import org.jetbrains.annotations.NotNull;
-
-import org.intellij.lang.xpath.context.ContextType;
-
-import javax.xml.namespace.QName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.namespace.QName;
+
+import org.intellij.lang.xpath.context.ContextType;
+import org.jetbrains.annotations.NotNull;
+import com.intellij.openapi.extensions.ExtensionPointName;
+import com.intellij.openapi.extensions.Extensions;
+import com.intellij.openapi.util.Pair;
+
 public abstract class XPathFunctionProvider {
     public static final ExtensionPointName<XPathFunctionProvider> EXTENSION_POINT_NAME =
-            ExtensionPointName.create("XPathView.xpath.functionProvider");
+            ExtensionPointName.create("com.intellij.xpath.functionProvider");
 
     @NotNull
     public abstract Map<QName, ? extends Function> getFunctions(ContextType contextType);

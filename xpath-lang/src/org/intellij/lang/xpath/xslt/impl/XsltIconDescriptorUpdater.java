@@ -15,19 +15,20 @@
  */
 package org.intellij.lang.xpath.xslt.impl;
 
-import com.intellij.ide.IconDescriptor;
-import com.intellij.ide.IconDescriptorUpdater;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import icons.XpathIcons;
 import org.intellij.lang.xpath.xslt.XsltSupport;
 import org.jetbrains.annotations.NotNull;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import consulo.ide.IconDescriptor;
+import consulo.ide.IconDescriptorUpdater;
+import icons.XpathIcons;
 
 /**
  * @author VISTALL
  * @since 15:02/20.07.13
  */
-public class XsltIconDescriptorUpdater implements IconDescriptorUpdater {
+public class XsltIconDescriptorUpdater implements IconDescriptorUpdater
+{
   @Override
   public void updateIcon(@NotNull IconDescriptor iconDescriptor, @NotNull PsiElement element, int flags) {
     if (element instanceof PsiFile && XsltSupport.isXsltFile((PsiFile) element)) {

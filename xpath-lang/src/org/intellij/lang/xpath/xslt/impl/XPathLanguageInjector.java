@@ -15,6 +15,12 @@
  */
 package org.intellij.lang.xpath.xslt.impl;
 
+import java.util.List;
+
+import org.intellij.lang.xpath.XPathTokenTypes;
+import org.intellij.lang.xpath.xslt.XsltSupport;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.Language;
 import com.intellij.lang.LanguageParserDefinitions;
@@ -28,14 +34,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.xml.XmlAttributeValueImpl;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlElementType;
-import com.intellij.util.LanguageVersionUtil;
 import com.intellij.util.SmartList;
-import org.intellij.lang.xpath.XPathTokenTypes;
-import org.intellij.lang.xpath.xslt.XsltSupport;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
+import consulo.lang.util.LanguageVersionUtil;
 
 public class XPathLanguageInjector implements MultiHostInjector {
   private static final Key<Pair<String, TextRange[]>> CACHED_FILES = Key.create("CACHED_FILES");
@@ -92,7 +92,7 @@ public class XPathLanguageInjector implements MultiHostInjector {
         if (lexer == null) {
           Language language = languageLevel.getXPathVersion().getLanguage();
           lexer =
-            LanguageParserDefinitions.INSTANCE.forLanguage(language).createLexer(null, LanguageVersionUtil.findDefaultVersion(language));
+            LanguageParserDefinitions.INSTANCE.forLanguage(language).createLexer(LanguageVersionUtil.findDefaultVersion(language));
         }
 
         // "A right curly brace inside a Literal in an expression is not recognized as terminating the expression."

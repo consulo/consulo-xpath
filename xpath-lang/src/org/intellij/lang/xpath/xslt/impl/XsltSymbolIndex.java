@@ -34,7 +34,6 @@ import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.ArchiveFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
@@ -54,6 +53,7 @@ import com.intellij.util.io.EnumeratorStringDescriptor;
 import com.intellij.util.io.KeyDescriptor;
 import com.intellij.util.text.CharArrayUtil;
 import com.intellij.util.xml.NanoXmlUtil;
+import consulo.vfs.ArchiveFileSystem;
 
 /*
 * Created by IntelliJ IDEA.

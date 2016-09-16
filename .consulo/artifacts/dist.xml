@@ -2,7 +2,7 @@
   <artifact name="dist">
     <output-path>$PROJECT_DIR$/out/artifacts/dist</output-path>
     <root id="root">
-      <element id="directory" name="xpath">
+      <element id="directory" name="com.intellij.xpath">
         <element id="directory" name="lib">
           <element id="zip-archive" name="xpath-intelliLang.jar">
             <element id="module-output" name="xpath-intellilang" />

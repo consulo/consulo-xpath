@@ -1,12 +1,10 @@
-<idea-plugin version="2" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <!-- Plugin name -->
-  <id>XPathView</id>
+<idea-plugin>
+  <id>com.intellij.xpath</id>
   <name>XPathView</name>
 
   <!-- Description -->
   <description><![CDATA[
-    The XPath part of the plugin provides a possibility to evaluate XPath expressions against any XML document
-    opened in IDEA. It can also generate and show an XPath expression that matches the current node.
+    The XPath part of the plugin provides a possibility to evaluate XPath expressions. It can also generate and show an XPath expression that matches the current node.
   ]]>
   </description>
   <version>SNAPSHOT</version>
@@ -14,6 +12,7 @@
 
   <depends>com.intellij.xml</depends>
   <depends optional="true" config-file="org.intellij.intellilang.xml">org.intellij.intelliLang</depends>
+
   <extensionPoints>
     <!-- XPath Language -->
     <extensionPoint name="xpath.contextProviderExtension" interface="org.intellij.lang.xpath.context.ContextProviderExtension"/>
@@ -24,8 +23,6 @@
   </extensionPoints>
 
   <extensions defaultExtensionNs="com.intellij">
-    <errorHandler implementation="com.intellij.diagnostic.ITNReporter" />
-
     <colorSettingsPage implementation="org.intellij.lang.xpath.XPathColorSettingsPage" />
 
     <configurationType implementation="org.intellij.lang.xpath.xslt.run.XsltRunConfigType" />
@@ -150,7 +147,7 @@
     <standardResourceProvider implementation="org.intellij.lang.xpath.xslt.impl.XsltResourceProvider"/>
   </extensions>
 
-  <extensions defaultExtensionNs="XPathView">
+  <extensions defaultExtensionNs="com.intellij.xpath">
     <xpath.functionProvider implementation="org.intellij.plugins.xpathView.support.jaxen.extensions.XPathFunctionProviderImpl" />
 
     <xpath.contextProviderExtension implementation="org.intellij.lang.xpath.xslt.context.Xslt1ContextProviderExtension" />
