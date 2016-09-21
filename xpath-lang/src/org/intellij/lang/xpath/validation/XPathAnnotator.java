@@ -15,19 +15,12 @@
  */
 package org.intellij.lang.xpath.validation;
 
-import com.intellij.codeInsight.PsiEquivalenceUtil;
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.Annotator;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.util.PsiTreeUtil;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.xml.namespace.QName;
+
 import org.intellij.lang.xpath.XPath2TokenTypes;
 import org.intellij.lang.xpath.XPathElementType;
 import org.intellij.lang.xpath.XPathTokenTypes;
@@ -41,14 +34,21 @@ import org.intellij.lang.xpath.psi.*;
 import org.intellij.lang.xpath.psi.impl.PrefixedNameImpl;
 import org.intellij.lang.xpath.psi.impl.XPathChangeUtil;
 import org.intellij.lang.xpath.psi.impl.XPathNumberImpl;
-import org.intellij.lang.xpath.xslt.impl.XsltReferenceContributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.xml.namespace.QName;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import com.intellij.codeInsight.PsiEquivalenceUtil;
+import com.intellij.codeInsight.intention.IntentionAction;
+import com.intellij.codeInspection.ProblemHighlightType;
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.annotation.Annotation;
+import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.Annotator;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiReference;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.util.PsiTreeUtil;
+import consulo.xpath.psi.XPathReferenceWithValidation;
 
 public final class XPathAnnotator extends XPath2ElementVisitor implements Annotator {
 
@@ -110,9 +110,9 @@ public final class XPathAnnotator extends XPath2ElementVisitor implements Annota
     if (o.getDeclaredType() == XPathType.UNKNOWN) {
       final PsiReference[] references = o.getReferences();
       for (PsiReference reference : references) {
-        if (reference instanceof XsltReferenceContributor.SchemaTypeReference ) {
+        if (reference instanceof XPathReferenceWithValidation) {
           if (!reference.isSoft() && reference.resolve() == null) {
-            final String message = ((EmptyResolveMessageProvider)reference).getUnresolvedMessagePattern();
+            final String message = ((XPathReferenceWithValidation)reference).getUnresolvedMessagePattern();
             final Annotation annotation =
               myHolder.createErrorAnnotation(reference.getRangeInElement().shiftRight(o.getTextOffset()), message);
             annotation.setHighlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);

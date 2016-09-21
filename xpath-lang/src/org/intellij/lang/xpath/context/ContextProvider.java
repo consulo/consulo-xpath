@@ -15,6 +15,24 @@
  */
 package org.intellij.lang.xpath.context;
 
+import java.util.Set;
+
+import javax.xml.namespace.QName;
+
+import org.intellij.lang.xpath.XPathFile;
+import org.intellij.lang.xpath.XPathFileType;
+import org.intellij.lang.xpath.context.functions.DefaultFunctionContext;
+import org.intellij.lang.xpath.context.functions.FunctionContext;
+import org.intellij.lang.xpath.psi.PrefixedName;
+import org.intellij.lang.xpath.psi.QNameElement;
+import org.intellij.lang.xpath.psi.XPath2TypeElement;
+import org.intellij.lang.xpath.psi.XPathElement;
+import org.intellij.lang.xpath.psi.XPathExpression;
+import org.intellij.lang.xpath.psi.XPathNodeTest;
+import org.intellij.lang.xpath.psi.XPathType;
+import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.lang.Language;
 import com.intellij.openapi.application.ApplicationManager;
@@ -24,18 +42,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
-import org.intellij.lang.xpath.XPathFile;
-import org.intellij.lang.xpath.XPathFileType;
-import org.intellij.lang.xpath.context.functions.DefaultFunctionContext;
-import org.intellij.lang.xpath.context.functions.FunctionContext;
-import org.intellij.lang.xpath.psi.*;
-import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
-import org.intellij.lang.xpath.xslt.context.XsltNamespaceContext;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.xml.namespace.QName;
-import java.util.Set;
+import consulo.xpath.context.NamespaceContextProvider;
 
 public abstract class ContextProvider {
     /**
@@ -208,7 +215,7 @@ public abstract class ContextProvider {
             myContextType = ContextType.PLAIN;
 
             if (myContextElement != null) {
-              myNamespaceContext = XsltNamespaceContext.NAMESPACE_CONTEXT;
+              myNamespaceContext = NamespaceContextProvider.EP_NAME.composite().getNamespaceContext(myContextElement);
               setXPathInjected(myContextElement.getContainingFile());
             } else {
               myNamespaceContext = NULL_NAMESPACE_CONTEXT;
@@ -220,7 +227,7 @@ public abstract class ContextProvider {
           myContextType = language == XPathFileType.XPATH2.getLanguage() ? ContextType.PLAIN_V2 : ContextType.PLAIN;
 
           if (myContextElement != null) {
-            myNamespaceContext = XsltNamespaceContext.NAMESPACE_CONTEXT;
+            myNamespaceContext = NamespaceContextProvider.EP_NAME.composite().getNamespaceContext(myContextElement);
             setXPathInjected(myContextElement.getContainingFile());
           } else {
             myNamespaceContext = NULL_NAMESPACE_CONTEXT;

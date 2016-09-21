@@ -30,7 +30,6 @@ import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import consulo.lang.LanguageVersion;
 
-@SuppressWarnings({"NullableProblems"})
 public class XPathParserDefinition implements ParserDefinition
 {
 
@@ -57,14 +56,14 @@ public class XPathParserDefinition implements ParserDefinition
 
 	@Override
 	@NotNull
-	public TokenSet getCommentTokens(LanguageVersion languageVersion)
+	public TokenSet getCommentTokens(@NotNull LanguageVersion languageVersion)
 	{
 		return TokenSet.EMPTY;
 	}
 
 	@Override
 	@NotNull
-	public TokenSet getStringLiteralElements(LanguageVersion languageVersion)
+	public TokenSet getStringLiteralElements(@NotNull LanguageVersion languageVersion)
 	{
 		return TokenSet.create(XPathTokenTypes.STRING_LITERAL);
 	}
@@ -76,6 +75,7 @@ public class XPathParserDefinition implements ParserDefinition
 		return new XPathParser();
 	}
 
+	@NotNull
 	@Override
 	public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right)
 	{
@@ -84,7 +84,7 @@ public class XPathParserDefinition implements ParserDefinition
 
 	@Override
 	@NotNull
-	public final PsiElement createElement(ASTNode node)
+	public final PsiElement createElement(@NotNull ASTNode node)
 	{
 		final IElementType type = node.getElementType();
 
@@ -164,7 +164,7 @@ public class XPathParserDefinition implements ParserDefinition
 	}
 
 	@Override
-	public PsiFile createFile(FileViewProvider viewProvider)
+	public PsiFile createFile(@NotNull FileViewProvider viewProvider)
 	{
 		return new XPathFile(viewProvider, XPathFileType.XPATH);
 	}
