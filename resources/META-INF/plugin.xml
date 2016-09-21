@@ -23,14 +23,6 @@
 				serviceInterface="org.intellij.plugins.xpathView.support.XPathSupport"
 				serviceImplementation="org.intellij.plugins.xpathView.support.jaxen.XPathSupportImpl"/>
 
-		<applicationService
-				serviceInterface="org.intellij.lang.xpath.xslt.psi.XsltElementFactory"
-				serviceImplementation="org.intellij.lang.xpath.xslt.psi.impl.XsltElementFactoryImpl"/>
-
-		<projectService
-				serviceInterface="org.intellij.lang.xpath.xslt.associations.impl.FileAssociationsConfigurable$UIState"
-				serviceImplementation="org.intellij.lang.xpath.xslt.associations.impl.FileAssociationsConfigurable$UIState"/>
-
 		<projectService
 				serviceInterface="org.intellij.plugins.xpathView.XPathProjectComponent"
 				serviceImplementation="org.intellij.plugins.xpathView.XPathProjectComponent"/>
