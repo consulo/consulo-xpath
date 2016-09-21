@@ -11,9 +11,8 @@
 
 	<extensionPoints>
 		<!-- XPath Language -->
-		<extensionPoint name="xpath.contextProviderExtension" interface="org.intellij.lang.xpath.context.ContextProviderExtension"/>
-		<extensionPoint name="xpath.functionProvider" interface="org.intellij.lang.xpath.context.functions.XPathFunctionProvider"/>
-
+		<extensionPoint name="contextProviderExtension" interface="org.intellij.lang.xpath.context.ContextProviderExtension"/>
+		<extensionPoint name="functionProvider" interface="org.intellij.lang.xpath.context.functions.XPathFunctionProvider"/>
 		<extensionPoint name="namespaceContextProvider" interface="consulo.xpath.context.NamespaceContextProvider"/>
 	</extensionPoints>
 
@@ -69,30 +68,13 @@
 
 		<extendWordSelectionHandler implementation="org.intellij.lang.xpath.XPathStringLiteralSelectioner"/>
 
-		<intentionAction>
-			<className>org.intellij.lang.xpath.xslt.intentions.AddOptionalArgumentsIntention</className>
-			<category>XSLT</category>
-		</intentionAction>
-		<intentionAction>
-			<className>org.intellij.lang.xpath.xslt.intentions.ConvertIfToChooseIntention</className>
-			<category>XSLT</category>
-		</intentionAction>
-		<intentionAction>
-			<className>org.intellij.lang.xpath.xslt.intentions.ReplaceWithXslAttribute</className>
-			<category>XSLT</category>
-		</intentionAction>
-		<intentionAction>
-			<className>org.intellij.lang.xpath.xslt.intentions.InlineXslAttribute</className>
-			<category>XSLT</category>
-		</intentionAction>
-
 		<applicationConfigurable instance="org.intellij.plugins.xpathView.XPathConfigurable" id="xpath.settings" displayName="XPath Viewer"/>
 		<defaultLiveTemplatesProvider implementation="org.intellij.plugins.xpathView.XPathAppComponent"/>
 	</extensions>
 
 
 	<extensions defaultExtensionNs="com.intellij.xpath">
-		<xpath.functionProvider implementation="org.intellij.plugins.xpathView.support.jaxen.extensions.XPathFunctionProviderImpl"/>
+		<functionProvider implementation="org.intellij.plugins.xpathView.support.jaxen.extensions.XPathFunctionProviderImpl"/>
 	</extensions>
 
 	<!-- Plugin's application components -->
