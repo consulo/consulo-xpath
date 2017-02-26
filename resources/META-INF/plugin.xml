@@ -60,7 +60,7 @@
 
 		<extendWordSelectionHandler implementation="org.intellij.lang.xpath.XPathStringLiteralSelectioner"/>
 
-		<applicationConfigurable instance="org.intellij.plugins.xpathView.XPathConfigurable" id="xpath.settings" displayName="XPath Viewer"/>
+		<applicationConfigurable instance="org.intellij.plugins.xpathView.XPathConfigurable" id="xpath.settings" parentId="editor" displayName="XPath"/>
 		<defaultLiveTemplatesProvider implementation="org.intellij.plugins.xpathView.XPathAppComponent"/>
 	</extensions>
 
