@@ -1,1 +1,1 @@
-[![Build Status](http://must-be.org/jenkins/job/consulo-xpath/badge/icon)](http://must-be.org/jenkins/job/consulo-xpath/)
+[![Build Status](https://ci.consulo.io/job/consulo-xpath/badge/icon)](https://ci.consulo.io/job/consulo-xpath/)
