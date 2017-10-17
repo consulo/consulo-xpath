@@ -15,11 +15,11 @@
  */
 package org.intellij.plugins.xpathView;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.dtd.DTDLanguage;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.editor.Editor;
@@ -28,68 +28,87 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
+import consulo.annotations.RequiredDispatchThread;
 
-public abstract class XPathAction extends AnAction {
-    protected final XPathAppComponent myComponent;
+public abstract class XPathAction extends AnAction
+{
+	protected final XPathAppComponent myComponent;
 
-    protected XPathAction() {
-        myComponent = XPathAppComponent.getInstance();
-    }
+	protected XPathAction()
+	{
+		myComponent = XPathAppComponent.getInstance();
+	}
 
-    public void update(AnActionEvent event) {
-        super.update(event);
-        final Presentation presentation = event.getPresentation();
+	@RequiredDispatchThread
+	public void update(@NotNull AnActionEvent event)
+	{
+		super.update(event);
+		final Presentation presentation = event.getPresentation();
 
-        // keep track of enabled status
-        presentation.setEnabled(isEnabled(event, true));
+		// keep track of enabled status
+		presentation.setEnabled(isEnabled(event, true));
 
-        // provide icon for toolbar
-        if (ActionPlaces.MAIN_TOOLBAR.equals(event.getPlace())) {
-            updateToolbar(event);
-        } else if (ActionPlaces.MAIN_MENU.equals(event.getPlace())) {
-            updateMainMenu(event);
-        } else if (ActionPlaces.EDITOR_POPUP.equals(event.getPlace())) {
-            presentation.setVisible(presentation.isEnabled());
-        }
-    }
+		// provide icon for toolbar
+		if(ActionPlaces.MAIN_TOOLBAR.equals(event.getPlace()))
+		{
+			updateToolbar(event);
+		}
+		else if(ActionPlaces.MAIN_MENU.equals(event.getPlace()))
+		{
+			updateMainMenu(event);
+		}
+		else if(ActionPlaces.EDITOR_POPUP.equals(event.getPlace()))
+		{
+			presentation.setVisible(presentation.isEnabled());
+		}
+	}
 
-    protected void updateMainMenu(AnActionEvent event) {
-        final boolean b = myComponent.getConfig().SHOW_IN_MAIN_MENU;
-        event.getPresentation().setVisible(b && isEnabled(event, false));
-    }
+	protected void updateMainMenu(AnActionEvent event)
+	{
+		final boolean b = myComponent.getConfig().SHOW_IN_MAIN_MENU;
+		event.getPresentation().setVisible(b && isEnabled(event, false));
+	}
 
-    protected void updateToolbar(AnActionEvent event) {
-        event.getPresentation().setVisible(myComponent.getConfig().SHOW_IN_TOOLBAR);
-    }
+	protected void updateToolbar(AnActionEvent event)
+	{
+		event.getPresentation().setVisible(myComponent.getConfig().SHOW_IN_TOOLBAR);
+	}
 
-    protected boolean isEnabled(AnActionEvent event, boolean checkAvailable) {
-        final Project project = CommonDataKeys.PROJECT.getData(event.getDataContext());
-        if (project == null) {
-            // no active project
-            return false;
-        }
+	protected boolean isEnabled(AnActionEvent event, boolean checkAvailable)
+	{
+		final Project project = event.getProject();
+		if(project == null)
+		{
+			// no active project
+			return false;
+		}
 
-        Editor editor = PlatformDataKeys.EDITOR.getData(event.getDataContext());
-        if (editor == null) {
-            FileEditorManager fem = FileEditorManager.getInstance(project);
-            editor = fem.getSelectedTextEditor();
-        }
-        if (editor == null) {
-            return false;
-        }
+		Editor editor = event.getData(PlatformDataKeys.EDITOR);
+		if(editor == null)
+		{
+			FileEditorManager fem = FileEditorManager.getInstance(project);
+			editor = fem.getSelectedTextEditor();
+		}
+		if(editor == null)
+		{
+			return false;
+		}
 
-        // do we have an xml file?
-        final PsiDocumentManager cem = PsiDocumentManager.getInstance(project);
-        final PsiFile psiFile = cem.getPsiFile(editor.getDocument());
-        // this is also true for DTD documents...
-        if (!(psiFile instanceof XmlFile)) {
-            return false;
-        } else if (psiFile.getLanguage() == DTDLanguage.INSTANCE) {
-            return false;
-        }
+		// do we have an xml file?
+		final PsiDocumentManager cem = PsiDocumentManager.getInstance(project);
+		final PsiFile psiFile = cem.getPsiFile(editor.getDocument());
+		// this is also true for DTD documents...
+		if(!(psiFile instanceof XmlFile))
+		{
+			return false;
+		}
+		else if(psiFile.getLanguage() == DTDLanguage.INSTANCE)
+		{
+			return false;
+		}
 
-        return !checkAvailable || isEnabledAt((XmlFile)psiFile, editor.getCaretModel().getOffset());
-    }
+		return !checkAvailable || isEnabledAt((XmlFile) psiFile, editor.getCaretModel().getOffset());
+	}
 
-    protected abstract boolean isEnabledAt(XmlFile xmlFile, int offset);
+	protected abstract boolean isEnabledAt(XmlFile xmlFile, int offset);
 }

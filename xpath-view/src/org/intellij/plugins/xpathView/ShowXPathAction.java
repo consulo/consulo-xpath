@@ -15,6 +15,20 @@
  */
 package org.intellij.plugins.xpathView;
 
+import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.intellij.plugins.xpathView.support.XPathSupport;
+import org.intellij.plugins.xpathView.util.HighlighterUtil;
 import com.intellij.codeInsight.hint.HintManagerImpl;
 import com.intellij.idea.ActionsBundle;
 import com.intellij.openapi.actionSystem.ActionPlaces;
@@ -37,104 +51,115 @@ import com.intellij.ui.InplaceButton;
 import com.intellij.ui.LightweightHint;
 import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.util.PlatformIcons;
-import org.intellij.plugins.xpathView.support.XPathSupport;
-import org.intellij.plugins.xpathView.util.HighlighterUtil;
+import consulo.annotations.RequiredDispatchThread;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+public class ShowXPathAction extends XPathAction
+{
+	@RequiredDispatchThread
+	public void update(AnActionEvent event)
+	{
+		super.update(event);
 
-public class ShowXPathAction extends XPathAction {
-    public void update(AnActionEvent event) {
-        super.update(event);
+		final Presentation presentation = event.getPresentation();
+		if(ActionPlaces.MAIN_MENU.equals(event.getPlace()) && presentation.getText().startsWith("Show "))
+		{
+			final String text = presentation.getText().substring("Show ".length());
+			presentation.setText(Character.toUpperCase(text.charAt(0)) + text.substring(1));
+		}
+	}
 
-        final Presentation presentation = event.getPresentation();
-        if (ActionPlaces.MAIN_MENU.equals(event.getPlace()) && presentation.getText().startsWith("Show ")) {
-            final String text = presentation.getText().substring("Show ".length());
-            presentation.setText(Character.toUpperCase(text.charAt(0)) + text.substring(1));
-        }
-    }
+	@Override
+	protected boolean isEnabledAt(XmlFile xmlFile, int offset)
+	{
+		final PsiElement element = xmlFile.findElementAt(offset);
+		if(!(element instanceof XmlElement || element instanceof PsiWhiteSpace))
+		{
+			return false;
+		}
 
-    protected boolean isEnabledAt(XmlFile xmlFile, int offset) {
-        final PsiElement element = xmlFile.findElementAt(offset);
-        if (!(element instanceof XmlElement || element instanceof PsiWhiteSpace)) {
-            return false;
-        }
+		final PsiElement node = XPathExpressionGenerator.transformToValidShowPathNode(element);
+		return node != null;
+	}
 
-        final PsiElement node = XPathExpressionGenerator.transformToValidShowPathNode(element);
-        return node != null;
-    }
+	@RequiredDispatchThread
+	public void actionPerformed(AnActionEvent e)
+	{
+		final Editor editor = e.getData(LangDataKeys.EDITOR);
+		if(editor == null)
+		{
+			return;
+		}
+		final Project project = editor.getProject();
+		if(project == null)
+		{
+			return;
+		}
+		final PsiDocumentManager docmgr = PsiDocumentManager.getInstance(project);
+		final Document document = editor.getDocument();
+		docmgr.commitDocument(document);
 
-    public void actionPerformed(AnActionEvent e) {
-        final Editor editor = LangDataKeys.EDITOR.getData(e.getDataContext());
-        if (editor == null) {
-            return;
-        }
-        final Project project = editor.getProject();
-        if (project == null) {
-            return;
-        }
-        final PsiDocumentManager docmgr = PsiDocumentManager.getInstance(project);
-        final Document document = editor.getDocument();
-        docmgr.commitDocument(document);
+		final PsiFile psiFile = docmgr.getPsiFile(document);
+		if(!(psiFile instanceof XmlFile))
+		{
+			return;
+		}
 
-        final PsiFile psiFile = docmgr.getPsiFile(document);
-        if (!(psiFile instanceof XmlFile)) {
-            return;
-        }
+		final PsiElement element = psiFile.findElementAt(editor.getCaretModel().getOffset());
+		if(!(element instanceof XmlElement || element instanceof PsiWhiteSpace))
+		{
+			XPathAppComponent.showEditorHint("No suitable context for an XPath-expression selected.", editor);
+			return;
+		}
 
-        final PsiElement element = psiFile.findElementAt(editor.getCaretModel().getOffset());
-        if (!(element instanceof XmlElement || element instanceof PsiWhiteSpace)) {
-            XPathAppComponent.showEditorHint("No suitable context for an XPath-expression selected.", editor);
-            return;
-        }
+		final PsiElement node = XPathExpressionGenerator.transformToValidShowPathNode(element);
+		if(node == null)
+		{
+			XPathAppComponent.showEditorHint("No suitable context for an XPath-expression selected.", editor);
+			return;
+		}
 
-        final PsiElement node = XPathExpressionGenerator.transformToValidShowPathNode(element);
-        if (node == null) {
-            XPathAppComponent.showEditorHint("No suitable context for an XPath-expression selected.", editor);
-            return;
-        }
+		final Config cfg = myComponent.getConfig();
+		final RangeHighlighter h = HighlighterUtil.highlightNode(editor, node, cfg.getContextAttributes(), cfg);
 
-        final Config cfg = myComponent.getConfig();
-        final RangeHighlighter h = HighlighterUtil.highlightNode(editor, node, cfg.getContextAttributes(), cfg);
+		final String path = XPathSupport.getInstance().getUniquePath((XmlElement) node, null);
 
-        final String path = XPathSupport.getInstance().getUniquePath((XmlElement)node, null);
+		final JTextField label = new JTextField(path);
+		label.setPreferredSize(new Dimension(label.getPreferredSize().width + new JLabel("M").getPreferredSize().width, label.getPreferredSize().height));
+		label.setOpaque(false);
+		label.setEditable(false);
+		label.setBorder(null);
+		label.setHorizontalAlignment(JTextField.CENTER);
+		label.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 
-        final JTextField label = new JTextField(path);
-        label.setPreferredSize(new Dimension(label.getPreferredSize().width + new JLabel("M").getPreferredSize().width, label.getPreferredSize().height));
-        label.setOpaque(false);
-        label.setEditable(false);
-        label.setBorder(null);
-        label.setHorizontalAlignment(JTextField.CENTER);
-        label.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-
-        final JPanel p = new NonOpaquePanel(new BorderLayout());
-        final JLabel l = new JLabel("XPath:");
-        p.add(l, BorderLayout.WEST);
-        p.add(label, BorderLayout.CENTER);
+		final JPanel p = new NonOpaquePanel(new BorderLayout());
+		final JLabel l = new JLabel("XPath:");
+		p.add(l, BorderLayout.WEST);
+		p.add(label, BorderLayout.CENTER);
 
 
-        InplaceButton copy = new InplaceButton(ActionsBundle.message("action.EditorCopy.text"), PlatformIcons.COPY_ICON, new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-            CopyPasteManager.getInstance().setContents(new StringSelection(path));
-          }
-        });
+		InplaceButton copy = new InplaceButton(ActionsBundle.message("action.EditorCopy.text"), PlatformIcons.COPY_ICON, new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				CopyPasteManager.getInstance().setContents(new StringSelection(path));
+			}
+		});
 
-        p.add(copy, BorderLayout.EAST);
+		p.add(copy, BorderLayout.EAST);
 
-      final LightweightHint hint = new LightweightHint(p) {
-            public void hide() {
-                super.hide();
-                HighlighterUtil.removeHighlighter(editor, h);
-            }
-        };
+		final LightweightHint hint = new LightweightHint(p)
+		{
+			public void hide()
+			{
+				super.hide();
+				HighlighterUtil.removeHighlighter(editor, h);
+			}
+		};
 
-        final Point point = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
-        point.y += editor.getLineHeight() / 2;
-      HintHint hintHint = new HintHint(editor, point).setAwtTooltip(true).setContentActive(true).setExplicitClose(true).setShowImmediately(true);
-      HintManagerImpl.getInstanceImpl().showEditorHint(hint, editor, point, HintManagerImpl.HIDE_BY_ANY_KEY, 0, false, hintHint);
-    }
+		final Point point = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
+		point.y += editor.getLineHeight() / 2;
+		HintHint hintHint = new HintHint(editor, point).setAwtTooltip(true).setContentActive(true).setExplicitClose(true).setShowImmediately(true);
+		HintManagerImpl.getInstanceImpl().showEditorHint(hint, editor, point, HintManagerImpl.HIDE_BY_ANY_KEY, 0, false, hintHint);
+	}
 }
