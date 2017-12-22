@@ -15,7 +15,6 @@
  */
 package org.intellij.lang.xpath;
 
-import com.intellij.openapi.application.PluginPathManager;
 import com.intellij.testFramework.PlatformTestCase;
 import com.intellij.testFramework.UsefulTestCase;
 import com.intellij.testFramework.fixtures.CodeInsightTestFixture;
@@ -30,7 +29,6 @@ import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory;
 public abstract class TestBase extends UsefulTestCase {
 
   protected TestBase() {
-    PlatformTestCase.initPlatformLangPrefix();
   }
 
   protected CodeInsightTestFixture myFixture;
@@ -54,7 +52,7 @@ public abstract class TestBase extends UsefulTestCase {
 
   public static String getTestDataPath(String subPath) {
     // path logic taken from RegExpSupport tests
-    final String def = PluginPathManager.getPluginHomePath("xpath") + "/xpath-lang/testData";
+    final String def = "/xpath-lang/testData";
     return System.getProperty("idea.xpath.testdata-path", def) + "/" + subPath;
   }
 

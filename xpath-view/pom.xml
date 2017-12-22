@@ -17,13 +17,17 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<parent>
 		<groupId>consulo</groupId>
-		<artifactId>arch.managment</artifactId>
+		<artifactId>arch.ide-provided</artifactId>
 		<version>2-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
+
+	<groupId>consulo.plugin</groupId>
+	<artifactId>com.intellij.xpath-xpath.view</artifactId>
+	<version>2-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<repositories>
 		<repository>
@@ -36,15 +40,23 @@
 		</repository>
 	</repositories>
 
-	<groupId>consulo.plugin</groupId>
-	<artifactId>com.intellij.xpath.parent</artifactId>
-	<version>2-SNAPSHOT</version>
-	<packaging>pom</packaging>
-
-	<modules>
-		<module>xpath-lang</module>
-		<module>xpath-impl</module>
-		<module>xpath-intellilang</module>
-		<module>xpath-view</module>
-	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xpath-xpath.lang</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>com.intellij.xml</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>consulo-lang-impl-testing</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
