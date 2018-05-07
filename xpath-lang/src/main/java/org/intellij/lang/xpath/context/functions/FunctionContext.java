@@ -16,7 +16,7 @@
 package org.intellij.lang.xpath.context.functions;
 
 import com.intellij.openapi.util.Pair;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import javax.xml.namespace.QName;
 import java.util.Map;

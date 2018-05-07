@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.IElementType;
@@ -23,8 +25,8 @@ import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.XPathElementTypes;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class XPathStepImpl extends XPathElementImpl implements XPathStep {
 
@@ -32,7 +34,7 @@ public class XPathStepImpl extends XPathElementImpl implements XPathStep {
     super(node);
   }
 
-  @NotNull
+  @Nonnull
   public XPathType getType() {
     if (getNode().getElementType() == XPath2ElementTypes.CONTEXT_ITEM) {
       final XPathPredicate predicate = PsiTreeUtil.getParentOfType(this, XPathPredicate.class);
@@ -85,7 +87,7 @@ public class XPathStepImpl extends XPathElementImpl implements XPathStep {
     }
   }
 
-  @NotNull
+  @Nonnull
   public XPathPredicate[] getPredicates() {
     final ASTNode[] nodes = getNode().getChildren(XPathElementTypes.PREDICATES);
     final XPathPredicate[] predicates = new XPathPredicate[nodes.length];

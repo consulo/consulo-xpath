@@ -15,11 +15,12 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.Commenter;
 import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.SingleLazyInstanceSyntaxHighlighterFactory;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import org.jetbrains.annotations.NotNull;
 
 public final class XPath2Language extends Language {
     public static final String ID = "XPath2";
@@ -34,7 +35,7 @@ public final class XPath2Language extends Language {
   }
 
   public static class XPathSyntaxHighlighterFactory extends SingleLazyInstanceSyntaxHighlighterFactory {
-    @NotNull
+    @Nonnull
     protected SyntaxHighlighter createHighlighter() {
       return new XPathHighlighter(true);
     }

@@ -15,9 +15,9 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import icons.XpathIcons;
@@ -33,21 +33,21 @@ public final class XPathFileType extends LanguageFileType
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getName()
 	{
 		return getLanguage().getID();
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getDescription()
 	{
 		return "XPath";
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getDefaultExtension()
 	{
 		return getLanguage().getID().toLowerCase();

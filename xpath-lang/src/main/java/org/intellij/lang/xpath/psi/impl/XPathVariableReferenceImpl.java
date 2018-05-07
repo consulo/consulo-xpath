@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
@@ -28,8 +30,8 @@ import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.context.VariableContext;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class XPathVariableReferenceImpl extends XPathElementImpl implements XPathVariableReference {
     private static final TokenSet QNAME_FILTER = TokenSet.create(XPathTokenTypes.VARIABLE_PREFIX, XPathTokenTypes.VARIABLE_NAME);
@@ -38,12 +40,12 @@ public class XPathVariableReferenceImpl extends XPathElementImpl implements XPat
         super(node);
     }
 
-    @NotNull
+    @Nonnull
     public String getReferencedName() {
         return getText().substring(1);
     }
 
-    @NotNull
+    @Nonnull
     public XPathType getType() {
         final XPathVariable xPathVariable = resolve();
         if (xPathVariable != null) {
@@ -100,7 +102,7 @@ public class XPathVariableReferenceImpl extends XPathElementImpl implements XPat
     return null;
   }
 
-  @NotNull
+  @Nonnull
     public String getCanonicalText() {
         return getText();
     }
@@ -110,7 +112,7 @@ public class XPathVariableReferenceImpl extends XPathElementImpl implements XPat
         return this;
     }
 
-    public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+    public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
         renameTo(((PsiNamedElement)element).getName());
         return this;
     }
@@ -143,7 +145,7 @@ public class XPathVariableReferenceImpl extends XPathElementImpl implements XPat
         return false;
     }
 
-    @NotNull
+    @Nonnull
     public Object[] getVariants() {
         return ArrayUtil.EMPTY_OBJECT_ARRAY;
     }

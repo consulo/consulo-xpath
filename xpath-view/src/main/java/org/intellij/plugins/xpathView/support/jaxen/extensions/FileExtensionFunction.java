@@ -17,7 +17,7 @@ package org.intellij.plugins.xpathView.support.jaxen.extensions;
 
 import org.intellij.lang.xpath.context.functions.Parameter;
 import org.intellij.lang.xpath.psi.XPathType;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;

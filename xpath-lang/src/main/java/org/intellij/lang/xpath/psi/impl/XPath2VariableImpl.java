@@ -15,20 +15,21 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.intellij.lang.xpath.psi.*;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 public class XPath2VariableImpl extends XPathElementImpl implements XPathVariable {
   public XPath2VariableImpl(ASTNode node) {
     super(node);
   }
 
-  @NotNull
+  @Nonnull
   public XPathType getType() {
     final XPathExpression value = getValue();
     return value != null ? value.getType() : XPathType.UNKNOWN;
@@ -55,7 +56,7 @@ public class XPath2VariableImpl extends XPathElementImpl implements XPathVariabl
   }
 
   @Override
-  public PsiElement setName(@NonNls @NotNull String name) throws IncorrectOperationException {
+  public PsiElement setName(@NonNls @Nonnull String name) throws IncorrectOperationException {
     return replace(XPathChangeUtil.createVariableReference(this, name));
   }
 

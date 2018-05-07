@@ -24,8 +24,8 @@ import com.intellij.psi.xml.XmlElement;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.NamespaceContext;
 import org.intellij.lang.xpath.psi.XPath2Type;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.jetbrains.annotations.TestOnly;
 
 import java.util.Collection;
@@ -56,7 +56,7 @@ class TestNamespaceContext implements NamespaceContext {
     return XPath2Type.XMLSCHEMA_NS.equals(uri) ? "xs" : null;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public Collection<String> getKnownPrefixes(XmlElement context) {
     return Collections.singleton("xs");

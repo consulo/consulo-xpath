@@ -1,8 +1,9 @@
 package org.intellij.lang.xpath.context;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
 
 import org.intellij.lang.xpath.psi.XPathVariable;
 import org.intellij.lang.xpath.psi.XPathVariableReference;
@@ -22,7 +23,7 @@ public abstract class SimpleVariableContext implements VariableContext<String> {
         return false;
     }
 
-    @NotNull
+    @Nonnull
     public IntentionAction[] getUnresolvedVariableFixes(XPathVariableReference reference) {
         return IntentionAction.EMPTY_ARRAY;
     }

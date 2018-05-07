@@ -23,7 +23,7 @@ import java.util.Set;
 import javax.xml.namespace.QName;
 
 import org.intellij.lang.xpath.context.ContextType;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.util.Pair;
@@ -32,7 +32,7 @@ public abstract class XPathFunctionProvider {
     public static final ExtensionPointName<XPathFunctionProvider> EXTENSION_POINT_NAME =
             ExtensionPointName.create("com.intellij.xpath.functionProvider");
 
-    @NotNull
+    @Nonnull
     public abstract Map<QName, ? extends Function> getFunctions(ContextType contextType);
 
     public static List<Pair<QName, ? extends Function>> getAvailableFunctions(ContextType type) {

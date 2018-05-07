@@ -17,7 +17,7 @@ package org.intellij.plugins.xpathView.ui;
 
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.DimensionService;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,7 +44,7 @@ public abstract class ModeSwitchableDialog extends DialogWrapper {
         super.init();
     }
 
-    @NotNull
+    @Nonnull
     protected Action[] createActions() {
         return new Action[]{ getOKAction(), getCancelAction(), new AbstractAction(myMode.other().getName()) {
             public void actionPerformed(ActionEvent e) {

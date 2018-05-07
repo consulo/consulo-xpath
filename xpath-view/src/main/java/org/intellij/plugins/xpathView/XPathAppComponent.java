@@ -20,6 +20,7 @@ import java.awt.Font;
 import java.awt.Point;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -27,7 +28,6 @@ import javax.swing.border.BevelBorder;
 
 import org.intellij.plugins.xpathView.util.HighlighterUtil;
 import org.jdom.Element;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.hint.HintManagerImpl;
 import com.intellij.codeInsight.hint.HintUtil;
 import com.intellij.codeInsight.template.impl.DefaultLiveTemplatesProvider;
@@ -70,7 +70,7 @@ public class XPathAppComponent implements ApplicationComponent, JDOMExternalizab
 
 	private Config configuration = new Config();
 
-	@NotNull
+	@Nonnull
 	public String getComponentName()
 	{
 		return "XPathView.XPathViewPlugin";
@@ -115,13 +115,13 @@ public class XPathAppComponent implements ApplicationComponent, JDOMExternalizab
 	 * @return the configuration object
 	 * @see Config
 	 */
-	@NotNull
+	@Nonnull
 	public Config getConfig()
 	{
 		return configuration;
 	}
 
-	public void setConfig(@NotNull Config configuration)
+	public void setConfig(@Nonnull Config configuration)
 	{
 		this.configuration = configuration;
 	}
@@ -147,7 +147,7 @@ public class XPathAppComponent implements ApplicationComponent, JDOMExternalizab
 		}
 
 		@RequiredDispatchThread
-		public void actionPerformed(@NotNull AnActionEvent event)
+		public void actionPerformed(@Nonnull AnActionEvent event)
 		{
 			final Editor editor = event.getData(LangDataKeys.EDITOR);
 			if(editor != null)

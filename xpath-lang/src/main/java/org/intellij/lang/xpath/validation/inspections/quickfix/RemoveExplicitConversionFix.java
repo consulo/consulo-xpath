@@ -24,7 +24,7 @@ import org.intellij.lang.xpath.psi.XPathBinaryExpression;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class RemoveExplicitConversionFix extends ReplaceElementFix<XPathExpression> {
 
@@ -32,21 +32,21 @@ public class RemoveExplicitConversionFix extends ReplaceElementFix<XPathExpressi
         super(ExpectedTypeUtil.unparenthesize(expression));
     }
 
-    @NotNull
+    @Nonnull
     public String getText() {
         return "Remove Explicit Type Conversion";
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
         return "ImplicitTypeConversion";
     }
 
   @Override
-  public boolean isAvailable(@NotNull Project project,
-                             @NotNull PsiFile file,
-                             @NotNull PsiElement startElement,
-                             @NotNull PsiElement endElement) {
+  public boolean isAvailable(@Nonnull Project project,
+                             @Nonnull PsiFile file,
+                             @Nonnull PsiElement startElement,
+                             @Nonnull PsiElement endElement) {
     return super.isAvailable(project, file, startElement, endElement)
         && ((XPathFunctionCall)startElement).getArgumentList().length == 1;
     }

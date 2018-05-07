@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.BracePair;
 import com.intellij.lang.Language;
 import com.intellij.lang.PairedBraceMatcher;
@@ -35,8 +37,8 @@ import com.intellij.psi.tree.IElementType;
 import org.intellij.lang.xpath.completion.CompletionLists;
 import org.intellij.lang.xpath.psi.XPathFunction;
 import org.intellij.lang.xpath.psi.XPathVariable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public final class XPathLanguage extends Language {
     public static final String ID = "XPath";
@@ -67,7 +69,7 @@ public final class XPathLanguage extends Language {
             return openingBraceOffset;
         }
 
-        public boolean isPairedBracesAllowedBeforeType(@NotNull IElementType lbraceType, @Nullable IElementType contextType) {
+        public boolean isPairedBracesAllowedBeforeType(@Nonnull IElementType lbraceType, @Nullable IElementType contextType) {
             return true;
         }
     }
@@ -78,17 +80,17 @@ public final class XPathLanguage extends Language {
             return new SimpleWordsScanner();
         }
 
-        public boolean canFindUsagesFor(@NotNull PsiElement psiElement) {
+        public boolean canFindUsagesFor(@Nonnull PsiElement psiElement) {
             return psiElement instanceof XPathFunction || psiElement instanceof XPathVariable;
         }
 
         @Nullable
-        public String getHelpId(@NotNull PsiElement psiElement) {
+        public String getHelpId(@Nonnull PsiElement psiElement) {
             return null;
         }
 
-        @NotNull
-        public String getType(@NotNull PsiElement element) {
+        @Nonnull
+        public String getType(@Nonnull PsiElement element) {
           if (element instanceof XPathFunction) {
             return "function";
           } else if (element instanceof XPathVariable) {
@@ -98,8 +100,8 @@ public final class XPathLanguage extends Language {
           }
         }
 
-        @NotNull
-        public String getDescriptiveName(@NotNull PsiElement element) {
+        @Nonnull
+        public String getDescriptiveName(@Nonnull PsiElement element) {
             if (element instanceof PsiNamedElement) {
                 final String name = ((PsiNamedElement)element).getName();
                 if (name != null) return name;
@@ -107,8 +109,8 @@ public final class XPathLanguage extends Language {
             return element.toString();
         }
 
-        @NotNull
-        public String getNodeText(@NotNull PsiElement element, boolean useFullName) {
+        @Nonnull
+        public String getNodeText(@Nonnull PsiElement element, boolean useFullName) {
             if (useFullName) {
                 if (element instanceof NavigationItem) {
                     final NavigationItem navigationItem = ((NavigationItem)element);
@@ -161,7 +163,7 @@ public final class XPathLanguage extends Language {
     }
 
     public static class XPathSyntaxHighlighterFactory extends SingleLazyInstanceSyntaxHighlighterFactory {
-        @NotNull
+        @Nonnull
         protected SyntaxHighlighter createHighlighter() {
             return new XPathHighlighter(false);
         }

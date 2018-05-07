@@ -17,20 +17,20 @@ package org.intellij.lang.xpath.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class XPath2SequenceImpl extends XPath2ElementImpl implements XPath2Sequence {
   public XPath2SequenceImpl(ASTNode node) {
     super(node);
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathExpression[] getSequence() {
     return findChildrenByClass(XPathExpression.class);
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathType getType() {
     final XPathExpression[] sequence = getSequence();

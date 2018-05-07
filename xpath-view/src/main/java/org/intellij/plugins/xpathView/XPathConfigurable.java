@@ -18,9 +18,9 @@ package org.intellij.plugins.xpathView;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.intellij.plugins.xpathView.ui.ConfigUI;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 
 public class XPathConfigurable implements SearchableConfigurable {
@@ -35,7 +35,7 @@ public class XPathConfigurable implements SearchableConfigurable {
         return "xpath.settings";
     }
 
-  @NotNull
+  @Nonnull
   public String getId() {
     return getHelpTopic();
   }

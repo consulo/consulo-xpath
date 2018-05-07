@@ -31,8 +31,8 @@ import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.context.functions.Function;
 import org.intellij.lang.xpath.context.functions.Parameter;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.xml.namespace.QName;
 
@@ -40,7 +40,7 @@ public class ExpectedTypeUtil {
   private ExpectedTypeUtil() {
   }
 
-  @NotNull
+  @Nonnull
   public static XPathType getExpectedType(XPathExpression expression) {
 
     final XPathExpression parentExpr = PsiTreeUtil.getParentOfType(expression, XPathExpression.class);

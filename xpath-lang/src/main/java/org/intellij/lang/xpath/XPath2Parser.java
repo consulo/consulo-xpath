@@ -15,10 +15,11 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.annotation.Nullable;
+
 import com.intellij.lang.PsiBuilder;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
-import org.jetbrains.annotations.Nullable;
 
 /*
 * Created by IntelliJ IDEA.

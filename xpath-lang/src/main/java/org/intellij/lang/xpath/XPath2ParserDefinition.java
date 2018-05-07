@@ -15,8 +15,9 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.lang.xpath.psi.impl.*;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiParser;
 import com.intellij.lexer.Lexer;
@@ -35,28 +36,28 @@ import consulo.lang.LanguageVersion;
 */
 public class XPath2ParserDefinition extends XPathParserDefinition
 {
-	@NotNull
+	@Nonnull
 	@Override
-	public Lexer createLexer(@NotNull LanguageVersion languageVersion)
+	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
 	{
 		return XPathLexer.create(true);
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public IFileElementType getFileNodeType()
 	{
 		return XPath2ElementTypes.FILE;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
-	public PsiParser createParser(@NotNull LanguageVersion languageVersion)
+	public PsiParser createParser(@Nonnull LanguageVersion languageVersion)
 	{
 		return new XPath2Parser();
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public TokenSet getCommentTokens(LanguageVersion languageVersion)
 	{

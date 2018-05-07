@@ -22,6 +22,8 @@
  */
 package org.intellij.lang.xpath.validation.inspections.quickfix;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.FileModificationService;
 import com.intellij.codeInspection.LocalQuickFixAndIntentionActionOnPsiElement;
 import com.intellij.codeInspection.SuppressIntentionAction;
@@ -35,7 +37,6 @@ import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.validation.inspections.XPathInspection;
-import org.jetbrains.annotations.NotNull;
 
 public interface XPathQuickFixFactory {
   Fix<XPathExpression>[] createImplicitTypeConversionFixes(XPathExpression expression, XPathType type, boolean explicit);
@@ -58,18 +59,18 @@ public interface XPathQuickFixFactory {
     }
 
     @Override
-    public boolean isAvailable(@NotNull Project project,
-                               @NotNull PsiFile file,
-                               @NotNull PsiElement startElement,
-                               @NotNull PsiElement endElement) {
+    public boolean isAvailable(@Nonnull Project project,
+                               @Nonnull PsiFile file,
+                               @Nonnull PsiElement startElement,
+                               @Nonnull PsiElement endElement) {
       return startElement.isValid() && startElement.getParent().isValid();
     }
 
     @Override
-    public void invoke(@NotNull Project project,
-                       @NotNull PsiFile file,
-                       Editor editor, @NotNull PsiElement startElement,
-                       @NotNull PsiElement endElement) {
+    public void invoke(@Nonnull Project project,
+                       @Nonnull PsiFile file,
+                       Editor editor, @Nonnull PsiElement startElement,
+                       @Nonnull PsiElement endElement) {
       if(!FileModificationService.getInstance().prepareFileForWrite(file)) {
         return;
       }

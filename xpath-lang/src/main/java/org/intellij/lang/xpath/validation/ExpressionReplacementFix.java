@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath.validation;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -22,7 +24,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.util.IncorrectOperationException;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.impl.XPathChangeUtil;
-import org.jetbrains.annotations.NotNull;
 
 class ExpressionReplacementFix implements IntentionAction {
   private final String myReplacement;
@@ -39,25 +40,25 @@ class ExpressionReplacementFix implements IntentionAction {
     myExpr = expression;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public String getText() {
     return "Replace with '" + myDisplay + "'";
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public String getFamilyName() {
     return "XPath2";
   }
 
   @Override
-  public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+  public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
     return myExpr.isValid();
   }
 
   @Override
-  public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
     myExpr.replace(XPathChangeUtil.createExpression(myExpr, myReplacement));
   }
 

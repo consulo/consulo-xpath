@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /*
 * Created by IntelliJ IDEA.
@@ -48,11 +48,11 @@ public class XPath2SequenceType extends XPath2Type {
     return myType;
   }
 
-  public static XPath2Type create(@NotNull XPathType type, Cardinality c) {
+  public static XPath2Type create(@Nonnull XPathType type, Cardinality c) {
     return new XPath2SequenceType(type, c);
   }
 
-  public static XPath2Type create(@NotNull XPathType type) {
+  public static XPath2Type create(@Nonnull XPathType type) {
     return new XPath2SequenceType(type, Cardinality.UNDEFINED);
   }
 
@@ -70,7 +70,7 @@ public class XPath2SequenceType extends XPath2Type {
   }
 
   @Override
-  public boolean isAssignableFrom(@NotNull XPathType type) {
+  public boolean isAssignableFrom(@Nonnull XPathType type) {
     return super.isAssignableFrom(type) || getType().isAssignableFrom(unwrap(type));
   }
 

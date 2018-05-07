@@ -18,8 +18,8 @@ package org.intellij.lang.xpath.psi;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Condition;
 import com.intellij.util.containers.ContainerUtil;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.xml.namespace.QName;
 import java.util.HashMap;
@@ -112,7 +112,7 @@ public class XPath2Type extends XPathType {
   }
 
   @Override
-  public boolean isAssignableFrom(@NotNull XPathType type) {
+  public boolean isAssignableFrom(@Nonnull XPathType type) {
     if (type instanceof XPath2SequenceType) {
       type = ((XPath2SequenceType)type).getType();
     }
@@ -227,7 +227,7 @@ public class XPath2Type extends XPathType {
     }
 
     @Override
-    public boolean isAssignableFrom(@NotNull XPathType type) {
+    public boolean isAssignableFrom(@Nonnull XPathType type) {
       return super.isAssignableFrom(type) || type == NODESET || this == ITEM;
     }
   }

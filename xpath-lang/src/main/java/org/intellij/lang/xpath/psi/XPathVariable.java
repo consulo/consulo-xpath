@@ -16,11 +16,11 @@
 package org.intellij.lang.xpath.psi;
 
 import com.intellij.psi.PsiNamedElement;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 public interface XPathVariable extends XPathElement, PsiNamedElement {
-    @NotNull
+    @Nonnull
     XPathType getType();
 
     @Nullable

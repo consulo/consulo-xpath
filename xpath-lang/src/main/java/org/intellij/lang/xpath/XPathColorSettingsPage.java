@@ -29,14 +29,14 @@ import com.intellij.openapi.options.colors.AttributesDescriptor;
 import com.intellij.openapi.options.colors.ColorDescriptor;
 import com.intellij.openapi.options.colors.ColorSettingsPage;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.util.Map;
 
 public class XPathColorSettingsPage implements ColorSettingsPage {
-    @NotNull
+    @Nonnull
     public String getDisplayName() {
         return "XPath";
     }
@@ -46,7 +46,7 @@ public class XPathColorSettingsPage implements ColorSettingsPage {
         return XPathFileType.XPATH.getIcon();
     }
 
-    @NotNull
+    @Nonnull
     public AttributesDescriptor[] getAttributeDescriptors() {
         return new AttributesDescriptor[]{
                 new AttributesDescriptor("Keyword", XPathHighlighter.XPATH_KEYWORD),
@@ -63,18 +63,18 @@ public class XPathColorSettingsPage implements ColorSettingsPage {
         };
     }
 
-    @NotNull
+    @Nonnull
     public ColorDescriptor[] getColorDescriptors() {
         return new ColorDescriptor[0];
     }
 
-    @NotNull
+    @Nonnull
     public SyntaxHighlighter getHighlighter() {
         return SyntaxHighlighterFactory.getSyntaxHighlighter(XPathFileType.XPATH.getLanguage(), null, null);
     }
 
     @NonNls
-    @NotNull
+    @Nonnull
     public String getDemoText() {
         return "//prefix:*[ext:name() = 'changes']/element[(position() mod 2) = $pos + 1]/parent::*";
     }

@@ -26,7 +26,7 @@ import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.ui.InputExpressionDialog;
 import org.jaxen.JaxenException;
 import org.jaxen.XPathSyntaxException;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.find.FindProgressIndicator;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -122,7 +122,7 @@ public class FindByXPathAction extends AnAction
 		};
 		final UsageViewManager.UsageViewStateListener stateListener = new UsageViewManager.UsageViewStateListener()
 		{
-			public void usageViewCreated(@NotNull UsageView usageView)
+			public void usageViewCreated(@Nonnull UsageView usageView)
 			{
 				usageView.addButtonToLowerPane(new MyEditExpressionAction(project, module), "&Edit Expression");
 			}

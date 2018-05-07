@@ -15,13 +15,13 @@
  */
 package org.intellij.lang.xpath;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.openapi.fileTypes.FileTypeConsumer;
 import com.intellij.openapi.fileTypes.FileTypeFactory;
 
 public class XPathSupportLoader extends FileTypeFactory
 {
-	public void createFileTypes(final @NotNull FileTypeConsumer consumer)
+	public void createFileTypes(final @Nonnull FileTypeConsumer consumer)
 	{
 		consumer.consume(XPathFileType.XPATH, XPathFileType.XPATH.getDefaultExtension());
 		consumer.consume(XPathFileType.XPATH2, XPathFileType.XPATH2.getDefaultExtension());

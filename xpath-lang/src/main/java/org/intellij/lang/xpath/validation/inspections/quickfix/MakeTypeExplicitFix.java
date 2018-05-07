@@ -22,6 +22,8 @@
  */
 package org.intellij.lang.xpath.validation.inspections.quickfix;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
@@ -30,7 +32,6 @@ import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NotNull;
 
 public class MakeTypeExplicitFix extends ReplaceElementFix<XPathExpression> {
     private final XPathType myType;
@@ -40,12 +41,12 @@ public class MakeTypeExplicitFix extends ReplaceElementFix<XPathExpression> {
         myType = type;
     }
 
-    @NotNull
+    @Nonnull
     public String getText() {
         return "Make Type Conversion Explicit";
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName() {
         return "ImplicitTypeConversion";
     }

@@ -17,15 +17,15 @@ package org.intellij.lang.xpath.context;
 
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.psi.PsiElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathVariable;
 import org.intellij.lang.xpath.psi.XPathVariableReference;
 
 public interface VariableContext<VarType> {
-    @NotNull
+    @Nonnull
     VarType[] getVariablesInScope(XPathElement element);
 
     boolean canResolve();
@@ -33,7 +33,7 @@ public interface VariableContext<VarType> {
     @Nullable
     XPathVariable resolve(XPathVariableReference reference);
 
-    @NotNull
+    @Nonnull
     IntentionAction[] getUnresolvedVariableFixes(XPathVariableReference reference);
 
     boolean isReferenceTo(PsiElement element, XPathVariableReference reference);

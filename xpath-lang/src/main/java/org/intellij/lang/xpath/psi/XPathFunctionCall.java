@@ -15,17 +15,17 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public interface XPathFunctionCall extends XPathExpression, QNameElement {
-    @NotNull
+    @Nonnull
     XPathExpression[] getArgumentList();
 
-    @NotNull
+    @Nonnull
     String getFunctionName();
 
-    @NotNull
+    @Nonnull
     PrefixedName getQName();
 
     @Nullable

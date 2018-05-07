@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /*
 * Created by IntelliJ IDEA.
@@ -23,6 +23,6 @@ import org.jetbrains.annotations.NotNull;
 * Date: 28.04.11
 */
 public interface XPathVariableHolder extends XPathElement {
-  @NotNull
+  @Nonnull
   XPathVariableDeclaration[] getVariables();
 }

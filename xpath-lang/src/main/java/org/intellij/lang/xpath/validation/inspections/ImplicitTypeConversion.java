@@ -38,8 +38,8 @@ import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.awt.event.ItemEvent;
@@ -68,12 +68,12 @@ public class ImplicitTypeConversion extends XPathInspection {
         }
     }
 
-    @NotNull
+    @Nonnull
     public String getDisplayName() {
         return "Implicit Type Conversion";
     }
 
-    @NotNull
+    @Nonnull
     @NonNls
     public String getShortName() {
         return SHORT_NAME;
@@ -92,12 +92,12 @@ public class ImplicitTypeConversion extends XPathInspection {
         return new Options();
     }
 
-    public void readSettings(@NotNull Element node) throws InvalidDataException {
+    public void readSettings(@Nonnull Element node) throws InvalidDataException {
         super.readSettings(node);
         update();
     }
 
-    public void writeSettings(@NotNull Element node) throws WriteExternalException {
+    public void writeSettings(@Nonnull Element node) throws WriteExternalException {
         BITS = 0;
         for (int i=11; i>=0; i--) {
             BITS <<= 1;
@@ -115,7 +115,7 @@ public class ImplicitTypeConversion extends XPathInspection {
             super(manager, isOnTheFly);
         }
 
-        protected void checkExpression(@NotNull XPathExpression expression) {
+        protected void checkExpression(@Nonnull XPathExpression expression) {
             final XPathType expectedType = ExpectedTypeUtil.getExpectedType(expression);
             // conversion to NODESET is impossible (at least not in a portable way) and is flagged by annotator
             if (expectedType != XPathType.NODESET && expectedType != XPathType.UNKNOWN) {
@@ -125,7 +125,7 @@ public class ImplicitTypeConversion extends XPathInspection {
             }
         }
 
-        private void checkExpressionOfType(@NotNull XPathExpression expression, XPathType type, boolean explicit) {
+        private void checkExpressionOfType(@Nonnull XPathExpression expression, XPathType type, boolean explicit) {
             final XPathType exprType = expression.getType();
             if (exprType.isAbstract() || type.isAbstract()) return;
 

@@ -17,8 +17,8 @@ package org.intellij.lang.xpath.psi.impl;
 
 import com.intellij.lang.ASTNode;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class XPath2InstanceOfImpl extends XPath2ElementImpl implements XPath2InstanceOf {
   public XPath2InstanceOfImpl(ASTNode node) {
@@ -32,7 +32,7 @@ public class XPath2InstanceOfImpl extends XPath2ElementImpl implements XPath2Ins
     return node != null ? node.getDeclaredType() : null;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathType getType() {
     return XPath2Type.BOOLEAN;

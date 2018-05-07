@@ -25,7 +25,7 @@ import org.jaxen.function.ext.EndsWithFunction;
 import org.jaxen.function.ext.EvaluateFunction;
 import org.jaxen.function.ext.LowerFunction;
 import org.jaxen.function.ext.UpperFunction;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.xml.namespace.QName;
 import java.util.Collections;
@@ -52,7 +52,7 @@ class XPathFunctionProviderImpl extends XPathFunctionProvider {
         myFunctions.put(new QName(null, "ends-with"), new JaxenEndsWith());
     }
 
-    @NotNull
+    @Nonnull
     public Map<QName, ? extends Function> getFunctions(ContextType contextType) {
         if (contextType == XPathSupport.TYPE) {
             return myFunctions;

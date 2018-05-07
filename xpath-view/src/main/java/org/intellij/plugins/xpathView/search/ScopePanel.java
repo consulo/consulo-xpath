@@ -27,8 +27,8 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.ui.ComboboxWithBrowseButton;
 import com.intellij.ui.DocumentAdapter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -56,7 +56,7 @@ public class ScopePanel extends JPanel implements Disposable{
 
     private final Project myProject;
 
-    public ScopePanel(@NotNull Project project) {
+    public ScopePanel(@Nonnull Project project) {
         myProject = project;
     }
 
@@ -143,7 +143,7 @@ public class ScopePanel extends JPanel implements Disposable{
         return module != null ? module.getName() : null;
     }
 
-    @NotNull
+    @Nonnull
     private SearchScope.ScopeType getScopeType() {
         if (myWholeProjectScope.isSelected()) return SearchScope.ScopeType.PROJECT;
         if (myModuleScope.isSelected()) return SearchScope.ScopeType.MODULE;

@@ -15,6 +15,8 @@
  */
 package org.intellij.plugins.xpathView.util;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.annotation.AnnotationSession;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
@@ -26,8 +28,8 @@ import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.LanguageAnnotators;
 import com.intellij.codeInsight.daemon.impl.AnnotationHolderImpl;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class MyPsiUtil {
     private static final Logger LOG = Logger.getInstance("org.intellij.plugins.xpathView.util.MyPsiUtil");
@@ -36,7 +38,7 @@ public class MyPsiUtil {
     }
 
     @Nullable
-    public static XmlElement findContextNode(@NotNull PsiFile psiFile, @NotNull Editor editor) {
+    public static XmlElement findContextNode(@Nonnull PsiFile psiFile, @Nonnull Editor editor) {
         PsiElement contextNode = psiFile.findElementAt(editor.getCaretModel().getOffset());
         while (contextNode != null && !isValidContextNode(contextNode)) {
             contextNode = contextNode.getParent();
@@ -58,8 +60,8 @@ public class MyPsiUtil {
         return false;
     }
 
-    @NotNull
-    public static PsiElement getNameElement(@NotNull XmlTag tag) {
+    @Nonnull
+    public static PsiElement getNameElement(@Nonnull XmlTag tag) {
         final PsiElement element = findNameElement(tag);
         if (element != null) {
             return element;
@@ -69,7 +71,7 @@ public class MyPsiUtil {
     }
 
     @Nullable
-    public static PsiElement findNameElement(@NotNull XmlTag tag) {
+    public static PsiElement findNameElement(@Nonnull XmlTag tag) {
         PsiElement[] children = tag.getChildren();
         for (PsiElement child : children) {
             if (isNameElement(child)) {
@@ -94,7 +96,7 @@ public class MyPsiUtil {
       return false;
     }
 
-    public static String getAttributePrefix(@NotNull XmlAttribute attribute) {
+    public static String getAttributePrefix(@Nonnull XmlAttribute attribute) {
         final String name = attribute.getName();
         if (name.indexOf(':') == -1) {
             return "";
@@ -163,17 +165,17 @@ public class MyPsiUtil {
         file.accept(new PsiRecursiveElementVisitor() {
             public void visitElement(PsiElement element) {
                 annotator.annotate(element, new AnnotationHolderImpl(new AnnotationSession(file)) {
-                    public Annotation createErrorAnnotation(@NotNull ASTNode astNode, String string) {
+                    public Annotation createErrorAnnotation(@Nonnull ASTNode astNode, String string) {
                         error[0] = string;
                         return super.createErrorAnnotation(astNode, string);
                     }
 
-                    public Annotation createErrorAnnotation(@NotNull PsiElement element, String string) {
+                    public Annotation createErrorAnnotation(@Nonnull PsiElement element, String string) {
                         error[0] = string;
                         return super.createErrorAnnotation(element, string);
                     }
 
-                    public Annotation createErrorAnnotation(@NotNull TextRange textRange, String string) {
+                    public Annotation createErrorAnnotation(@Nonnull TextRange textRange, String string) {
                         error[0] = string;
                         return super.createErrorAnnotation(textRange, string);
                     }

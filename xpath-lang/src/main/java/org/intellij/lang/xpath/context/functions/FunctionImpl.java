@@ -18,7 +18,7 @@ package org.intellij.lang.xpath.context.functions;
 import com.intellij.openapi.util.text.StringUtil;
 
 import org.intellij.lang.xpath.psi.XPathType;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Arrays;
 
@@ -28,7 +28,7 @@ public class FunctionImpl implements Function {
   private final XPathType returnType;
   private final int minArity;
 
-  public FunctionImpl(String name, @NotNull XPathType returnType, Parameter... parameters) {
+  public FunctionImpl(String name, @Nonnull XPathType returnType, Parameter... parameters) {
     this.name = name;
     this.parameters = parameters;
     this.returnType = returnType;
@@ -81,13 +81,13 @@ public class FunctionImpl implements Function {
     return name;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public Parameter[] getParameters() {
     return parameters;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathType getReturnType() {
     return returnType;

@@ -15,22 +15,23 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.intellij.lang.xpath.psi.PrefixedName;
 
 import com.intellij.lang.ASTNode;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class PrefixedNameImpl implements PrefixedName {
     private final ASTNode prefixNode;
     private final ASTNode localNode;
 
-    PrefixedNameImpl(@Nullable ASTNode prefixNode, @NotNull ASTNode localNode) {
+    PrefixedNameImpl(@Nullable ASTNode prefixNode, @Nonnull ASTNode localNode) {
         this.prefixNode = prefixNode;
         this.localNode = localNode;
     }
 
-    public PrefixedNameImpl(@NotNull ASTNode node) {
+    public PrefixedNameImpl(@Nonnull ASTNode node) {
         this(null, node);
     }
 
@@ -38,7 +39,7 @@ public class PrefixedNameImpl implements PrefixedName {
         return prefixNode != null ? prefixNode.getText() : null;
     }
 
-    @NotNull
+    @Nonnull
     public String getLocalName() {
         return localNode.getText();
     }

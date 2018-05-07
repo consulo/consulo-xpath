@@ -15,8 +15,8 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public interface XPathNodeTest extends XPathElement, QNameElement {
     enum PrincipalType {
@@ -27,10 +27,10 @@ public interface XPathNodeTest extends XPathElement, QNameElement {
         }
     }
 
-    @NotNull
+    @Nonnull
     XPathStep getStep();
 
-    @NotNull
+    @Nonnull
     PrincipalType getPrincipalType();
 
     boolean isNameTest();

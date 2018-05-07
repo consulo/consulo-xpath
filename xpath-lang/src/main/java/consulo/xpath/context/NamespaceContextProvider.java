@@ -1,8 +1,9 @@
 package consulo.xpath.context;
 
 import org.intellij.lang.xpath.context.NamespaceContext;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.psi.xml.XmlElement;
 import consulo.extensions.CompositeExtensionPointName;
 
@@ -15,5 +16,5 @@ public interface NamespaceContextProvider
 	CompositeExtensionPointName<NamespaceContextProvider> EP_NAME = CompositeExtensionPointName.applicationPoint("com.intellij.xpath.namespaceContextProvider", NamespaceContextProvider.class);
 
 	@Nullable
-	NamespaceContext getNamespaceContext(@NotNull XmlElement xmlElement);
+	NamespaceContext getNamespaceContext(@Nonnull XmlElement xmlElement);
 }

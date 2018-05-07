@@ -22,7 +22,7 @@ import com.intellij.openapi.editor.colors.CodeInsightColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +39,7 @@ public class XPathHighlighter extends SyntaxHighlighterBase {
     myXPath2Syntax = xpath2Syntax;
   }
 
-  @NotNull
+  @Nonnull
     public Lexer getHighlightingLexer() {
         return XPathLexer.create(myXPath2Syntax);
     }
@@ -131,7 +131,7 @@ public class XPathHighlighter extends SyntaxHighlighterBase {
       fillMap(keys1_2, XPath2TokenTypes.KEYWORDS, XPATH_KEYWORD);
     }
 
-    @NotNull
+    @Nonnull
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
         return pack(((TextAttributesKey)(myXPath2Syntax ? keys1_2 : keys1).get(tokenType)), ((TextAttributesKey)keys2.get(tokenType)));
     }

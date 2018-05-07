@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.xpathView.util;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Set;
 import java.util.Collection;
@@ -34,7 +34,7 @@ public final class Variable implements Cloneable, Copyable<Variable> {
         this.myName = name;
     }
 
-    @NotNull
+    @Nonnull
     public String getName() {
         return myName != null ? myName : "";
     }
@@ -47,7 +47,7 @@ public final class Variable implements Cloneable, Copyable<Variable> {
         }
     }
 
-    @NotNull
+    @Nonnull
     public String getExpression() {
         return myExpression != null ? myExpression : "";
     }

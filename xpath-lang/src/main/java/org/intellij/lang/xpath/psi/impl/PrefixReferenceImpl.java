@@ -23,8 +23,8 @@ import org.intellij.lang.xpath.context.NamespaceContext;
 import org.intellij.lang.xpath.psi.PrefixReference;
 import org.intellij.lang.xpath.psi.QNameElement;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 class PrefixReferenceImpl extends ReferenceBase implements PrefixReference {
 
@@ -53,7 +53,7 @@ class PrefixReferenceImpl extends ReferenceBase implements PrefixReference {
     return getElement();
   }
 
-  @NotNull
+  @Nonnull
   public Object[] getVariants() {
     // handled in XPathCompletionData
     return EMPTY_ARRAY;

@@ -37,8 +37,8 @@ import com.intellij.psi.search.PsiSearchScopeUtil;
 import com.intellij.util.Processor;
 import gnu.trove.THashSet;
 import org.jdom.Element;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -98,7 +98,7 @@ public class SearchScope implements JDOMExternalizable {
         return null;
     }
 
-    @NotNull
+    @Nonnull
     public ScopeType getScopeType() {
         return myScopeType;
     }
@@ -183,7 +183,7 @@ public class SearchScope implements JDOMExternalizable {
     }
 
 
-    public void iterateContent(@NotNull final Project project, final Processor<VirtualFile> processor) {
+    public void iterateContent(@Nonnull final Project project, final Processor<VirtualFile> processor) {
 
         switch (getScopeType()) {
             case PROJECT:
@@ -251,7 +251,7 @@ public class SearchScope implements JDOMExternalizable {
     private static void iterateRecursively(VirtualFile virtualFile, final Processor<VirtualFile> processor, boolean recursive) {
         VfsUtilCore.visitChildrenRecursively(virtualFile, new VirtualFileVisitor(recursive ? null : VirtualFileVisitor.ONE_LEVEL_DEEP) {
             @Override
-            public boolean visitFile(@NotNull VirtualFile file) {
+            public boolean visitFile(@Nonnull VirtualFile file) {
                 if (!file.isDirectory()) {
                     processor.process(file);
                 }

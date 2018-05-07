@@ -15,10 +15,10 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public interface XPathAxisSpecifier extends XPathElement {
-    @NotNull
+    @Nonnull
     Axis getAxis();
 
     boolean isDefaultAxis();

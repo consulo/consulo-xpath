@@ -15,9 +15,11 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.lang.xpath.psi.impl.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
@@ -34,48 +36,48 @@ public class XPathParserDefinition implements ParserDefinition
 {
 
 	@Override
-	@NotNull
-	public Lexer createLexer(@NotNull LanguageVersion languageVersion)
+	@Nonnull
+	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
 	{
 		return XPathLexer.create(false);
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public IFileElementType getFileNodeType()
 	{
 		return XPathElementTypes.FILE;
 	}
 
 	@Override
-	@NotNull
-	public TokenSet getWhitespaceTokens(@NotNull LanguageVersion languageVersion)
+	@Nonnull
+	public TokenSet getWhitespaceTokens(@Nonnull LanguageVersion languageVersion)
 	{
 		return TokenSet.create(XPathTokenTypes.WHITESPACE);
 	}
 
 	@Override
-	@NotNull
-	public TokenSet getCommentTokens(@NotNull LanguageVersion languageVersion)
+	@Nonnull
+	public TokenSet getCommentTokens(@Nonnull LanguageVersion languageVersion)
 	{
 		return TokenSet.EMPTY;
 	}
 
 	@Override
-	@NotNull
-	public TokenSet getStringLiteralElements(@NotNull LanguageVersion languageVersion)
+	@Nonnull
+	public TokenSet getStringLiteralElements(@Nonnull LanguageVersion languageVersion)
 	{
 		return TokenSet.create(XPathTokenTypes.STRING_LITERAL);
 	}
 
 	@Override
-	@NotNull
-	public PsiParser createParser(@NotNull LanguageVersion languageVersion)
+	@Nonnull
+	public PsiParser createParser(@Nonnull LanguageVersion languageVersion)
 	{
 		return new XPathParser();
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right)
 	{
@@ -83,8 +85,8 @@ public class XPathParserDefinition implements ParserDefinition
 	}
 
 	@Override
-	@NotNull
-	public final PsiElement createElement(@NotNull ASTNode node)
+	@Nonnull
+	public final PsiElement createElement(@Nonnull ASTNode node)
 	{
 		final IElementType type = node.getElementType();
 
@@ -164,7 +166,7 @@ public class XPathParserDefinition implements ParserDefinition
 	}
 
 	@Override
-	public PsiFile createFile(@NotNull FileViewProvider viewProvider)
+	public PsiFile createFile(@Nonnull FileViewProvider viewProvider)
 	{
 		return new XPathFile(viewProvider, XPathFileType.XPATH);
 	}

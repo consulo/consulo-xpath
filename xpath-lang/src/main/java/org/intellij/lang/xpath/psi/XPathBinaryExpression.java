@@ -15,9 +15,10 @@
  */
 package org.intellij.lang.xpath.psi;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.lang.xpath.XPathElementType;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nullable;
 
 public interface XPathBinaryExpression extends XPathExpression {
     @Nullable
@@ -26,9 +27,9 @@ public interface XPathBinaryExpression extends XPathExpression {
     @Nullable
     XPathExpression getROperand();
 
-    @NotNull
+    @Nonnull
     XPathElementType getOperator();
 
-    @NotNull
+    @Nonnull
     String getOperationSign();
 }

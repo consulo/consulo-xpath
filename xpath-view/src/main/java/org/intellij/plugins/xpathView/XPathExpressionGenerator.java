@@ -27,7 +27,7 @@ import org.intellij.plugins.xpathView.util.MyPsiUtil;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.List;

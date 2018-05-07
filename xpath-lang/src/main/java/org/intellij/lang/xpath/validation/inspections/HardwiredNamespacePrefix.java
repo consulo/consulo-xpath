@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.InspectionManager;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -28,7 +30,6 @@ import org.intellij.lang.xpath.psi.XPathFunctionCall;
 import org.intellij.lang.xpath.psi.XPathString;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 public class HardwiredNamespacePrefix extends XPathInspection {
     public boolean isEnabledByDefault() {
@@ -86,13 +87,13 @@ public class HardwiredNamespacePrefix extends XPathInspection {
     }
 
     @Nls
-    @NotNull
+    @Nonnull
     public String getDisplayName() {
         return "Hardwired Namespace Prefix";
     }
 
     @NonNls
-    @NotNull
+    @Nonnull
     public String getShortName() {
         return "HardwiredNamespacePrefix";
     }

@@ -22,15 +22,15 @@ import org.intellij.lang.xpath.psi.XPathNodeTypeTest;
 import org.intellij.lang.xpath.psi.XPathType;
 
 import com.intellij.lang.ASTNode;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class XPathNodeTypeTestImpl extends XPathFunctionCallImpl implements XPathNodeTypeTest {
     public XPathNodeTypeTestImpl(ASTNode node) {
         super(node);
     }
 
-    @NotNull
+    @Nonnull
     public XPathType getType() {
         return XPathType.NODESET;
     }

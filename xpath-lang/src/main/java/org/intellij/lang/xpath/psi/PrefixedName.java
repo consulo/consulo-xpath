@@ -15,13 +15,13 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public interface PrefixedName {
     @Nullable
     String getPrefix();
 
-    @NotNull
+    @Nonnull
     String getLocalName();
 }

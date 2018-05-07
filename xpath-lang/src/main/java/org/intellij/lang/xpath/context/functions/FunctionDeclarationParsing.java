@@ -26,7 +26,7 @@ import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.XPath2SequenceType;
 import org.intellij.lang.xpath.psi.XPath2Type;
 import org.intellij.lang.xpath.psi.XPathType;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import javax.xml.namespace.QName;
 import java.util.ArrayList;

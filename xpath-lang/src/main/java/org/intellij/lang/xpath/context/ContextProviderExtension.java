@@ -1,8 +1,10 @@
 package org.intellij.lang.xpath.context;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.lang.xpath.XPathFile;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.openapi.extensions.Extensions;
 
@@ -12,7 +14,7 @@ public abstract class ContextProviderExtension {
 
     protected abstract boolean accepts(XPathFile file);
 
-    @NotNull
+    @Nonnull
     protected abstract ContextProvider getContextProvider(XPathFile file);
 
     @Nullable

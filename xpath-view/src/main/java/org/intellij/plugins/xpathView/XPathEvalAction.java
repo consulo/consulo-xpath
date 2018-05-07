@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.SwingUtilities;
 
 import org.intellij.plugins.xpathView.eval.EvalExpressionDialog;
@@ -32,8 +34,6 @@ import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 import org.jaxen.XPathSyntaxException;
 import org.jaxen.saxpath.SAXPathException;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.find.FindProgressIndicator;
 import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.ide.projectView.PresentationData;
@@ -385,7 +385,7 @@ public class XPathEvalAction extends XPathAction
 		UsageViewManager.getInstance(project).searchAndShowUsages(usageTargets, searcherFactory, processPresentation, presentation, new UsageViewManager.UsageViewStateListener()
 		{
 			@Override
-			public void usageViewCreated(@NotNull UsageView usageView)
+			public void usageViewCreated(@Nonnull UsageView usageView)
 			{
 				usageView.addButtonToLowerPane(editAction, "&Edit Expression");
 			}
@@ -438,7 +438,7 @@ public class XPathEvalAction extends XPathAction
 	 *
 	 * @param editor The editor object to apply the highlighting to
 	 */
-	private void highlightResult(XmlElement contextNode, @NotNull final Editor editor, final List<?> list)
+	private void highlightResult(XmlElement contextNode, @Nonnull final Editor editor, final List<?> list)
 	{
 
 		final Config cfg = myComponent.getConfig();
@@ -508,13 +508,13 @@ public class XPathEvalAction extends XPathAction
 		}
 
 		@Override
-		public void findUsagesInEditor(@NotNull FileEditor editor)
+		public void findUsagesInEditor(@Nonnull FileEditor editor)
 		{
 			throw new IllegalArgumentException();
 		}
 
 		@Override
-		public void highlightUsages(@NotNull PsiFile file, @NotNull Editor editor, boolean clearHighlights)
+		public void highlightUsages(@Nonnull PsiFile file, @Nonnull Editor editor, boolean clearHighlights)
 		{
 			throw new UnsupportedOperationException();
 		}

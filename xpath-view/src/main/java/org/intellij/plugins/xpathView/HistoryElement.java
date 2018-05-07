@@ -19,7 +19,7 @@ import org.intellij.plugins.xpathView.util.Copyable;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.intellij.plugins.xpathView.util.Variable;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -31,7 +31,7 @@ public final class HistoryElement implements Copyable<HistoryElement> {
     public final Collection<Variable> variables;
     public final Collection<Namespace> namespaces;
 
-    public HistoryElement(String expression, @NotNull Collection<Variable> variables, @NotNull Collection<Namespace> namespaces) {
+    public HistoryElement(String expression, @Nonnull Collection<Variable> variables, @Nonnull Collection<Namespace> namespaces) {
         this.expression = expression;
         this.variables = Collections.unmodifiableCollection(variables);
         this.namespaces = Collections.unmodifiableCollection(namespaces);

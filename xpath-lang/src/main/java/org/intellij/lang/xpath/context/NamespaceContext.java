@@ -19,8 +19,8 @@ import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.xml.XmlElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 
@@ -31,7 +31,7 @@ public interface NamespaceContext {
     @Nullable
     String getPrefixForURI(String uri, XmlElement context);
 
-    @NotNull
+    @Nonnull
     Collection<String> getKnownPrefixes(XmlElement context);
 
     /** resolve to NS-Attribute's name-token */

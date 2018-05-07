@@ -21,14 +21,14 @@ import org.intellij.lang.xpath.psi.XPath2ElementVisitor;
 import org.intellij.lang.xpath.psi.XPath2If;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathType;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class XPath2IfImpl extends XPath2ElementImpl implements XPath2If {
   public XPath2IfImpl(ASTNode node) {
     super(node);
   }
 
-  @NotNull
+  @Nonnull
   public XPathType getType() {
     final XPathExpression then = getThenBranch();
     final XPathExpression value = then != null ? then : getElseBranch();

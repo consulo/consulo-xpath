@@ -30,7 +30,7 @@ import org.jaxen.FunctionCallException;
 import org.jaxen.UnsupportedAxisException;
 import org.jaxen.XPath;
 import org.jaxen.saxpath.SAXPathException;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -151,7 +151,7 @@ public class PsiDocumentNavigator extends DefaultNavigator {
         return text;
     }
 
-    @NotNull
+    @Nonnull
     public String getProcessingInstructionData(Object obj) {
         LOG.debug("enter: getProcessingInstructionData");
         LOG.assertTrue(obj instanceof XmlProcessingInstruction);
@@ -334,7 +334,7 @@ public class PsiDocumentNavigator extends DefaultNavigator {
         return b;
     }
 
-    @NotNull
+    @Nonnull
     public String getCommentStringValue(Object comment) {
         LOG.assertTrue(comment instanceof XmlComment);
 
@@ -352,7 +352,7 @@ public class PsiDocumentNavigator extends DefaultNavigator {
         return "";
     }
 
-    @NotNull
+    @Nonnull
     public String getElementStringValue(Object element) {
         LOG.assertTrue(element instanceof XmlTag);
 
@@ -365,7 +365,7 @@ public class PsiDocumentNavigator extends DefaultNavigator {
         return collector.getText();
     }
 
-    @NotNull
+    @Nonnull
     public String getAttributeStringValue(Object attr) {
         LOG.assertTrue(attr instanceof XmlAttribute);
         return StringUtil.notNullize(((XmlAttribute)attr).getValue());
@@ -389,7 +389,7 @@ public class PsiDocumentNavigator extends DefaultNavigator {
         return null;
     }
 
-    @NotNull
+    @Nonnull
     public String getTextStringValue(Object txt) {
         LOG.debug("enter: getTextStringValue");
 

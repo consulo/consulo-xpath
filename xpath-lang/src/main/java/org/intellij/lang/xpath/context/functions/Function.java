@@ -1,7 +1,7 @@
 package org.intellij.lang.xpath.context.functions;
 
 import org.intellij.lang.xpath.psi.XPathType;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /*
 * Created by IntelliJ IDEA.
@@ -11,10 +11,10 @@ import org.jetbrains.annotations.NotNull;
 public interface Function {
   String getName();
 
-  @NotNull
+  @Nonnull
   Parameter[] getParameters();
 
-  @NotNull
+  @Nonnull
   XPathType getReturnType();
 
   int getMinArity();

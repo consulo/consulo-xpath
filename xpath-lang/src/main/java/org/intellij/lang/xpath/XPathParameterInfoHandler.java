@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.lang.ASTNode;
@@ -27,8 +29,8 @@ import com.intellij.util.ArrayUtil;
 import org.intellij.lang.xpath.context.functions.Function;
 import org.intellij.lang.xpath.psi.XPathFunction;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class XPathParameterInfoHandler implements ParameterInfoHandler<XPathFunctionCall, XPathFunction> {
     public boolean couldShowInLookup() {
@@ -72,7 +74,7 @@ public class XPathParameterInfoHandler implements ParameterInfoHandler<XPathFunc
         return null;
     }
 
-    public void showParameterInfo(@NotNull XPathFunctionCall call, CreateParameterInfoContext context) {
+    public void showParameterInfo(@Nonnull XPathFunctionCall call, CreateParameterInfoContext context) {
         context.showHint(call, call.getTextOffset() + 1, this);
     }
 
@@ -80,7 +82,7 @@ public class XPathParameterInfoHandler implements ParameterInfoHandler<XPathFunc
         return findFunctionCall(context.getFile(), context.getOffset());
     }
 
-    public void updateParameterInfo(@NotNull XPathFunctionCall call, UpdateParameterInfoContext context) {
+    public void updateParameterInfo(@Nonnull XPathFunctionCall call, UpdateParameterInfoContext context) {
         int currentParameterIndex = ParameterInfoUtils.getCurrentParameterIndex(call.getNode(), context.getOffset(), XPathTokenTypes.COMMA);
         context.setCurrentParameter(currentParameterIndex);
     }

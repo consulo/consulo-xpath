@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 
 import org.intellij.lang.xpath.XPath2TokenTypes;
@@ -34,8 +36,6 @@ import org.intellij.lang.xpath.psi.*;
 import org.intellij.lang.xpath.psi.impl.PrefixedNameImpl;
 import org.intellij.lang.xpath.psi.impl.XPathChangeUtil;
 import org.intellij.lang.xpath.psi.impl.XPathNumberImpl;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInsight.PsiEquivalenceUtil;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -54,7 +54,7 @@ public final class XPathAnnotator extends XPath2ElementVisitor implements Annota
 
   private AnnotationHolder myHolder;
 
-  public void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder holder) {
+  public void annotate(@Nonnull PsiElement psiElement, @Nonnull AnnotationHolder holder) {
 
     try {
       myHolder = holder;
@@ -252,7 +252,7 @@ public final class XPathAnnotator extends XPath2ElementVisitor implements Annota
     }
   }
 
-  private static void checkVariableReference(AnnotationHolder holder, XPathVariableReference reference, @NotNull ContextProvider contextProvider) {
+  private static void checkVariableReference(AnnotationHolder holder, XPathVariableReference reference, @Nonnull ContextProvider contextProvider) {
     if (reference.resolve() == null) {
       final VariableContext variableResolver = contextProvider.getVariableContext();
       if (variableResolver == null) return;
@@ -309,7 +309,7 @@ public final class XPathAnnotator extends XPath2ElementVisitor implements Annota
     }
   }
 
-  private static void checkFunctionCall(AnnotationHolder holder, XPathFunctionCall call, @NotNull ContextProvider contextProvider) {
+  private static void checkFunctionCall(AnnotationHolder holder, XPathFunctionCall call, @Nonnull ContextProvider contextProvider) {
     final ASTNode node = call.getNode().findChildByType(XPathTokenTypes.FUNCTION_NAME);
     if (node == null) {
       return;
@@ -507,7 +507,7 @@ public final class XPathAnnotator extends XPath2ElementVisitor implements Annota
     return null;
   }
 
-  private static void checkNodeTest(@NotNull ContextProvider myProvider, AnnotationHolder holder, XPathNodeTest nodeTest) {
+  private static void checkNodeTest(@Nonnull ContextProvider myProvider, AnnotationHolder holder, XPathNodeTest nodeTest) {
     checkSillyNodeTest(holder, nodeTest);
 
     checkPrefixReferences(holder, nodeTest, myProvider);
@@ -557,7 +557,7 @@ public final class XPathAnnotator extends XPath2ElementVisitor implements Annota
     super.visitXPathPredicate(o);
   }
 
-  private static void checkExpression(AnnotationHolder holder, @NotNull XPathExpression expression) {
+  private static void checkExpression(AnnotationHolder holder, @Nonnull XPathExpression expression) {
     final XPathType expectedType = ExpectedTypeUtil.getExpectedType(expression);
     final XPathType opType = ExpectedTypeUtil.mapType(expression, expression.getType());
     if (!XPathType.isAssignable(expectedType, opType)) {

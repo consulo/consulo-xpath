@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.TextRange;
@@ -22,8 +24,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.util.IncorrectOperationException;
 import org.intellij.lang.xpath.psi.XPathElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public abstract class ReferenceBase implements PsiReference {
     private final XPathElement element;
@@ -48,7 +50,7 @@ public abstract class ReferenceBase implements PsiReference {
         return null;
     }
 
-    @NotNull
+    @Nonnull
     public String getCanonicalText() {
         return nameNode.getText();
     }
@@ -57,7 +59,7 @@ public abstract class ReferenceBase implements PsiReference {
         throw new IncorrectOperationException("unsupported");
     }
 
-    public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException {
+    public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException {
         throw new IncorrectOperationException("unsupported");
     }
 
@@ -65,7 +67,7 @@ public abstract class ReferenceBase implements PsiReference {
         return Comparing.equal(resolve(), element);
     }
 
-    @NotNull
+    @Nonnull
     public abstract Object[] getVariants();
 
     public boolean isSoft() {

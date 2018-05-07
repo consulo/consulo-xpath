@@ -19,7 +19,7 @@ import com.intellij.openapi.util.Factory;
 import com.intellij.openapi.util.Pair;
 import com.intellij.util.containers.ContainerUtil;
 import org.intellij.lang.xpath.context.ContextType;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import javax.xml.namespace.QName;
 import java.util.Collections;

@@ -15,6 +15,9 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.lang.ASTNode;
 import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.XPathElementType;
@@ -23,15 +26,13 @@ import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathPrefixExpression;
 import org.intellij.lang.xpath.psi.XPathType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class XPathPrefixExpressionImpl extends XPathElementImpl implements XPathPrefixExpression {
     public XPathPrefixExpressionImpl(ASTNode node) {
         super(node);
     }
 
-    @NotNull
+    @Nonnull
     public XPathType getType() {
       // +/-: isn't this always a number?
         final XPathExpression expression = getExpression();
@@ -44,7 +45,7 @@ public class XPathPrefixExpressionImpl extends XPathElementImpl implements XPath
         return (XPathExpression)(nodes.length > 0 ? nodes[0].getPsi() : null);
     }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathElementType getOperator() {
     final ASTNode node = getNode().findChildByType(XPathTokenTypes.ADD_OPS);

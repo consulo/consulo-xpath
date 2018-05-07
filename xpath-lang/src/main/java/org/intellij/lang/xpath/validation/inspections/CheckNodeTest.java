@@ -26,9 +26,9 @@ import org.intellij.lang.xpath.context.NamespaceContext;
 import org.intellij.lang.xpath.psi.PrefixedName;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
 
+import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.text.MessageFormat;
 import java.util.Set;
@@ -41,12 +41,12 @@ public class CheckNodeTest extends XPathInspection {
         return new MyVisitor(manager, isOnTheFly);
     }
 
-    @NotNull
+    @Nonnull
     public String getDisplayName() {
         return "Check Node Test";
     }
 
-    @NotNull
+    @Nonnull
     @NonNls
     public String getShortName() {
         return SHORT_NAME;

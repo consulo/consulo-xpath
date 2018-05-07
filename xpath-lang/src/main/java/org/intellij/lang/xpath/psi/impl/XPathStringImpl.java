@@ -15,19 +15,20 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathString;
 import org.intellij.lang.xpath.psi.XPathType;
-import org.jetbrains.annotations.NotNull;
 
 public class XPathStringImpl extends XPathElementImpl implements XPathString {
   public XPathStringImpl(ASTNode node) {
     super(node);
   }
 
-  @NotNull
+  @Nonnull
   public XPathType getType() {
     return XPathType.STRING;
   }

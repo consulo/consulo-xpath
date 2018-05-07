@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.InspectionManager;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -24,19 +26,18 @@ import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 public class IndexZeroPredicate extends XPathInspection {
     protected Visitor createVisitor(InspectionManager manager, boolean isOnTheFly) {
         return new MyVisitor(manager, isOnTheFly);
     }
 
-    @NotNull
+    @Nonnull
     public String getDisplayName() {
         return "Use of index 0 in XPath predicates";
     }
 
-    @NotNull
+    @Nonnull
     @NonNls
     public String getShortName() {
         return "IndexZeroUsage";

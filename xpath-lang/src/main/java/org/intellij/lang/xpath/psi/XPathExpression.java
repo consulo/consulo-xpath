@@ -15,11 +15,11 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public interface XPathExpression extends XPathElement {
     XPathExpression[] EMPTY_ARRAY = new XPathExpression[0];
     
-    @NotNull
+    @Nonnull
     XPathType getType();
 }

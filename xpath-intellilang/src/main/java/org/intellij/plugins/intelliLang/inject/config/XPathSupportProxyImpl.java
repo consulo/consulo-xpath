@@ -29,7 +29,7 @@ import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.xml.namespace.QName;
 import java.util.Collections;
@@ -47,12 +47,12 @@ public class XPathSupportProxyImpl extends XPathSupportProxy {
       }
     };
 
-    @NotNull
+    @Nonnull
     public ContextType getContextType() {
       return XPathSupport.TYPE;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public XPathType getExpectedType(XPathExpression expr) {
       return XPathType.BOOLEAN;
@@ -84,12 +84,12 @@ public class XPathSupportProxyImpl extends XPathSupportProxy {
   private final ContextProvider myProvider = new Provider();
   private final XPathSupport mySupport = XPathSupport.getInstance();
 
-  @NotNull
+  @Nonnull
   public XPath createXPath(String expression) throws JaxenException {
     return mySupport.createXPath(null, expression, Collections.<Namespace>emptyList());
   }
 
-  public void attachContext(@NotNull PsiFile file) {
+  public void attachContext(@Nonnull PsiFile file) {
     myProvider.attachTo(file);
   }
 }

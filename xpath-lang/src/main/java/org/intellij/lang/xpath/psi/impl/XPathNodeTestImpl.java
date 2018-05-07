@@ -15,21 +15,23 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class XPathNodeTestImpl extends XPathElementImpl implements XPathNodeTest {
     public XPathNodeTestImpl(ASTNode node) {
         super(node);
     }
 
-    @NotNull
+    @Nonnull
     public XPathStep getStep() {
         final XPathStep step = PsiTreeUtil.getParentOfType(this, XPathStep.class);
         assert step != null : unexpectedPsiAssertion();
@@ -71,7 +73,7 @@ public class XPathNodeTestImpl extends XPathElementImpl implements XPathNodeTest
         }
     }
 
-    @NotNull
+    @Nonnull
     public PrincipalType getPrincipalType() {
         final XPathStep step = getStep();
 
@@ -97,7 +99,7 @@ public class XPathNodeTestImpl extends XPathElementImpl implements XPathNodeTest
         return null;
     }
 
-    @NotNull
+    @Nonnull
     public PsiReference[] getReferences() {
         final PrefixedName prefixedName = getQName();
         if (prefixedName != null && prefixedName.getPrefix() != null && getReference() != null) {
@@ -111,7 +113,7 @@ public class XPathNodeTestImpl extends XPathElementImpl implements XPathNodeTest
             super(element, nameNode);
         }
 
-        @NotNull
+        @Nonnull
         public Object[] getVariants() {
             // handled in XPathCompletionData
             return EMPTY_ARRAY;

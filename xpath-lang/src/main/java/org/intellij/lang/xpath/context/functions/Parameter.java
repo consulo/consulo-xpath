@@ -15,9 +15,9 @@
  */
 package org.intellij.lang.xpath.context.functions;
 
-import org.intellij.lang.xpath.psi.XPathType;
+import javax.annotation.Nonnull;
 
-import org.jetbrains.annotations.NotNull;
+import org.intellij.lang.xpath.psi.XPathType;
 
 public class Parameter {
     public enum Kind {
@@ -26,7 +26,7 @@ public class Parameter {
     public final XPathType type;
     public final Kind kind;
 
-    public Parameter(@NotNull XPathType type, @NotNull Kind kind) {
+    public Parameter(@Nonnull XPathType type, @Nonnull Kind kind) {
         this.type = type;
         this.kind = kind;
     }

@@ -15,13 +15,14 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nullable;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.intellij.lang.xpath.psi.XPath2ElementVisitor;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathVariable;
 import org.intellij.lang.xpath.psi.XPathVariableDeclaration;
-import org.jetbrains.annotations.Nullable;
 
 /*
 * Created by IntelliJ IDEA.

@@ -49,8 +49,8 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.LocalTimeCounter;
 import com.intellij.util.containers.BidirectionalMap;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.SimpleVariableContext;
@@ -87,7 +87,8 @@ public abstract class InputExpressionDialog<FormType extends InputForm> extends 
     private final ComboBox myComboBox = new ComboBox(300);
     private JComponent myEditorComponent;
 
-    @Nullable private Set<Namespace> myNamespaceCache;
+    @Nullable
+	private Set<Namespace> myNamespaceCache;
     private InteractiveContextProvider myContextProvider;
     private final PsiFile myXPathFile;
 
@@ -458,7 +459,7 @@ public abstract class InputExpressionDialog<FormType extends InputForm> extends 
             myModel = model;
         }
 
-        @NotNull
+        @Nonnull
         public String[] getVariablesInScope(XPathElement element) {
             final HistoryElement selectedItem = myModel.getSelectedItem();
             if (selectedItem != null) {
@@ -482,7 +483,7 @@ public abstract class InputExpressionDialog<FormType extends InputForm> extends 
             myNamespaceContext = new EvalExpressionDialog.MyNamespaceContext();
         }
 
-        @NotNull
+        @Nonnull
         public ContextType getContextType() {
             return XPathSupport.TYPE;
         }
@@ -492,7 +493,7 @@ public abstract class InputExpressionDialog<FormType extends InputForm> extends 
             return myContextElement;
         }
 
-        @NotNull
+        @Nonnull
         public EvalExpressionDialog.MyNamespaceContext getNamespaceContext() {
             return myNamespaceContext;
         }
@@ -546,7 +547,7 @@ public abstract class InputExpressionDialog<FormType extends InputForm> extends 
             return list != null && !list.isEmpty() ? list.get(0) : null;
         }
 
-        @NotNull
+        @Nonnull
         public Collection<String> getKnownPrefixes(XmlElement context) {
             return myMap.keySet();
         }
@@ -578,21 +579,21 @@ public abstract class InputExpressionDialog<FormType extends InputForm> extends 
             myReference = reference;
         }
 
-        @NotNull
+        @Nonnull
         public String getText() {
             return "Register Namespace Prefix";
         }
 
-        @NotNull
+        @Nonnull
         public String getFamilyName() {
             return getText();
         }
 
-        public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file) {
+        public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
             return myReference instanceof PrefixReference && myReference.getElement().isValid() && ((PrefixReference)myReference).isUnresolved();
         }
 
-        public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+        public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
             final Set<String> prefix = Collections.singleton(myReference.getCanonicalText());
 
             final Map<String, String> myMap = myContextProvider.getNamespaceContext().myMap;

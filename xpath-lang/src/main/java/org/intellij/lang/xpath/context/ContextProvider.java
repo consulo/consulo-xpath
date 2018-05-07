@@ -17,6 +17,7 @@ package org.intellij.lang.xpath.context;
 
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.xml.namespace.QName;
 
 import org.intellij.lang.xpath.XPathFile;
@@ -31,8 +32,8 @@ import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.lang.Language;
 import com.intellij.openapi.application.ApplicationManager;
@@ -57,7 +58,7 @@ public abstract class ContextProvider {
     protected ContextProvider() {
     }
 
-    @NotNull
+    @Nonnull
     public abstract ContextType getContextType();
 
     @Nullable
@@ -69,7 +70,7 @@ public abstract class ContextProvider {
     @Nullable
     public abstract VariableContext getVariableContext();
 
-    @NotNull
+    @Nonnull
     public FunctionContext getFunctionContext() {
       FunctionContext context = myFunctionContext;
       if (context == null) {
@@ -82,7 +83,7 @@ public abstract class ContextProvider {
       return DefaultFunctionContext.getInstance(getContextType());
     }
 
-    @NotNull
+    @Nonnull
     public XPathQuickFixFactory getQuickFixFactory() {
         return XPathQuickFixFactoryImpl.INSTANCE;
     }
@@ -103,14 +104,14 @@ public abstract class ContextProvider {
     }
 
     @SuppressWarnings({ "ClassReferencesSubclass" })
-    public static void copy(@NotNull PsiFile file1, @NotNull XPathFile file2) {
+    public static void copy(@Nonnull PsiFile file1, @Nonnull XPathFile file2) {
         final ContextProvider contextProvider = getContextProvider(file1);
         if (!(contextProvider instanceof DefaultProvider)) {
             contextProvider.attachTo(file2);
         }
     }
 
-    @NotNull
+    @Nonnull
     public static ContextProvider getContextProvider(PsiFile psiFile) {
         ContextProvider provider = psiFile.getCopyableUserData(KEY);
         if (provider != null && provider.isValid()) {
@@ -144,7 +145,7 @@ public abstract class ContextProvider {
     }
 
     @SuppressWarnings({ "ClassReferencesSubclass" })
-    @NotNull
+    @Nonnull
     public static ContextProvider getContextProvider(PsiElement element) {
         return element instanceof XPathElement ?
                 getContextProvider(element instanceof XPathFile ?
@@ -157,7 +158,7 @@ public abstract class ContextProvider {
         return PsiFile.EMPTY_ARRAY;
     }
 
-    @NotNull
+    @Nonnull
     public XPathType getExpectedType(XPathExpression expr) {
         return XPathType.UNKNOWN;
     }
@@ -169,7 +170,7 @@ public abstract class ContextProvider {
     }
 
     @Nullable
-    public QName getQName(@NotNull PrefixedName qName, XPathElement context) {
+    public QName getQName(@Nonnull PrefixedName qName, XPathElement context) {
         final String prefix = qName.getPrefix();
         final NamespaceContext namespaceContext = getNamespaceContext();
         if (namespaceContext != null) {
@@ -257,7 +258,7 @@ public abstract class ContextProvider {
           }
         }
 
-        @NotNull
+        @Nonnull
         public ContextType getContextType() {
             return myContextType;
         }

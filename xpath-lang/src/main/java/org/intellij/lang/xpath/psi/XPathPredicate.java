@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 public interface XPathPredicate extends XPathElement {
     @Nullable

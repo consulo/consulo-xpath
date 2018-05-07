@@ -15,10 +15,12 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class XPath2CastableImpl extends XPath2ElementImpl implements XPath2Castable {
   public XPath2CastableImpl(ASTNode node) {
@@ -32,7 +34,7 @@ public class XPath2CastableImpl extends XPath2ElementImpl implements XPath2Casta
     return node != null ? node.getDeclaredType() : null;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathType getType() {
     return XPath2Type.BOOLEAN;

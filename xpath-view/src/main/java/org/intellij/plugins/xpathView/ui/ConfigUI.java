@@ -20,7 +20,7 @@ import org.intellij.plugins.xpathView.Config;
 
 import com.intellij.ui.ColorPanel;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -116,7 +116,7 @@ public class ConfigUI extends JPanel {
         colors.add(chooseContext, constraints);
     }
 
-    @NotNull
+    @Nonnull
     public Config getConfig() {
         final Config config = new Config();
         config.setHighlightStartTagOnly(highlightStartTagOnly.isSelected());
@@ -132,7 +132,7 @@ public class ConfigUI extends JPanel {
         return config;
     }
 
-    public void setConfig(@NotNull Config configuration) {
+    public void setConfig(@Nonnull Config configuration) {
         scrollToFirst.setSelected(configuration.isScrollToFirst());
         highlightStartTagOnly.setSelected(configuration.isHighlightStartTagOnly());
         useContextAtCursor.setSelected(configuration.isUseContextAtCursor());

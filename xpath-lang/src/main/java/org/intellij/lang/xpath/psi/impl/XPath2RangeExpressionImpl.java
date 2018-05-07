@@ -19,14 +19,14 @@ import com.intellij.lang.ASTNode;
 import org.intellij.lang.xpath.XPath2TokenTypes;
 import org.intellij.lang.xpath.XPathElementType;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class XPath2RangeExpressionImpl extends XPath2ElementImpl implements XPath2RangeExpression {
   public XPath2RangeExpressionImpl(ASTNode node) {
     super(node);
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathExpression getFrom() {
     return findChildrenByClass(XPathExpression.class)[0];
@@ -48,19 +48,19 @@ public class XPath2RangeExpressionImpl extends XPath2ElementImpl implements XPat
     return getTo();
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathElementType getOperator() {
     return (XPathElementType)XPath2TokenTypes.TO;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public String getOperationSign() {
     return "to";
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathType getType() {
     return XPath2SequenceType.create(XPath2Type.INTEGER, XPath2SequenceType.Cardinality.ZERO_OR_MORE);

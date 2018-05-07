@@ -16,6 +16,8 @@
 
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
@@ -26,13 +28,12 @@ import org.intellij.lang.xpath.XPathFile;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathVariableReference;
-import org.jetbrains.annotations.NotNull;
 
 public class XPathChangeUtil {
     private XPathChangeUtil() {
     }
 
-    @NotNull
+    @Nonnull
     public static XPathExpression createExpression(PsiElement context, String text) {
         final XPathFile file = createXPathFile(context, text);
         final XPathExpression child = PsiTreeUtil.getChildOfType(file, XPathExpression.class);
@@ -40,19 +41,19 @@ public class XPathChangeUtil {
         return child;
     }
 
-    @NotNull
+    @Nonnull
     public static XPathVariableReference createVariableReference(PsiElement context, String name) {
         return (XPathVariableReference)createExpression(context, "$" + name);
     }
 
-    @NotNull
+    @Nonnull
     public static XPathFile createXPathFile(PsiElement context, String text) {
         final XPathFile file = createXPathFile(context.getProject(), text, context.getContainingFile().getFileType());
         ContextProvider.copy(context.getContainingFile(), file);
         return file;
     }
 
-    @NotNull
+    @Nonnull
     public static XPathFile createXPathFile(Project project, String text, FileType fileType) {
         return (XPathFile)PsiFileFactory.getInstance(project).createFileFromText("dummy." + fileType.getDefaultExtension(), fileType, text, LocalTimeCounter.currentTime(), true);
     }

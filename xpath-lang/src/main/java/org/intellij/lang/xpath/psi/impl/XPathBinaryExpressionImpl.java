@@ -15,12 +15,14 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
 import org.intellij.lang.xpath.*;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class XPathBinaryExpressionImpl extends XPathElementImpl implements XPathBinaryExpression {
     private static final TokenSet BINARY_OPERATIONS = TokenSet.orSet(XPathTokenTypes.BINARY_OPERATIONS,
@@ -44,7 +46,7 @@ public class XPathBinaryExpressionImpl extends XPathElementImpl implements XPath
         return (XPathExpression)(nodes.length > 1 ? nodes[1].getPsi() : null);
     }
 
-    @NotNull
+    @Nonnull
     public XPathElementType getOperator() {
         final ASTNode[] nodes = getNode().getChildren(BINARY_OPERATIONS);
         final XPathElementType elementType = (XPathElementType)(nodes.length > 0 ? nodes[0].getElementType() : null);
@@ -52,14 +54,14 @@ public class XPathBinaryExpressionImpl extends XPathElementImpl implements XPath
         return elementType;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getOperationSign() {
       final ASTNode[] nodes = getNode().getChildren(BINARY_OPERATIONS);
       return nodes[0].getText();
     }
 
-    @NotNull
+    @Nonnull
     public XPathType getType() {
         final XPathElementType operator = getOperator();
         if (operator == XPathTokenTypes.UNION || XPath2TokenTypes.INTERSECT_EXCEPT.contains(operator)) {

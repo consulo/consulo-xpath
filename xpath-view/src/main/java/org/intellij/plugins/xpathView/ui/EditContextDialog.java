@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -46,8 +47,8 @@ import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.plugins.xpathView.util.MyPsiUtil;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.intellij.plugins.xpathView.util.Variable;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.ide.DataManager;
 import com.intellij.javaee.ExternalResourceManager;
@@ -522,7 +523,7 @@ public class EditContextDialog extends DialogWrapper
 			return list != null && list.size() > 0 ? list.get(0) : null;
 		}
 
-		@NotNull
+		@Nonnull
 		public Collection<String> getKnownPrefixes(XmlElement context)
 		{
 			return Namespace.makeMap(myNamespaceTableModel.getNamespaces()).keySet();
@@ -548,7 +549,7 @@ public class EditContextDialog extends DialogWrapper
 
 	private class MyVariableContext extends SimpleVariableContext
 	{
-		@NotNull
+		@Nonnull
 		public String[] getVariablesInScope(XPathElement element)
 		{
 			final Collection<Variable> variables = myVariableTableModel.getVariables();
@@ -569,7 +570,7 @@ public class EditContextDialog extends DialogWrapper
 			myVariableContext = new MyVariableContext();
 		}
 
-		@NotNull
+		@Nonnull
 		public ContextType getContextType()
 		{
 			return myContextProvider.getContextType();

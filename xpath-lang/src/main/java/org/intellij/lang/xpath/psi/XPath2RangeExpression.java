@@ -15,8 +15,8 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /*
 * Created by IntelliJ IDEA.
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 * Date: 04.01.11
 */
 public interface XPath2RangeExpression extends XPathBinaryExpression {
-  @NotNull
+  @Nonnull
   XPathExpression getFrom();
 
   @Nullable

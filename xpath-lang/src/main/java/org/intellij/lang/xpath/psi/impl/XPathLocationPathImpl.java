@@ -18,15 +18,15 @@ package org.intellij.lang.xpath.psi.impl;
 import com.intellij.lang.ASTNode;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class XPathLocationPathImpl extends XPathElementImpl implements XPathLocationPath {
     public XPathLocationPathImpl(ASTNode node) {
         super(node);
     }
 
-    @NotNull
+    @Nonnull
     public XPathType getType() {
       final XPathStep step = getFirstStep();
       if (step != null) {

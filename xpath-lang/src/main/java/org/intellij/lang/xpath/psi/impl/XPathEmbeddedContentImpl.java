@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.ResolveState;
@@ -22,7 +24,6 @@ import com.intellij.psi.scope.PsiScopeProcessor;
 import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlTagChild;
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings({"ConstantConditions"})
 public class XPathEmbeddedContentImpl extends XPathElementImpl implements XmlTagChild {
@@ -55,7 +56,7 @@ public class XPathEmbeddedContentImpl extends XPathElementImpl implements XmlTag
     }
 
     @Override
-    public boolean processDeclarations(@NotNull PsiScopeProcessor processor, @NotNull ResolveState substitutor, PsiElement lastParent, @NotNull PsiElement place) {
+    public boolean processDeclarations(@Nonnull PsiScopeProcessor processor, @Nonnull ResolveState substitutor, PsiElement lastParent, @Nonnull PsiElement place) {
         if (lastParent == null) {
             PsiElement child = getFirstChild();
             while (child != null) {

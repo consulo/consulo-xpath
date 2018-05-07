@@ -19,7 +19,7 @@ import org.intellij.plugins.xpathView.HistoryElement;
 
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.util.Comparing;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 import java.util.Arrays;

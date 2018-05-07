@@ -15,23 +15,24 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.util.PsiTreeUtil;
 import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
 
 public class XPath2QuantifiedExprImpl extends XPath2ElementImpl implements XPath2QuantifiedExpr {
   public XPath2QuantifiedExprImpl(ASTNode node) {
     super(node);
   }
 
-  @NotNull
+  @Nonnull
   public XPathType getType() {
     return XPath2Type.BOOLEAN;
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathVariableDeclaration[] getVariables() {
     return findChildrenByClass(XPathVariableDeclaration.class);

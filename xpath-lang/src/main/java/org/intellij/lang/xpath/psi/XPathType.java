@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class XPathType {
     public static final XPathType UNKNOWN = new XPathType("unknown", true);
@@ -71,7 +71,7 @@ public class XPathType {
     return type != NODESET;
   }
 
-  public static boolean isAssignable(@NotNull XPathType left, @NotNull XPathType type) {
+  public static boolean isAssignable(@Nonnull XPathType left, @Nonnull XPathType type) {
     if (left instanceof ChoiceType) {
       final XPathType[] types = ((ChoiceType)left).getTypes();
       for (XPathType t : types) {
@@ -109,7 +109,7 @@ public class XPathType {
     }
 
     @Override
-    public boolean isAssignableFrom(@NotNull XPathType type) {
+    public boolean isAssignableFrom(@Nonnull XPathType type) {
       return false;
     }
 

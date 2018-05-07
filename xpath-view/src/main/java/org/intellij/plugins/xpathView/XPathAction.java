@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.xpathView;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lang.dtd.DTDLanguage;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -40,7 +40,7 @@ public abstract class XPathAction extends AnAction
 	}
 
 	@RequiredDispatchThread
-	public void update(@NotNull AnActionEvent event)
+	public void update(@Nonnull AnActionEvent event)
 	{
 		super.update(event);
 		final Presentation presentation = event.getPresentation();

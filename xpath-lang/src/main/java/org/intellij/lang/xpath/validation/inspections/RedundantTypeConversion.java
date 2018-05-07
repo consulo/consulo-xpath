@@ -28,8 +28,8 @@ import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import javax.swing.*;
 
@@ -39,12 +39,12 @@ public class RedundantTypeConversion extends XPathInspection {
 
     public boolean CHECK_ANY = false;
 
-    @NotNull
+    @Nonnull
     public String getDisplayName() {
         return "Redundant Type Conversion";
     }
 
-    @NotNull
+    @Nonnull
     @NonNls
     public String getShortName() {
         return SHORT_NAME;
@@ -73,7 +73,7 @@ public class RedundantTypeConversion extends XPathInspection {
             super(manager, isOnTheFly);
         }
 
-        protected void checkExpression(final @NotNull XPathExpression expr) {
+        protected void checkExpression(final @Nonnull XPathExpression expr) {
             if (ExpectedTypeUtil.isExplicitConversion(expr)) {
                 final XPathExpression expression = ExpectedTypeUtil.unparenthesize(expr);
                 assert expression != null;

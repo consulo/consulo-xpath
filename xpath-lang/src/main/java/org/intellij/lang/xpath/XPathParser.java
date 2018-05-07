@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import consulo.lang.LanguageVersion;
 import com.intellij.lang.PsiBuilder;
@@ -22,13 +24,12 @@ import com.intellij.lang.PsiParser;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
-import org.jetbrains.annotations.NotNull;
 
 public class XPathParser implements PsiParser {
   private static final boolean DBG_MODE = Boolean.getBoolean(XPathParser.class.getName() + ".debug") || ApplicationManager.getApplication().isUnitTestMode();
 
-  @NotNull
-  public ASTNode parse(@NotNull IElementType root, @NotNull PsiBuilder builder, @NotNull LanguageVersion languageVersion) {
+  @Nonnull
+  public ASTNode parse(@Nonnull IElementType root, @Nonnull PsiBuilder builder, @Nonnull LanguageVersion languageVersion) {
     builder.setDebugMode(DBG_MODE);
 
     final PsiBuilder.Marker rootMarker = builder.mark();

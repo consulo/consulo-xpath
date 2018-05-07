@@ -20,13 +20,14 @@ import org.intellij.lang.xpath.psi.XPathType;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.Nullable;
 
 import org.jaxen.Context;
 import org.jaxen.Function;
 import org.jaxen.FunctionCallException;
 
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 public abstract class BasicFileInfoFunction extends FunctionImplementation implements Function {
     public BasicFileInfoFunction(String name, XPathType returnType, Parameter... parameters) {

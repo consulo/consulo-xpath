@@ -15,6 +15,9 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInspection.*;
 import com.intellij.lang.Language;
 import com.intellij.openapi.util.TextRange;
@@ -28,12 +31,10 @@ import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.intellij.lang.xpath.psi.XPathPredicate;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class XPathInspection extends LocalInspectionTool implements CustomSuppressableInspectionTool {
 
-    @NotNull
+    @Nonnull
     public String getGroupDisplayName() {
         return "XPath";
     }
@@ -43,14 +44,14 @@ public abstract class XPathInspection extends LocalInspectionTool implements Cus
         return ContextProvider.getContextProvider(e != null ? e : element).getQuickFixFactory().getSuppressActions(this);
     }
 
-    public boolean isSuppressedFor(@NotNull PsiElement element) {
+    public boolean isSuppressedFor(@Nonnull PsiElement element) {
         return ContextProvider.getContextProvider(element.getContainingFile()).getQuickFixFactory().isSuppressedFor(element, this);
     }
 
     protected abstract Visitor createVisitor(InspectionManager manager, boolean isOnTheFly);
 
     @Nullable
-    public ProblemDescriptor[] checkFile(@NotNull PsiFile file, @NotNull InspectionManager manager, boolean isOnTheFly) {
+    public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly) {
         final Language language = file.getLanguage();
         if (!acceptsLanguage(language)) return null;
 

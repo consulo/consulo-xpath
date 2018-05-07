@@ -23,17 +23,17 @@ import org.intellij.lang.xpath.context.ContextType;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collection;
 
 public abstract class XPathSupport {
     public static final ContextType TYPE = ContextType.lookupOrCreate("INTERACTIVE");
 
-    public abstract XPath createXPath(@NotNull XmlFile file, String expression) throws JaxenException;
+    public abstract XPath createXPath(@Nonnull XmlFile file, String expression) throws JaxenException;
 
-    public abstract XPath createXPath(@Nullable XmlFile psiFile, String expression, @NotNull Collection<Namespace> namespaces) throws JaxenException;
+    public abstract XPath createXPath(@Nullable XmlFile psiFile, String expression, @Nonnull Collection<Namespace> namespaces) throws JaxenException;
 
     public abstract String getPath(XmlElement element, XmlTag context);
 

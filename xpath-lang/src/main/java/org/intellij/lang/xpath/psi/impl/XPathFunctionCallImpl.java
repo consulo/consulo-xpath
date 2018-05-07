@@ -15,6 +15,7 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
 import javax.swing.Icon;
 import javax.xml.namespace.QName;
 
@@ -29,8 +30,8 @@ import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathFunction;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
 import org.intellij.lang.xpath.psi.XPathType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
@@ -51,7 +52,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XPathExpression[] getArgumentList()
 	{
 		final ASTNode[] nodes = getNode().getChildren(XPath2ElementTypes.EXPRESSIONS);
@@ -64,7 +65,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 	}
 
 	@Override
-	public PsiElement add(@NotNull PsiElement psiElement) throws IncorrectOperationException
+	public PsiElement add(@Nonnull PsiElement psiElement) throws IncorrectOperationException
 	{
 		if(psiElement instanceof XPathExpression)
 		{
@@ -87,7 +88,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getFunctionName()
 	{
 		final ASTNode node = getNameNode();
@@ -109,7 +110,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public PrefixedName getQName()
 	{
 		final ASTNode node = getNameNode();
@@ -138,7 +139,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public PsiReference[] getReferences()
 	{
 		if(getPrefixNode() != null && getNameNode() != null)
@@ -152,7 +153,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public XPathType getType()
 	{
 		final XPathFunction f = resolve();
@@ -199,7 +200,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 		}
 
 		@Override
-		@NotNull
+		@Nonnull
 		public Object[] getVariants()
 		{
 			return EMPTY_ARRAY;
@@ -285,7 +286,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 			}
 
 			@Override
-			public void accept(@NotNull PsiElementVisitor visitor)
+			public void accept(@Nonnull PsiElementVisitor visitor)
 			{
 			}
 
@@ -296,7 +297,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 			}
 
 			@Override
-			public PsiElement setName(@NotNull String name) throws IncorrectOperationException
+			public PsiElement setName(@Nonnull String name) throws IncorrectOperationException
 			{
 				throw new IncorrectOperationException();
 			}

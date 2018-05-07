@@ -15,20 +15,22 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
 import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.XPathElementTypes;
 import org.intellij.lang.xpath.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class XPathFilterExpressionImpl extends XPathElementImpl implements XPathFilterExpression {
     public XPathFilterExpressionImpl(ASTNode node) {
         super(node);
     }
 
-    @NotNull
+    @Nonnull
     public XPathType getType() {
         final XPathExpression expression = getExpression();
         return expression != null ? expression.getType() : XPathType.UNKNOWN;
@@ -48,7 +50,7 @@ public class XPathFilterExpressionImpl extends XPathElementImpl implements XPath
 //        return (XPathExpression)(nodes.length > 0 ? nodes[0].getPsi() : null);
     }
 
-    @NotNull
+    @Nonnull
     public XPathPredicate getPredicate() {
         final ASTNode[] nodes = getNode().getChildren(TokenSet.create(XPathElementTypes.PREDICATE));
         assert nodes.length == 1 : unexpectedPsiAssertion();

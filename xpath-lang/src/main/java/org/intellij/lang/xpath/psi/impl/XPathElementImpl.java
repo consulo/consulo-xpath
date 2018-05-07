@@ -15,6 +15,8 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.injection.InjectedLanguageManager;
@@ -31,7 +33,6 @@ import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathElementVisitor;
-import org.jetbrains.annotations.NotNull;
 
 public class XPathElementImpl extends ASTWrapperPsiElement implements XPathElement {
 
@@ -44,7 +45,7 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
     return name.substring(name.lastIndexOf('.') + 1) + ": " + getText();
   }
 
-  public PsiElement addBefore(@NotNull PsiElement psiElement, final PsiElement anchor) throws IncorrectOperationException {
+  public PsiElement addBefore(@Nonnull PsiElement psiElement, final PsiElement anchor) throws IncorrectOperationException {
     final ASTNode node = getNode();
     final ASTNode child = psiElement.getNode();
     assert child != null;
@@ -52,7 +53,7 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
     return node.getPsi();
   }
 
-  public PsiElement addAfter(@NotNull PsiElement psiElement, final PsiElement anchor) throws IncorrectOperationException {
+  public PsiElement addAfter(@Nonnull PsiElement psiElement, final PsiElement anchor) throws IncorrectOperationException {
     final ASTNode astNode = anchor.getNode();
     assert astNode != null;
     final ASTNode next = astNode.getTreeNext();
@@ -68,7 +69,7 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
     return node.getPsi();
   }
 
-  public PsiElement add(@NotNull PsiElement psiElement) throws IncorrectOperationException {
+  public PsiElement add(@Nonnull PsiElement psiElement) throws IncorrectOperationException {
     final ASTNode child = psiElement.getNode();
     assert child != null;
     getNode().addChild(child);
@@ -91,7 +92,7 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
     }
   }
 
-  public PsiElement replace(@NotNull PsiElement psiElement) throws IncorrectOperationException {
+  public PsiElement replace(@Nonnull PsiElement psiElement) throws IncorrectOperationException {
     final ASTNode newNode = psiElement.getNode();
     final ASTNode myNode = getNode();
 
@@ -101,7 +102,7 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
     return newNode.getPsi();
   }
 
-  @NotNull
+  @Nonnull
   @SuppressWarnings({ "ConstantConditions", "EmptyMethod" })
   public final ASTNode getNode() {
     return super.getNode();
@@ -128,7 +129,7 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
   }
 
   @Override
-  public final void accept(@NotNull PsiElementVisitor visitor) {
+  public final void accept(@Nonnull PsiElementVisitor visitor) {
     if (visitor instanceof XPathElementVisitor) {
       accept((XPathElementVisitor)visitor);
     } else {

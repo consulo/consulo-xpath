@@ -19,7 +19,7 @@ import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathAxisSpecifier;
 import org.intellij.lang.xpath.psi.Axis;
 import org.intellij.lang.xpath.XPathTokenTypes;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.lang.ASTNode;
 
 public class XPathAxisSpecifierImpl extends XPathElementImpl implements XPathAxisSpecifier {
@@ -27,7 +27,7 @@ public class XPathAxisSpecifierImpl extends XPathElementImpl implements XPathAxi
         super(node);
     }
 
-    @NotNull
+    @Nonnull
     public Axis getAxis() {
         final ASTNode[] nodes = getNode().getChildren(XPathTokenTypes.AXIS);
         if (nodes.length > 0) {

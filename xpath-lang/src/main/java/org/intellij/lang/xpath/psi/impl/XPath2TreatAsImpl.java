@@ -15,12 +15,13 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.lang.ASTNode;
 import org.intellij.lang.xpath.psi.XPath2ElementVisitor;
 import org.intellij.lang.xpath.psi.XPath2TreatAs;
 import org.intellij.lang.xpath.psi.XPath2TypeElement;
 import org.intellij.lang.xpath.psi.XPathType;
-import org.jetbrains.annotations.NotNull;
 
 public class XPath2TreatAsImpl extends XPath2ElementImpl implements XPath2TreatAs {
   public XPath2TreatAsImpl(ASTNode node) {
@@ -32,7 +33,7 @@ public class XPath2TreatAsImpl extends XPath2ElementImpl implements XPath2TreatA
     return getType();
   }
 
-  @NotNull
+  @Nonnull
   @Override
   public XPathType getType() {
     final XPath2TypeElement node = findChildByClass(XPath2TypeElement.class);

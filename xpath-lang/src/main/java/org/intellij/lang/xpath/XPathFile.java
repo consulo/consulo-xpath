@@ -15,6 +15,9 @@
  */
 package org.intellij.lang.xpath;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
@@ -24,8 +27,6 @@ import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathExpression;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public final class XPathFile extends PsiFileBase implements XPathElement {
 
@@ -36,7 +37,7 @@ public final class XPathFile extends PsiFileBase implements XPathElement {
     myType = type;
   }
 
-  @NotNull
+  @Nonnull
   public FileType getFileType() {
     return myType;
   }
@@ -66,7 +67,7 @@ public final class XPathFile extends PsiFileBase implements XPathElement {
   }
 
   @Override
-  public final void accept(@NotNull PsiElementVisitor visitor) {
+  public final void accept(@Nonnull PsiElementVisitor visitor) {
     if (visitor instanceof XPathElementVisitor) {
       accept((XPathElementVisitor)visitor);
     } else {
