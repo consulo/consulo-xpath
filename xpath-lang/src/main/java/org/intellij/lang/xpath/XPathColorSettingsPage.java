@@ -22,28 +22,23 @@
  */
 package org.intellij.lang.xpath;
 
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import com.intellij.openapi.options.colors.AttributesDescriptor;
 import com.intellij.openapi.options.colors.ColorDescriptor;
 import com.intellij.openapi.options.colors.ColorSettingsPage;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import javax.swing.*;
-import java.util.Map;
 
 public class XPathColorSettingsPage implements ColorSettingsPage {
     @Nonnull
     public String getDisplayName() {
         return "XPath";
-    }
-
-    @Nullable
-    public Icon getIcon() {
-        return XPathFileType.XPATH.getIcon();
     }
 
     @Nonnull

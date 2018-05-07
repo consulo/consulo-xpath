@@ -74,6 +74,7 @@ import com.intellij.usages.UsageView;
 import com.intellij.usages.UsageViewManager;
 import com.intellij.usages.UsageViewPresentation;
 import com.intellij.util.Processor;
+import consulo.awt.TargetAWT;
 
 /**
  * <p>This class implements the core action to enter, evaluate and display the results of an XPath expression.</p>
@@ -126,14 +127,13 @@ import com.intellij.util.Processor;
  */
 public class XPathEvalAction extends XPathAction
 {
-
-	private static final Logger LOG = Logger.getInstance("org.intellij.plugins.xpathView.XPathEvalAction");
+	private static final Logger LOG = Logger.getInstance(XPathEvalAction.class);
 
 	@Override
 	protected void updateToolbar(AnActionEvent event)
 	{
 		super.updateToolbar(event);
-		event.getPresentation().setIcon(XmlFileType.INSTANCE.getIcon());
+		event.getPresentation().setIcon(TargetAWT.to(XmlFileType.INSTANCE.getIcon()));
 	}
 
 	@Override

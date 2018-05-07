@@ -16,10 +16,10 @@
 package org.intellij.lang.xpath;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
 
 import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.ui.image.Image;
 import icons.XpathIcons;
 
 public final class XPathFileType extends LanguageFileType
@@ -34,7 +34,7 @@ public final class XPathFileType extends LanguageFileType
 
 	@Override
 	@Nonnull
-	public String getName()
+	public String getId()
 	{
 		return getLanguage().getID();
 	}
@@ -54,7 +54,7 @@ public final class XPathFileType extends LanguageFileType
 	}
 
 	@Override
-	public Icon getIcon()
+	public Image getIcon()
 	{
 		return XpathIcons.Xpath;
 	}
