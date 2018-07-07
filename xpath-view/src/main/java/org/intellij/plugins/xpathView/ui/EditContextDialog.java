@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,8 +48,6 @@ import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.plugins.xpathView.util.MyPsiUtil;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.intellij.plugins.xpathView.util.Variable;
-
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.ide.DataManager;
 import com.intellij.javaee.ExternalResourceManager;
@@ -67,9 +66,9 @@ import com.intellij.psi.xml.XmlElement;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.AnActionButtonRunnable;
 import com.intellij.ui.IdeBorderFactory;
+import com.intellij.ui.JBColor;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.util.containers.BidirectionalMap;
-import com.intellij.util.ui.PlatformColors;
 import com.intellij.util.ui.Table;
 import com.intellij.util.ui.UIUtil;
 
@@ -395,7 +394,7 @@ public class EditContextDialog extends DialogWrapper
 				}
 				else if(variable.getExpression().length() == 0)
 				{
-					setForeground(PlatformColors.BLUE);
+					setForeground(JBColor.BLUE);
 					setToolTipText("Empty expression. Variable will evaluate to empty nodeset.");
 				}
 			}
@@ -488,7 +487,7 @@ public class EditContextDialog extends DialogWrapper
 			final String prefix = myNamespaces.get(row).getPrefix();
 			if(column == 1 && prefix == null || prefix.length() == 0)
 			{
-				setForeground(PlatformColors.BLUE);
+				setForeground(JBColor.BLUE);
 			}
 			else if(column == 0)
 			{
