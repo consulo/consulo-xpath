@@ -18,15 +18,15 @@ package org.intellij.plugins.xpathView.search;
 
 import java.util.Collections;
 
+import javax.annotation.Nonnull;
+
 import org.intellij.plugins.xpathView.Config;
-import org.intellij.plugins.xpathView.XPathAppComponent;
 import org.intellij.plugins.xpathView.XPathEvalAction;
 import org.intellij.plugins.xpathView.XPathProjectComponent;
 import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.ui.InputExpressionDialog;
 import org.jaxen.JaxenException;
 import org.jaxen.XPathSyntaxException;
-import javax.annotation.Nonnull;
 import com.intellij.find.FindProgressIndicator;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -42,6 +42,7 @@ import com.intellij.usages.UsageTarget;
 import com.intellij.usages.UsageView;
 import com.intellij.usages.UsageViewManager;
 import com.intellij.usages.UsageViewPresentation;
+import consulo.xpath.view.XPathViewConfig;
 
 public class FindByXPathAction extends AnAction
 {
@@ -64,7 +65,7 @@ public class FindByXPathAction extends AnAction
 
 	private void executeSearch(final Project project, final Module module)
 	{
-		final Config settings = XPathAppComponent.getInstance().getConfig();
+		final Config settings = XPathViewConfig.getInstance().getState();
 		final XPathProjectComponent projectComponent = XPathProjectComponent.getInstance(project);
 
 		final FindByExpressionDialog dlg = new FindByExpressionDialog(project, settings, projectComponent.getFindHistory(), module);
@@ -138,7 +139,7 @@ public class FindByXPathAction extends AnAction
 	{
 		private final Project myProject;
 		private final Module myModule;
-		private final Config myConfig = XPathAppComponent.getInstance().getConfig();
+		private final Config myConfig = XPathViewConfig.getInstance().getState();
 
 		public MyEditExpressionAction(Project project, Module module)
 		{

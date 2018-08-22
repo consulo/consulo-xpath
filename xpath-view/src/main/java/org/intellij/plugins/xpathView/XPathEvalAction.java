@@ -75,6 +75,7 @@ import com.intellij.usages.UsageViewManager;
 import com.intellij.usages.UsageViewPresentation;
 import com.intellij.util.Processor;
 import consulo.awt.TargetAWT;
+import consulo.xpath.view.XPathViewConfig;
 
 /**
  * <p>This class implements the core action to enter, evaluate and display the results of an XPath expression.</p>
@@ -193,7 +194,7 @@ public class XPathEvalAction extends XPathAction
 
 		InputExpressionDialog.Context input;
 		XmlElement contextNode = null;
-		final Config cfg = myComponent.getConfig();
+		final Config cfg = XPathViewConfig.getInstance().getState();
 		do
 		{
 			RangeHighlighter contextHighlighter = null;
@@ -329,7 +330,7 @@ public class XPathEvalAction extends XPathAction
 
 		showUsageView(project, usageTarget, searcherFactory, new EditExpressionAction()
 		{
-			final Config config = myComponent.getConfig();
+			final Config config = XPathViewConfig.getInstance().getState();
 
 			@Override
 			protected void execute()
@@ -367,7 +368,7 @@ public class XPathEvalAction extends XPathAction
 		presentation.setTabText("XPath");
 		presentation.setScopeText("XML Files");
 
-		presentation.setOpenInNewTab(XPathAppComponent.getInstance().getConfig().OPEN_NEW_TAB);
+		presentation.setOpenInNewTab(XPathViewConfig.getInstance().getState().OPEN_NEW_TAB);
 
 		final FindUsagesProcessPresentation processPresentation = new FindUsagesProcessPresentation(new UsageViewPresentation());
 		processPresentation.setProgressIndicatorFactory(new Factory<ProgressIndicator>()
@@ -413,7 +414,7 @@ public class XPathEvalAction extends XPathAction
 		// get expression history from project component
 		final HistoryElement[] history = pc.getHistory();
 
-		final EvalExpressionDialog dialog = new EvalExpressionDialog(project, myComponent.getConfig(), history);
+		final EvalExpressionDialog dialog = new EvalExpressionDialog(project, XPathViewConfig.getInstance().getState(), history);
 		if(!dialog.show(contextNode))
 		{
 			// cancel
@@ -440,8 +441,7 @@ public class XPathEvalAction extends XPathAction
 	 */
 	private void highlightResult(XmlElement contextNode, @Nonnull final Editor editor, final List<?> list)
 	{
-
-		final Config cfg = myComponent.getConfig();
+		final Config cfg = XPathViewConfig.getInstance().getState();
 		int lowestOffset = Integer.MAX_VALUE;
 
 		for(final Object o : list)

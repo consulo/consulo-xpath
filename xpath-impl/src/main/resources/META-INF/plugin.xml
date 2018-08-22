@@ -61,24 +61,18 @@
 		<extendWordSelectionHandler implementation="org.intellij.lang.xpath.XPathStringLiteralSelectioner"/>
 
 		<applicationConfigurable instance="org.intellij.plugins.xpathView.XPathConfigurable" id="xpath.settings" parentId="editor" displayName="XPath"/>
-		<defaultLiveTemplatesProvider implementation="org.intellij.plugins.xpathView.XPathAppComponent"/>
-	</extensions>
 
+		<defaultLiveTemplatesProvider implementation="consulo.xpath.view.XPathViewDefaultLiveTemplateProvider"/>
+
+		<applicationService serviceImplementation="consulo.xpath.view.XPathViewConfig" />
+
+		<applicationService serviceImplementation="org.intellij.plugins.xpathView.XPathAppComponent" lazy="false" />
+	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij.xpath">
 		<functionProvider implementation="org.intellij.plugins.xpathView.support.jaxen.extensions.XPathFunctionProviderImpl"/>
 	</extensions>
 
-	<!-- Plugin's application components -->
-	<application-components>
-		<!-- XPathView components -->
-		<component>
-			<implementation-class>org.intellij.plugins.xpathView.XPathAppComponent</implementation-class>
-		</component>
-
-	</application-components>
-
-	<!-- Component's actions -->
 	<actions>
 		<action id="XPathView.Actions.Evaluate" class="org.intellij.plugins.xpathView.XPathEvalAction"
 				text="Evaluate XPath..."

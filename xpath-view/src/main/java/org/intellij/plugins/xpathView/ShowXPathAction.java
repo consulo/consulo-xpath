@@ -52,6 +52,7 @@ import com.intellij.ui.LightweightHint;
 import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.util.PlatformIcons;
 import consulo.annotations.RequiredDispatchThread;
+import consulo.xpath.view.XPathViewConfig;
 
 public class ShowXPathAction extends XPathAction
 {
@@ -118,7 +119,7 @@ public class ShowXPathAction extends XPathAction
 			return;
 		}
 
-		final Config cfg = myComponent.getConfig();
+		final Config cfg = XPathViewConfig.getInstance().getState();
 		final RangeHighlighter h = HighlighterUtil.highlightNode(editor, node, cfg.getContextAttributes(), cfg);
 
 		final String path = XPathSupport.getInstance().getUniquePath((XmlElement) node, null);

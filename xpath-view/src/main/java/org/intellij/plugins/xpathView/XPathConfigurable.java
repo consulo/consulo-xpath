@@ -15,58 +15,77 @@
  */
 package org.intellij.plugins.xpathView;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.JComponent;
+
+import org.intellij.plugins.xpathView.ui.ConfigUI;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
-import org.intellij.plugins.xpathView.ui.ConfigUI;
-import javax.annotation.Nonnull;
+import consulo.annotations.RequiredDispatchThread;
+import consulo.xpath.view.XPathViewConfig;
 
-import javax.annotation.Nullable;
-import javax.swing.*;
+public class XPathConfigurable implements SearchableConfigurable
+{
+	private ConfigUI configUI;
 
-public class XPathConfigurable implements SearchableConfigurable {
-    private ConfigUI configUI;
+	public String getDisplayName()
+	{
+		return "XPath Viewer";
+	}
 
-    public String getDisplayName() {
-        return "XPath Viewer";
-    }
+	@Nullable
+	public String getHelpTopic()
+	{
+		return "xpath.settings";
+	}
 
-  @Nullable
-    public String getHelpTopic() {
-        return "xpath.settings";
-    }
+	@Nonnull
+	public String getId()
+	{
+		return getHelpTopic();
+	}
 
-  @Nonnull
-  public String getId() {
-    return getHelpTopic();
-  }
+	public Runnable enableSearch(String option)
+	{
+		return null;
+	}
 
-  public Runnable enableSearch(String option) {
-    return null;
-  }
+	@RequiredDispatchThread
+	public JComponent createComponent()
+	{
+		configUI = new ConfigUI(XPathViewConfig.getInstance().getState());
 
-  public JComponent createComponent() {
-        configUI = new ConfigUI(XPathAppComponent.getInstance().getConfig());
+		return configUI;
+	}
 
-        return configUI;
-    }
+	@RequiredDispatchThread
+	public boolean isModified()
+	{
+		return configUI != null && !configUI.getConfig().equals(XPathViewConfig.getInstance().getState());
+	}
 
-    public synchronized boolean isModified() {
-        return configUI != null && !configUI.getConfig().equals(XPathAppComponent.getInstance().getConfig());
-    }
+	@RequiredDispatchThread
+	public void apply() throws ConfigurationException
+	{
+		if(configUI != null)
+		{
+			XPathViewConfig.getInstance().loadState(configUI.getConfig());
+		}
+	}
 
-    public synchronized void apply() throws ConfigurationException {
-        if (configUI != null) {
-            XPathAppComponent.getInstance().setConfig(configUI.getConfig());
-        }
-    }
+	@RequiredDispatchThread
+	public void reset()
+	{
+		if(configUI != null)
+		{
+			configUI.setConfig(XPathViewConfig.getInstance().getState());
+		}
+	}
 
-    public synchronized void reset() {
-        if (configUI != null) {
-            configUI.setConfig(XPathAppComponent.getInstance().getConfig());
-        }
-    }
-
-    public synchronized void disposeUIResources() {
-        configUI = null;
-    }
+	@RequiredDispatchThread
+	public void disposeUIResources()
+	{
+		configUI = null;
+	}
 }

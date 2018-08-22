@@ -16,6 +16,7 @@
 package org.intellij.plugins.xpathView;
 
 import javax.annotation.Nonnull;
+
 import com.intellij.lang.dtd.DTDLanguage;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -29,14 +30,12 @@ import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import consulo.annotations.RequiredDispatchThread;
+import consulo.xpath.view.XPathViewConfig;
 
 public abstract class XPathAction extends AnAction
 {
-	protected final XPathAppComponent myComponent;
-
 	protected XPathAction()
 	{
-		myComponent = XPathAppComponent.getInstance();
 	}
 
 	@RequiredDispatchThread
@@ -65,13 +64,13 @@ public abstract class XPathAction extends AnAction
 
 	protected void updateMainMenu(AnActionEvent event)
 	{
-		final boolean b = myComponent.getConfig().SHOW_IN_MAIN_MENU;
+		final boolean b = XPathViewConfig.getInstance().getState().SHOW_IN_MAIN_MENU;
 		event.getPresentation().setVisible(b && isEnabled(event, false));
 	}
 
 	protected void updateToolbar(AnActionEvent event)
 	{
-		event.getPresentation().setVisible(myComponent.getConfig().SHOW_IN_TOOLBAR);
+		event.getPresentation().setVisible(XPathViewConfig.getInstance().getState().SHOW_IN_TOOLBAR);
 	}
 
 	protected boolean isEnabled(AnActionEvent event, boolean checkAvailable)

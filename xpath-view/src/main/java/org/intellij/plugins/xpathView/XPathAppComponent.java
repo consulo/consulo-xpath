@@ -21,32 +21,27 @@ import java.awt.Point;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 
 import org.intellij.plugins.xpathView.util.HighlighterUtil;
-import org.jdom.Element;
 import com.intellij.codeInsight.hint.HintManagerImpl;
 import com.intellij.codeInsight.hint.HintUtil;
-import com.intellij.codeInsight.template.impl.DefaultLiveTemplatesProvider;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.Shortcut;
 import com.intellij.openapi.actionSystem.ShortcutSet;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ScrollType;
 import com.intellij.openapi.editor.markup.RangeHighlighter;
 import com.intellij.openapi.keymap.KeymapUtil;
 import com.intellij.openapi.project.DumbAware;
-import com.intellij.openapi.util.InvalidDataException;
-import com.intellij.openapi.util.JDOMExternalizable;
-import com.intellij.openapi.util.WriteExternalException;
 import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.LightweightHint;
@@ -56,30 +51,19 @@ import consulo.annotations.RequiredDispatchThread;
  * Application component.<br>
  * This component holds the application-level configuration and registers an own handler for
  * ESC-Action to clear highlighters.<br>
- * <p>
- * Also used to manage highlighters.
  */
-public class XPathAppComponent implements ApplicationComponent, JDOMExternalizable, DefaultLiveTemplatesProvider
+@Singleton
+public class XPathAppComponent
 {
-
 	private static final String ACTION_FIND_NEXT = "FindNext";
 	private static final String ACTION_FIND_PREVIOUS = "FindPrevious";
 
 	private AnAction nextAction;
 	private AnAction prevAction;
 
-	private Config configuration = new Config();
-
-	@Nonnull
-	public String getComponentName()
+	@Inject
+	XPathAppComponent(ActionManager actionManager)
 	{
-		return "XPathView.XPathViewPlugin";
-	}
-
-	public void initComponent()
-	{
-
-		final ActionManager actionManager = ActionManager.getInstance();
 		nextAction = actionManager.getAction(ACTION_FIND_NEXT);
 		prevAction = actionManager.getAction(ACTION_FIND_PREVIOUS);
 
@@ -87,48 +71,6 @@ public class XPathAppComponent implements ApplicationComponent, JDOMExternalizab
 		actionManager.unregisterAction(ACTION_FIND_PREVIOUS);
 		actionManager.registerAction(ACTION_FIND_NEXT, new MyFindAction(nextAction, false));
 		actionManager.registerAction(ACTION_FIND_PREVIOUS, new MyFindAction(prevAction, true));
-	}
-
-	public void disposeComponent()
-	{
-		// IDEA-97697
-		//    final ActionManager actionManager = ActionManager.getInstance();
-		//    actionManager.unregisterAction(ACTION_FIND_NEXT);
-		//    actionManager.unregisterAction(ACTION_FIND_PREVIOUS);
-		//    actionManager.registerAction(ACTION_FIND_NEXT, nextAction);
-		//    actionManager.registerAction(ACTION_FIND_PREVIOUS, prevAction);
-	}
-
-	public void readExternal(Element element) throws InvalidDataException
-	{
-		configuration.readExternal(element);
-	}
-
-	public void writeExternal(Element element) throws WriteExternalException
-	{
-		configuration.writeExternal(element);
-	}
-
-	/**
-	 * Returns the configuration of this plugin
-	 *
-	 * @return the configuration object
-	 * @see Config
-	 */
-	@Nonnull
-	public Config getConfig()
-	{
-		return configuration;
-	}
-
-	public void setConfig(@Nonnull Config configuration)
-	{
-		this.configuration = configuration;
-	}
-
-	public static XPathAppComponent getInstance()
-	{
-		return ApplicationManager.getApplication().getComponent(XPathAppComponent.class);
 	}
 
 	class MyFindAction extends AnAction implements DumbAware
@@ -285,16 +227,5 @@ public class XPathAppComponent implements ApplicationComponent, JDOMExternalizab
 			}
 		}
 		return ActionManager.getInstance().getId(action);
-	}
-
-	public String[] getDefaultLiveTemplateFiles()
-	{
-		return new String[]{"/liveTemplates/xsl"};
-	}
-
-	@Override
-	public String[] getHiddenLiveTemplateFiles()
-	{
-		return null;
 	}
 }
