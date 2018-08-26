@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <idea-plugin>
-
-  <extensions defaultExtensionNs="com.intellij">
-    <applicationService serviceInterface="org.intellij.plugins.intelliLang.inject.config.XPathSupportProxy"
-                        serviceImplementation="org.intellij.plugins.intelliLang.inject.config.XPathSupportProxyImpl"/>
+  <extensions defaultExtensionNs="com.intellij.xml">
+    <intelliLang.xpathSupportProvider implementation="org.intellij.plugins.intelliLang.inject.config.XPathSupportProxyImpl"/>
   </extensions>
-
 </idea-plugin>

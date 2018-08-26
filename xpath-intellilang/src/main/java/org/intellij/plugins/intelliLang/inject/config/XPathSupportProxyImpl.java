@@ -15,10 +15,13 @@
  */
 package org.intellij.plugins.intelliLang.inject.config;
 
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.impl.source.xml.XmlTokenImpl;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlElementType;
+import java.util.Collections;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.xml.namespace.QName;
+
+import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.ContextType;
 import org.intellij.lang.xpath.context.NamespaceContext;
@@ -29,67 +32,87 @@ import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
-import javax.annotation.Nonnull;
-
-import javax.xml.namespace.QName;
-import java.util.Collections;
-import java.util.Set;
+import com.intellij.lang.Language;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.impl.source.xml.XmlTokenImpl;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlElementType;
+import consulo.intelliLang.xml.XPathSupportProvider;
 
 /**
-* @author Gregory.Shrago
-*/
-public class XPathSupportProxyImpl extends XPathSupportProxy {
-  private static class Provider extends ContextProvider {
-    private final XmlTokenImpl myDummyContext = new XmlTokenImpl(XmlElementType.XML_CONTENT_EMPTY, "") {
-      @Override
-      public boolean isValid() {
-        return true;
-      }
-    };
+ * @author Gregory.Shrago
+ */
+public class XPathSupportProxyImpl implements XPathSupportProvider
+{
+	private static class Provider extends ContextProvider
+	{
+		private final XmlTokenImpl myDummyContext = new XmlTokenImpl(XmlElementType.XML_CONTENT_EMPTY, "")
+		{
+			@Override
+			public boolean isValid()
+			{
+				return true;
+			}
+		};
 
-    @Nonnull
-    public ContextType getContextType() {
-      return XPathSupport.TYPE;
-    }
+		@Nonnull
+		public ContextType getContextType()
+		{
+			return XPathSupport.TYPE;
+		}
 
-    @Nonnull
-    @Override
-    public XPathType getExpectedType(XPathExpression expr) {
-      return XPathType.BOOLEAN;
-    }
+		@Nonnull
+		@Override
+		public XPathType getExpectedType(XPathExpression expr)
+		{
+			return XPathType.BOOLEAN;
+		}
 
-    public XmlElement getContextElement() {
-      // needed because the static method ContextProvider.isValid() checks this to determine if the provider
-      // is still valid - refactor this into an instance method ContextProvider.isValid()?
-      return myDummyContext;
-    }
+		public XmlElement getContextElement()
+		{
+			// needed because the static method ContextProvider.isValid() checks this to determine if the provider
+			// is still valid - refactor this into an instance method ContextProvider.isValid()?
+			return myDummyContext;
+		}
 
-    public NamespaceContext getNamespaceContext() {
-      return null;
-    }
+		public NamespaceContext getNamespaceContext()
+		{
+			return null;
+		}
 
-    public VariableContext getVariableContext() {
-      return null;
-    }
+		public VariableContext getVariableContext()
+		{
+			return null;
+		}
 
-    public Set<QName> getAttributes(boolean forValidation) {
-      return null;
-    }
+		public Set<QName> getAttributes(boolean forValidation)
+		{
+			return null;
+		}
 
-    public Set<QName> getElements(boolean forValidation) {
-      return null;
-    }
-  }
+		public Set<QName> getElements(boolean forValidation)
+		{
+			return null;
+		}
+	}
 
-  private final ContextProvider myProvider = new Provider();
-  private final XPathSupport mySupport = XPathSupport.getInstance();
+	private final ContextProvider myProvider = new Provider();
+	private final XPathSupport mySupport = XPathSupport.getInstance();
 
-  @Nonnull
-  public XPath createXPath(String expression) throws JaxenException {
-    return mySupport.createXPath(null, expression, Collections.<Namespace>emptyList());
-  }
+	@Override
+	public Language getLanguage()
+	{
+		return XPathFileType.XPATH.getLanguage();
+	}
 
-  public void attachContext(@Nonnull PsiFile file) {
-    myProvider.attachTo(file);
-  }
+	@Nonnull
+	public XPath createXPath(String expression) throws JaxenException
+	{
+		return mySupport.createXPath(null, expression, Collections.<Namespace>emptyList());
+	}
+
+	public void attachContext(@Nonnull PsiFile file)
+	{
+		myProvider.attachTo(file);
+	}
 }
