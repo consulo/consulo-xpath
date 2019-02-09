@@ -16,7 +16,7 @@
 package org.intellij.lang.xpath.psi.impl;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
+import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 
 import org.intellij.lang.xpath.XPath2ElementTypes;
@@ -30,8 +30,6 @@ import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathFunction;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
 import org.intellij.lang.xpath.psi.XPathType;
-
-import javax.annotation.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
@@ -42,6 +40,7 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.light.LightElement;
 import com.intellij.util.IncorrectOperationException;
+import consulo.ui.image.Image;
 
 public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunctionCall
 {
@@ -265,7 +264,7 @@ public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunc
 
 			@Override
 			@Nullable
-			public Icon getIcon(boolean open)
+			public Image getIcon()
 			{
 				return AllIcons.Nodes.Function;
 			}
