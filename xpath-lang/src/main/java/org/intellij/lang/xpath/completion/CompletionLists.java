@@ -43,6 +43,7 @@ import org.intellij.lang.xpath.psi.XPathToken;
 import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.psi.XPathVariable;
 import com.intellij.codeInsight.completion.CompletionInitializationContext;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Pair;
 import com.intellij.psi.PsiElement;
@@ -52,9 +53,7 @@ import com.intellij.psi.PsiRecursiveElementVisitor;
 import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.PlatformIcons;
 import com.intellij.util.containers.ContainerUtil;
-import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
 
 public class CompletionLists {
@@ -174,9 +173,9 @@ public class CompletionLists {
             type = "";
           }
           final String name = ((PsiNamedElement)o).getName();
-          lookups.add(new VariableLookup("$" + name, type, TargetAWT.to(IconDescriptorUpdaters.getIcon(((PsiNamedElement)o), 0)), (PsiElement)o));
+          lookups.add(new VariableLookup("$" + name, type, IconDescriptorUpdaters.getIcon(((PsiNamedElement)o), 0), (PsiElement)o));
         } else {
-          lookups.add(new VariableLookup("$" + String.valueOf(o), PlatformIcons.VARIABLE_ICON));
+          lookups.add(new VariableLookup("$" + String.valueOf(o), AllIcons.Nodes.Variable));
         }
       }
       return lookups;

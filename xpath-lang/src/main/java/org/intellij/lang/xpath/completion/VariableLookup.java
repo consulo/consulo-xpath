@@ -16,22 +16,21 @@
 package org.intellij.lang.xpath.completion;
 
 import com.intellij.codeInsight.lookup.LookupValueWithPriority;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.psi.PsiElement;
-import com.intellij.util.PlatformIcons;
-
-import javax.swing.*;
+import consulo.ui.image.Image;
 
 public class VariableLookup extends AbstractLookup implements Lookup, Iconable, LookupValueWithPriority, ElementProvider {
     private final String myType;
-    private final Icon myIcon;
+    private final Image myIcon;
     private final PsiElement myPsiElement;
 
-    public VariableLookup(String name, Icon icon) {
+    public VariableLookup(String name, Image icon) {
         this(name, "", icon, null);
     }
 
-    public VariableLookup(String name, String type, Icon icon, PsiElement psiElement) {
+    public VariableLookup(String name, String type, Image icon, PsiElement psiElement) {
         super(name, name);
         myType = type;
         myIcon = icon;
@@ -42,8 +41,8 @@ public class VariableLookup extends AbstractLookup implements Lookup, Iconable, 
         return myType;
     }
 
-    public Icon getIcon(int flags) {
-        return myIcon != null ? myIcon : PlatformIcons.VARIABLE_ICON;
+    public Image getIcon(int flags) {
+        return myIcon != null ? myIcon : AllIcons.Nodes.Variable;
     }
 
     public int getPriority() {

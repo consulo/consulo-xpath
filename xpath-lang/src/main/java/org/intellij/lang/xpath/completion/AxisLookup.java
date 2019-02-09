@@ -17,8 +17,7 @@ package org.intellij.lang.xpath.completion;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.util.Iconable;
-
-import javax.swing.*;
+import consulo.ui.image.Image;
 
 public class AxisLookup extends AbstractLookup implements Iconable {
     public AxisLookup(String name) {
@@ -29,7 +28,7 @@ public class AxisLookup extends AbstractLookup implements Iconable {
         return true;
     }
 
-    public Icon getIcon(int flags) {
+    public Image getIcon(int flags) {
         return AllIcons.Nodes.J2eeParameter;
     }
 }

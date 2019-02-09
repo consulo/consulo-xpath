@@ -15,12 +15,11 @@
  */
 package org.intellij.lang.xpath.completion;
 
-import javax.swing.Icon;
-
 import org.intellij.lang.xpath.context.functions.Function;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.Iconable;
+import consulo.ui.image.Image;
 
 public class FunctionLookup extends AbstractLookup implements Iconable
 {
@@ -64,7 +63,7 @@ public class FunctionLookup extends AbstractLookup implements Iconable
 	}
 
 	@Override
-	public Icon getIcon(int flags)
+	public Image getIcon(int flags)
 	{
 		return AllIcons.Nodes.Function;
 	}
