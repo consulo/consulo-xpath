@@ -15,39 +15,6 @@
  */
 package org.intellij.plugins.xpathView.ui;
 
-import static org.intellij.plugins.xpathView.util.Copyable.Util.copy;
-
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
-import javax.xml.namespace.QName;
-
-import org.intellij.lang.xpath.XPathFileType;
-import org.intellij.lang.xpath.context.ContextProvider;
-import org.intellij.lang.xpath.context.ContextType;
-import org.intellij.lang.xpath.context.NamespaceContext;
-import org.intellij.lang.xpath.context.SimpleVariableContext;
-import org.intellij.lang.xpath.context.VariableContext;
-import org.intellij.lang.xpath.psi.XPathElement;
-import org.intellij.plugins.xpathView.util.MyPsiUtil;
-import org.intellij.plugins.xpathView.util.Namespace;
-import org.intellij.plugins.xpathView.util.Variable;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.ide.DataManager;
 import com.intellij.javaee.ExternalResourceManager;
@@ -57,25 +24,36 @@ import com.intellij.openapi.fileTypes.LanguageFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.ui.Splitter;
-import com.intellij.openapi.util.DimensionService;
 import com.intellij.openapi.util.Pair;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.xml.XmlElement;
-import com.intellij.ui.AnActionButton;
-import com.intellij.ui.AnActionButtonRunnable;
-import com.intellij.ui.IdeBorderFactory;
-import com.intellij.ui.JBColor;
-import com.intellij.ui.ToolbarDecorator;
+import com.intellij.ui.*;
 import com.intellij.util.containers.BidirectionalMap;
 import com.intellij.util.ui.Table;
 import com.intellij.util.ui.UIUtil;
+import org.intellij.lang.xpath.XPathFileType;
+import org.intellij.lang.xpath.context.*;
+import org.intellij.lang.xpath.psi.XPathElement;
+import org.intellij.plugins.xpathView.util.MyPsiUtil;
+import org.intellij.plugins.xpathView.util.Namespace;
+import org.intellij.plugins.xpathView.util.Variable;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
+import javax.xml.namespace.QName;
+import java.awt.*;
+import java.util.List;
+import java.util.*;
+
+import static org.intellij.plugins.xpathView.util.Copyable.Util.copy;
 
 public class EditContextDialog extends DialogWrapper
 {
-	private final DimensionService myDimensionService = DimensionService.getInstance();
-
 	private final Set<String> myUnresolvedPrefixes;
 
 	private final JTable myVariableTable;
@@ -84,7 +62,7 @@ public class EditContextDialog extends DialogWrapper
 	private final JTable myNamespaceTable;
 	private final NamespaceTableModel myNamespaceTableModel;
 	private final ContextProvider myContextProvider;
-	private Splitter mySplitter;
+	private JBSplitter mySplitter;
 
 	public EditContextDialog(Project project, Set<String> unresolvedPrefixes, Collection<Namespace> namespaces, Collection<Variable> variables, ContextProvider contextProvider)
 	{
@@ -175,12 +153,7 @@ public class EditContextDialog extends DialogWrapper
 		}).disableUpDownActions().createPanel();
 		UIUtil.addBorder(n, IdeBorderFactory.createTitledBorder("Namespaces", false));
 
-		int extendedState = myDimensionService.getExtendedState(getDimensionServiceKey());
-		if(extendedState == -1)
-		{
-			extendedState = 400;
-		}
-		mySplitter = new Splitter(true, extendedState / 1000f);
+		mySplitter = new JBSplitter(true, getDimensionServiceKey(), 400 / 1000f);
 		mySplitter.setHonorComponentsMinimumSize(true);
 		mySplitter.setFirstComponent(n);
 		mySplitter.setSecondComponent(p);
@@ -226,15 +199,6 @@ public class EditContextDialog extends DialogWrapper
 			}
 		}
 		super.doOKAction();
-	}
-
-	public void show()
-	{
-		super.show();
-		if(mySplitter != null)
-		{
-			myDimensionService.setExtendedState(getDimensionServiceKey(), (int) (mySplitter.getProportion() * 1000));
-		}
 	}
 
 	private String getError(final Expression expression)

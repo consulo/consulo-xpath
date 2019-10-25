@@ -15,102 +15,128 @@
  */
 package org.intellij.plugins.xpathView.ui;
 
+import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.util.DimensionService;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public abstract class ModeSwitchableDialog extends DialogWrapper {
-    protected final DimensionService dimensionService = DimensionService.getInstance();
-    private Mode myMode;
+public abstract class ModeSwitchableDialog extends DialogWrapper
+{
+	protected final DimensionService dimensionService = DimensionService.getInstance();
+	private Mode myMode;
 
-    public ModeSwitchableDialog(com.intellij.openapi.project.Project project, boolean canBeParent) {
-        super(project, canBeParent);
+	public ModeSwitchableDialog(com.intellij.openapi.project.Project project, boolean canBeParent)
+	{
+		super(project, canBeParent);
 
-        final int state = dimensionService.getExtendedState(getPrivateDimensionServiceKey() + ".MODE");
-        myMode = (state == -1 ? Mode.values()[0] : Mode.values()[state]);
-    }
+		final int state = PropertiesComponent.getInstance().getInt(getPrivateDimensionServiceKey() + ".MODE", -1);
+		myMode = (state == -1 ? Mode.values()[0] : Mode.values()[state]);
+	}
 
-    protected void init() {
-        final Mode mode = myMode;
-        myMode = null;
-        setMode(mode);
+	protected void init()
+	{
+		final Mode mode = myMode;
+		myMode = null;
+		setMode(mode);
 
-        super.init();
-    }
+		super.init();
+	}
 
-    @Nonnull
-    protected Action[] createActions() {
-        return new Action[]{ getOKAction(), getCancelAction(), new AbstractAction(myMode.other().getName()) {
-            public void actionPerformed(ActionEvent e) {
-                putValue(Action.NAME, myMode.getName());
+	@Nonnull
+	protected Action[] createActions()
+	{
+		return new Action[]{
+				getOKAction(),
+				getCancelAction(),
+				new AbstractAction(myMode.other().getName())
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						putValue(Action.NAME, myMode.getName());
 
-                dimensionService.setSize(getPrivateDimensionKey(), getSize());
+						dimensionService.setSize(getPrivateDimensionKey(), getSize());
 
-                setMode(myMode.other());
-                final Dimension size = dimensionService.getSize(getPrivateDimensionKey());
-                if (size != null) {
-                    setSize(size.width, size.height);
-                    validate();
-                } else {
-                    pack();
-                }
-            }
-        } };
-    }
+						setMode(myMode.other());
+						final Dimension size = dimensionService.getSize(getPrivateDimensionKey());
+						if(size != null)
+						{
+							setSize(size.width, size.height);
+							validate();
+						}
+						else
+						{
+							pack();
+						}
+					}
+				}
+		};
+	}
 
-    public final Mode getMode() {
-        return myMode;
-    }
+	public final Mode getMode()
+	{
+		return myMode;
+	}
 
-    protected final void setMode(Mode mode) {
-        setModeImpl(mode);
-        this.myMode = mode;
-    }
+	protected final void setMode(Mode mode)
+	{
+		setModeImpl(mode);
+		this.myMode = mode;
+	}
 
-    public void show() {
-        final Window window = SwingUtilities.windowForComponent(getContentPane());
-        window.addWindowListener(new WindowAdapter() {
-            public void windowOpened(WindowEvent e) {
-                final Dimension size = dimensionService.getSize(getPrivateDimensionKey());
-                if (size != null) {
-                    setSize(size.width, size.height);
-                    validate();
-                }
-            }
-        });
+	public void show()
+	{
+		final Window window = SwingUtilities.windowForComponent(getContentPane());
+		window.addWindowListener(new WindowAdapter()
+		{
+			public void windowOpened(WindowEvent e)
+			{
+				final Dimension size = dimensionService.getSize(getPrivateDimensionKey());
+				if(size != null)
+				{
+					setSize(size.width, size.height);
+					validate();
+				}
+			}
+		});
 
-        super.show();
+		super.show();
 
-        dimensionService.setSize(getPrivateDimensionKey(), getSize());
-        dimensionService.setLocation(getPrivateDimensionKey(), getLocation());
-        dimensionService.setExtendedState(getPrivateDimensionServiceKey() + ".MODE", myMode.ordinal());
-    }
+		dimensionService.setSize(getPrivateDimensionKey(), getSize());
+		dimensionService.setLocation(getPrivateDimensionKey(), getLocation());
+		PropertiesComponent.getInstance().setValue(getPrivateDimensionServiceKey() + ".MODE", myMode.ordinal(), -1);
+	}
 
-    protected abstract void setModeImpl(Mode mode);
+	protected abstract void setModeImpl(Mode mode);
 
-    public Point getInitialLocation() {
-        return dimensionService.getLocation(getPrivateDimensionKey());
-    }
+	public Point getInitialLocation()
+	{
+		return dimensionService.getLocation(getPrivateDimensionKey());
+	}
 
-    protected abstract String getPrivateDimensionServiceKey();
+	protected abstract String getPrivateDimensionServiceKey();
 
-    protected final String getPrivateDimensionKey() {
-        return getPrivateDimensionServiceKey() + "." + myMode.toString();
-    }
+	protected final String getPrivateDimensionKey()
+	{
+		return getPrivateDimensionServiceKey() + "." + myMode.toString();
+	}
 
-    /** @deprecated we gotta do this ourselves because this value is cached but the key for this dialog changes with mode changes */
-    protected final String getDimensionServiceKey() {
-        //noinspection ConstantConditions
-        return null;
-    }
+	/**
+	 * @deprecated we gotta do this ourselves because this value is cached but the key for this dialog changes with mode changes
+	 */
+	protected final String getDimensionServiceKey()
+	{
+		//noinspection ConstantConditions
+		return null;
+	}
 
-    public boolean isOK() {
-        return getExitCode() == OK_EXIT_CODE;
-    }
+	public boolean isOK()
+	{
+		return getExitCode() == OK_EXIT_CODE;
+	}
 }
