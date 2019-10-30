@@ -69,12 +69,8 @@ public class MultilineEditor extends JPanel {
 
               return editor;
           }
-
-          @Override
-          protected boolean isOneLineMode() {
-              return false;
-          }
         };
+        myEditorTextField.setOneLineMode(false);
         add(myEditorTextField, BorderLayout.CENTER);
         model.addListDataListener(new ListDataListener() {
             public void intervalAdded(ListDataEvent e) {
