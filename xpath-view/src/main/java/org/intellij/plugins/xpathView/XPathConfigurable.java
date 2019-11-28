@@ -15,15 +15,15 @@
  */
 package org.intellij.plugins.xpathView;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.JComponent;
-
-import org.intellij.plugins.xpathView.ui.ConfigUI;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
-import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xpath.view.XPathViewConfig;
+import org.intellij.plugins.xpathView.ui.ConfigUI;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.*;
 
 public class XPathConfigurable implements SearchableConfigurable
 {
@@ -51,7 +51,7 @@ public class XPathConfigurable implements SearchableConfigurable
 		return null;
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public JComponent createComponent()
 	{
 		configUI = new ConfigUI(XPathViewConfig.getInstance().getState());
@@ -59,13 +59,13 @@ public class XPathConfigurable implements SearchableConfigurable
 		return configUI;
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public boolean isModified()
 	{
 		return configUI != null && !configUI.getConfig().equals(XPathViewConfig.getInstance().getState());
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public void apply() throws ConfigurationException
 	{
 		if(configUI != null)
@@ -74,7 +74,7 @@ public class XPathConfigurable implements SearchableConfigurable
 		}
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public void reset()
 	{
 		if(configUI != null)
@@ -83,7 +83,7 @@ public class XPathConfigurable implements SearchableConfigurable
 		}
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public void disposeUIResources()
 	{
 		configUI = null;

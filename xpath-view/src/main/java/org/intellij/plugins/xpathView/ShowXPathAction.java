@@ -15,20 +15,6 @@
  */
 package org.intellij.plugins.xpathView;
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import org.intellij.plugins.xpathView.support.XPathSupport;
-import org.intellij.plugins.xpathView.util.HighlighterUtil;
 import com.intellij.codeInsight.hint.HintManagerImpl;
 import com.intellij.idea.ActionsBundle;
 import com.intellij.openapi.actionSystem.ActionPlaces;
@@ -51,12 +37,20 @@ import com.intellij.ui.InplaceButton;
 import com.intellij.ui.LightweightHint;
 import com.intellij.ui.components.panels.NonOpaquePanel;
 import com.intellij.util.PlatformIcons;
-import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xpath.view.XPathViewConfig;
+import org.intellij.plugins.xpathView.support.XPathSupport;
+import org.intellij.plugins.xpathView.util.HighlighterUtil;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ShowXPathAction extends XPathAction
 {
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public void update(AnActionEvent event)
 	{
 		super.update(event);
@@ -82,7 +76,7 @@ public class ShowXPathAction extends XPathAction
 		return node != null;
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public void actionPerformed(AnActionEvent e)
 	{
 		final Editor editor = e.getData(LangDataKeys.EDITOR);

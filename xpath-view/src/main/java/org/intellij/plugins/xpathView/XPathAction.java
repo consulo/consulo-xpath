@@ -15,22 +15,18 @@
  */
 package org.intellij.plugins.xpathView;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.lang.dtd.DTDLanguage;
-import com.intellij.openapi.actionSystem.ActionPlaces;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.actionSystem.Presentation;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
-import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xpath.view.XPathViewConfig;
+
+import javax.annotation.Nonnull;
 
 public abstract class XPathAction extends AnAction
 {
@@ -38,7 +34,7 @@ public abstract class XPathAction extends AnAction
 	{
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	public void update(@Nonnull AnActionEvent event)
 	{
 		super.update(event);

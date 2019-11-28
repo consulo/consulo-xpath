@@ -15,28 +15,9 @@
  */
 package org.intellij.plugins.xpathView;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Point;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.BevelBorder;
-
-import org.intellij.plugins.xpathView.util.HighlighterUtil;
 import com.intellij.codeInsight.hint.HintManagerImpl;
 import com.intellij.codeInsight.hint.HintUtil;
-import com.intellij.openapi.actionSystem.ActionManager;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.actionSystem.Shortcut;
-import com.intellij.openapi.actionSystem.ShortcutSet;
+import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.ScrollType;
 import com.intellij.openapi.editor.markup.RangeHighlighter;
@@ -45,7 +26,16 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.LightweightHint;
-import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.annotation.RequiredUIAccess;
+import org.intellij.plugins.xpathView.util.HighlighterUtil;
+
+import javax.annotation.Nonnull;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
+import java.util.List;
 
 /**
  * Application component.<br>
@@ -88,7 +78,7 @@ public class XPathAppComponent
 			setEnabledInModalContext(origAction.isEnabledInModalContext());
 		}
 
-		@RequiredDispatchThread
+		@RequiredUIAccess
 		public void actionPerformed(@Nonnull AnActionEvent event)
 		{
 			final Editor editor = event.getData(LangDataKeys.EDITOR);
