@@ -15,35 +15,27 @@
  */
 package org.intellij.lang.xpath.context;
 
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.xml.namespace.QName;
-
-import org.intellij.lang.xpath.XPathFile;
-import org.intellij.lang.xpath.XPathFileType;
-import org.intellij.lang.xpath.context.functions.DefaultFunctionContext;
-import org.intellij.lang.xpath.context.functions.FunctionContext;
-import org.intellij.lang.xpath.psi.PrefixedName;
-import org.intellij.lang.xpath.psi.QNameElement;
-import org.intellij.lang.xpath.psi.XPath2TypeElement;
-import org.intellij.lang.xpath.psi.XPathElement;
-import org.intellij.lang.xpath.psi.XPathExpression;
-import org.intellij.lang.xpath.psi.XPathNodeTest;
-import org.intellij.lang.xpath.psi.XPathType;
-import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
-
-import javax.annotation.Nullable;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.lang.Language;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
+import consulo.util.dataholder.Key;
 import consulo.xpath.context.NamespaceContextProvider;
+import org.intellij.lang.xpath.XPathFile;
+import org.intellij.lang.xpath.XPathFileType;
+import org.intellij.lang.xpath.context.functions.DefaultFunctionContext;
+import org.intellij.lang.xpath.context.functions.FunctionContext;
+import org.intellij.lang.xpath.psi.*;
+import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.xml.namespace.QName;
+import java.util.Set;
 
 public abstract class ContextProvider {
     /**
