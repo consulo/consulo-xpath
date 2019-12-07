@@ -32,7 +32,7 @@ public class XPathLexerTest extends LexerTestCase {
 
   @Override
   protected String getDirPath() {
-    return TestBase.getTestDataPath("xpath/parsing/lexer").substring(PathManager.getHomePath().length());
+    return TestBase.getTestDataPath("xpath/parsing/lexer");
   }
 
   public void testAttributeAxis() {

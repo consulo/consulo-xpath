@@ -16,7 +16,6 @@
 package org.intellij.lang.xpath;
 
 import com.intellij.lexer.Lexer;
-import com.intellij.openapi.application.PathManager;
 import com.intellij.testFramework.LexerTestCase;
 
 /*
@@ -32,7 +31,7 @@ public class XPath2LexerTest extends LexerTestCase {
 
   @Override
   protected String getDirPath() {
-    return TestBase.getTestDataPath("xpath2/parsing/lexer").substring(PathManager.getHomePath().length());
+    return TestBase.getTestDataPath("xpath2/parsing/lexer");
   }
 
   public void testNonKeywords() {
