@@ -15,11 +15,12 @@
  */
 package org.intellij.plugins.xpathView.ui;
 
-import com.intellij.openapi.Disposable;
-
 import javax.swing.*;
 
-public interface InputForm extends Disposable {
+import consulo.disposer.Disposable;
+
+public interface InputForm extends Disposable
+{
     JComponent getComponent();
 
     JLabel getIcon();
