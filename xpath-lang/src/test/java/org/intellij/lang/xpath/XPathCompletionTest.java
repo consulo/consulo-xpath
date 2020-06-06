@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath;
 
-public class XPathCompletionTest extends TestBase {
+public abstract class XPathCompletionTest extends TestBase {
 
   public void testAxis() throws Throwable {
         doXPathCompletion("ancestor", "ancestor-or-self", "attribute");

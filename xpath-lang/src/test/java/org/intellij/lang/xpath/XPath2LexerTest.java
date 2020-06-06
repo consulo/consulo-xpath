@@ -23,7 +23,7 @@ import com.intellij.testFramework.LexerTestCase;
 * User: sweinreuter
 * Date: 26.04.11
 */
-public class XPath2LexerTest extends LexerTestCase {
+public abstract class XPath2LexerTest extends LexerTestCase {
   @Override
   protected Lexer createLexer() {
     return XPathLexer.create(true);

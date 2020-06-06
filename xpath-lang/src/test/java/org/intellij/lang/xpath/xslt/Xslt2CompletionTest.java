@@ -22,7 +22,7 @@ import org.intellij.lang.xpath.TestBase;
 * User: sweinreuter
 * Date: 12.06.2008
 */
-public class Xslt2CompletionTest extends TestBase {
+public abstract class Xslt2CompletionTest extends TestBase {
 
     public void testCustomFunctions() throws Throwable {
         doXsltCompletion();

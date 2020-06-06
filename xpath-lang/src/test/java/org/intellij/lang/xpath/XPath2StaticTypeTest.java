@@ -15,12 +15,12 @@
  */
 package org.intellij.lang.xpath;
 
-import junit.framework.TestCase;
 import org.intellij.lang.xpath.psi.XPath2SequenceType;
 import org.intellij.lang.xpath.psi.XPath2Type;
 import org.intellij.lang.xpath.psi.XPathType;
+import junit.framework.TestCase;
 
-public class XPath2StaticTypeTest extends TestCase {
+public abstract class XPath2StaticTypeTest extends TestCase {
 
   public void testStatic() throws Throwable {
     assertTrue(XPathType.isAssignable(XPath2Type.NODE, XPath2Type.ITEM));

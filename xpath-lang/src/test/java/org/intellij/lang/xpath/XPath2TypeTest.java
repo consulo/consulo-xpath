@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath;
 
-public class XPath2TypeTest extends XPath2HighlightingTestBase {
+public abstract class XPath2TypeTest extends XPath2HighlightingTestBase {
 
   public void testQNameToQName() throws Throwable {
     doXPathHighlighting();

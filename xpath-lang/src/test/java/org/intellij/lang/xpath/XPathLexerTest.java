@@ -16,7 +16,6 @@
 package org.intellij.lang.xpath;
 
 import com.intellij.lexer.Lexer;
-import com.intellij.openapi.application.PathManager;
 import com.intellij.testFramework.LexerTestCase;
 
 /*
@@ -24,7 +23,7 @@ import com.intellij.testFramework.LexerTestCase;
 * User: sweinreuter
 * Date: 26.04.11
 */
-public class XPathLexerTest extends LexerTestCase {
+public abstract class XPathLexerTest extends LexerTestCase {
   @Override
   protected Lexer createLexer() {
     return XPathLexer.create(false);

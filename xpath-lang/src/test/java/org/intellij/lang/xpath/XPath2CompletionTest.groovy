@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath
 
-public class XPath2CompletionTest extends TestBase {
+public abstract class XPath2CompletionTest extends TestBase {
 
   public void testCastInsert() throws Throwable {
     TestNamespaceContext.install(getTestRootDisposable());

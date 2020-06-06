@@ -15,10 +15,14 @@
  */
 package org.intellij.lang.xpath;
 
+import org.intellij.lang.xpath.validation.inspections.CheckNodeTest;
+import org.intellij.lang.xpath.validation.inspections.HardwiredNamespacePrefix;
+import org.intellij.lang.xpath.validation.inspections.ImplicitTypeConversion;
+import org.intellij.lang.xpath.validation.inspections.IndexZeroPredicate;
+import org.intellij.lang.xpath.validation.inspections.RedundantTypeConversion;
 import com.intellij.util.ArrayUtil;
-import org.intellij.lang.xpath.validation.inspections.*;
 
-public class XPathHighlightingTest extends TestBase {
+public abstract class XPathHighlightingTest extends TestBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();

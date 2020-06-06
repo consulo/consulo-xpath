@@ -20,7 +20,7 @@ package org.intellij.lang.xpath;
 * User: sweinreuter
 * Date: 10.03.11
 */
-public class XPath2HighlightingTest extends XPath2HighlightingTestBase {
+public abstract class XPath2HighlightingTest extends XPath2HighlightingTestBase {
   public void testIfInsideArgumentList() throws Throwable {
     doXPathHighlighting();
   }

@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath;
 
-public class XPath2ParsingTest extends TestBase {
+public abstract class XPath2ParsingTest extends TestBase {
 
   public void testComments() throws Throwable {
     doXPathHighlighting();
