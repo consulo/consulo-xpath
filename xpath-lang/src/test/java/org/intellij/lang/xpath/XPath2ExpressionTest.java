@@ -27,7 +27,7 @@ import static org.intellij.lang.xpath.psi.XPath2Type.*;
 * User: sweinreuter
 * Date: 10.03.11
 */
-public class XPath2ExpressionTest extends TestBase {
+public abstract class XPath2ExpressionTest extends TestBase {
   @Override
   protected void setUp() throws Exception {
     super.setUp();
