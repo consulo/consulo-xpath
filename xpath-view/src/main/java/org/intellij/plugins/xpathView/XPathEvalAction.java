@@ -134,7 +134,7 @@ public class XPathEvalAction extends XPathAction
 	protected void updateToolbar(AnActionEvent event)
 	{
 		super.updateToolbar(event);
-		event.getPresentation().setIcon(TargetAWT.to(XmlFileType.INSTANCE.getIcon()));
+		event.getPresentation().setIcon(XmlFileType.INSTANCE.getIcon());
 	}
 
 	@Override

@@ -16,6 +16,7 @@
 package org.intellij.plugins.xpathView;
 
 import com.intellij.codeInsight.hint.HintManagerImpl;
+import com.intellij.icons.AllIcons;
 import com.intellij.idea.ActionsBundle;
 import com.intellij.openapi.actionSystem.ActionPlaces;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -36,7 +37,6 @@ import com.intellij.ui.HintHint;
 import com.intellij.ui.InplaceButton;
 import com.intellij.ui.LightweightHint;
 import com.intellij.ui.components.panels.NonOpaquePanel;
-import com.intellij.util.PlatformIcons;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xpath.view.XPathViewConfig;
 import org.intellij.plugins.xpathView.support.XPathSupport;
@@ -132,7 +132,7 @@ public class ShowXPathAction extends XPathAction
 		p.add(label, BorderLayout.CENTER);
 
 
-		InplaceButton copy = new InplaceButton(ActionsBundle.message("action.EditorCopy.text"), PlatformIcons.COPY_ICON, new ActionListener()
+		InplaceButton copy = new InplaceButton(ActionsBundle.message("action.EditorCopy.text"), AllIcons.Actions.Copy, new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
