@@ -16,6 +16,7 @@
 package org.intellij.plugins.xpathView.ui;
 
 import com.intellij.ui.ListCellRendererWrapper;
+import consulo.awt.TargetAWT;
 import org.intellij.plugins.xpathView.Config;
 import org.intellij.plugins.xpathView.HistoryElement;
 import org.intellij.plugins.xpathView.eval.EvalExpressionDialog;
@@ -152,7 +153,7 @@ public abstract class InputExpressionDialog<FormType extends InputForm> extends 
 
     protected void init() {
         myForm.getIcon().setText(null);
-        myForm.getIcon().setIcon(Messages.getQuestionIcon());
+        myForm.getIcon().setIcon(TargetAWT.to(Messages.getQuestionIcon()));
 
         myForm.getEditContextButton().addActionListener(new ActionListener() {
 

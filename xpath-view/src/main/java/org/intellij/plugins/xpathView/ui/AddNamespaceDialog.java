@@ -21,6 +21,7 @@ import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.ui.DocumentAdapter;
 import com.intellij.util.ArrayUtil;
+import consulo.awt.TargetAWT;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -45,7 +46,7 @@ public class AddNamespaceDialog extends DialogWrapper {
         super(project, false);
 
         myIcon.setText(null);
-        myIcon.setIcon(Messages.getQuestionIcon());
+        myIcon.setIcon(TargetAWT.to(Messages.getQuestionIcon()));
 
         myURI.setModel(new DefaultComboBoxModel(ArrayUtil.toStringArray(uriList)));
         myURI.setSelectedItem("");
