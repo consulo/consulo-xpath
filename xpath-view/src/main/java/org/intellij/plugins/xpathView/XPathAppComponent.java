@@ -27,11 +27,12 @@ import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.LightweightHint;
 import consulo.ui.annotation.RequiredUIAccess;
+import jakarta.inject.Inject;
 import org.intellij.plugins.xpathView.util.HighlighterUtil;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Singleton;
+
+import jakarta.inject.Singleton;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;

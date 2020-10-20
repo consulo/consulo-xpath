@@ -1,7 +1,7 @@
 package consulo.xpath.view;
 
 import javax.annotation.Nonnull;
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 import org.intellij.plugins.xpathView.Config;
 import com.intellij.openapi.components.PersistentStateComponent;
