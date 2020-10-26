@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<consulo-plugin>
-	<extensions defaultExtensionNs="com.intellij.xml">
-		<intelliLang.xpathSupportProvider implementation="org.intellij.plugins.intelliLang.inject.config.XPathSupportProxyImpl"/>
-	</extensions>
-</consulo-plugin>

@@ -44,7 +44,6 @@
 	<modules>
 		<module>xpath-lang</module>
 		<module>xpath-impl</module>
-		<module>xpath-intellilang</module>
 		<module>xpath-view</module>
 	</modules>
 </project>

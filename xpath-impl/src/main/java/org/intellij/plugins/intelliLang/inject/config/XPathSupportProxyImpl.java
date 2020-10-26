@@ -15,12 +15,12 @@
  */
 package org.intellij.plugins.intelliLang.inject.config;
 
-import java.util.Collections;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.xml.namespace.QName;
-
+import com.intellij.lang.Language;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.impl.source.xml.XmlTokenImpl;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlElementType;
+import consulo.intelliLang.xml.XPathSupportProvider;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.ContextType;
@@ -32,12 +32,11 @@ import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
-import com.intellij.lang.Language;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.impl.source.xml.XmlTokenImpl;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlElementType;
-import consulo.intelliLang.xml.XPathSupportProvider;
+
+import javax.annotation.Nonnull;
+import javax.xml.namespace.QName;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * @author Gregory.Shrago
