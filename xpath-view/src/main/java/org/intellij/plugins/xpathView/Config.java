@@ -15,11 +15,11 @@
  */
 package org.intellij.plugins.xpathView;
 
-import java.awt.Color;
-import java.awt.Font;
-
-import org.intellij.plugins.xpathView.search.SearchScope;
 import com.intellij.openapi.editor.markup.TextAttributes;
+import consulo.ui.color.RGBColor;
+import org.intellij.plugins.xpathView.search.SearchScope;
+
+import java.awt.*;
 
 /**
  * Class that holds the plugin's configuration. All customizable settings are accessible via property getters/setters.
@@ -36,8 +36,8 @@ public class Config
 	public SearchScope SEARCH_SCOPE = new SearchScope();
 	public boolean MATCH_RECURSIVELY = false;
 
-	private final TextAttributes attributes = new TextAttributes(null, new Color(255, 213, 120), null, null, Font.PLAIN);
-	private final TextAttributes contextAttributes = new TextAttributes(null, new Color(194, 255, 212), null, null, Font.PLAIN);
+	private final TextAttributes attributes = new TextAttributes(null, new RGBColor(255, 213, 120), null, null, Font.PLAIN);
+	private final TextAttributes contextAttributes = new TextAttributes(null, new RGBColor(194, 255, 212), null, null, Font.PLAIN);
 	public boolean scrollToFirst = true;
 	public boolean bUseContextAtCursor = true;
 	public boolean bHighlightStartTagOnly = true;

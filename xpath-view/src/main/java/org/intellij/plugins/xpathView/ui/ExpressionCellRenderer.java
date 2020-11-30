@@ -21,6 +21,7 @@ import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.ui.EditorTextField;
+import consulo.awt.TargetAWT;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -58,7 +59,7 @@ public class ExpressionCellRenderer extends DefaultTableCellRenderer implements 
 
         protected EditorEx createEditor() {
             final EditorEx editor = super.createEditor();
-            editor.setBackgroundColor(ExpressionCellRenderer.this.getBackground());
+            editor.setBackgroundColor(TargetAWT.from(ExpressionCellRenderer.this.getBackground()));
             return editor;
         }
     }

@@ -26,13 +26,13 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.LightweightHint;
+import consulo.awt.TargetAWT;
 import consulo.ui.annotation.RequiredUIAccess;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import org.intellij.plugins.xpathView.util.HighlighterUtil;
 
 import javax.annotation.Nonnull;
-
-import jakarta.inject.Singleton;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -166,7 +166,7 @@ public class XPathAppComponent
 		final JLabel label = new JLabel(info);
 		label.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.WHITE, Gray._128), BorderFactory.createEmptyBorder(3, 5, 3, 5)));
 		label.setForeground(JBColor.foreground());
-		label.setBackground(HintUtil.INFORMATION_COLOR);
+		label.setBackground(TargetAWT.to(HintUtil.getInformationColor()));
 		label.setOpaque(true);
 		label.setFont(label.getFont().deriveFont(Font.BOLD));
 

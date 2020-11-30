@@ -16,12 +16,11 @@
 package org.intellij.plugins.xpathView.ui;
 
 import com.intellij.ui.IdeBorderFactory;
+import consulo.awt.TargetAWT;
+import consulo.ui.ColorBox;
 import org.intellij.plugins.xpathView.Config;
 
-import com.intellij.ui.ColorPanel;
-
 import javax.annotation.Nonnull;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -35,8 +34,8 @@ public class ConfigUI extends JPanel {
     private JCheckBox addErrorStripe;
     private JCheckBox showInToolbar;
     private JCheckBox showInMainMenu;
-    private ColorPanel chooseHighlight;
-    private ColorPanel chooseContext;
+    private ColorBox chooseHighlight;
+    private ColorBox chooseContext;
 
     public ConfigUI(Config configuration) {
         init();
@@ -100,8 +99,8 @@ public class ConfigUI extends JPanel {
         constraints.gridx = 1;
         constraints.weightx = 1;
 
-        chooseHighlight = new ColorPanel();
-        colors.add(chooseHighlight, constraints);
+        chooseHighlight = ColorBox.create();
+        colors.add(TargetAWT.to(chooseHighlight), constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 1;
@@ -112,8 +111,8 @@ public class ConfigUI extends JPanel {
         constraints.gridy = 1;
         constraints.weightx = 1;
 
-        chooseContext = new ColorPanel();
-        colors.add(chooseContext, constraints);
+        chooseContext = ColorBox.create();
+        colors.add(TargetAWT.to(chooseContext), constraints);
     }
 
     @Nonnull
@@ -125,9 +124,9 @@ public class ConfigUI extends JPanel {
         config.setAddErrorStripe(addErrorStripe.isSelected());
         config.SHOW_IN_TOOLBAR = showInToolbar.isSelected();
         config.SHOW_IN_MAIN_MENU = showInMainMenu.isSelected();
-        config.getAttributes().setBackgroundColor(chooseHighlight.getSelectedColor());
+        config.getAttributes().setBackgroundColor(chooseHighlight.getValue());
         if (useContextAtCursor.isSelected()) {
-            config.getContextAttributes().setBackgroundColor(chooseContext.getSelectedColor());
+            config.getContextAttributes().setBackgroundColor(chooseContext.getValue());
         }
         return config;
     }
@@ -139,22 +138,12 @@ public class ConfigUI extends JPanel {
         addErrorStripe.setSelected(configuration.isAddErrorStripe());
         showInToolbar.setSelected(configuration.SHOW_IN_TOOLBAR);
         showInMainMenu.setSelected(configuration.SHOW_IN_MAIN_MENU);
-        chooseHighlight.setSelectedColor(configuration.getAttributes().getBackgroundColor());
-        chooseContext.setSelectedColor(configuration.getContextAttributes().getBackgroundColor());
+        chooseHighlight.setValue(configuration.getAttributes().getBackgroundColor());
+        chooseContext.setValue(configuration.getContextAttributes().getBackgroundColor());
         stateChanged();
     }
 
     private void stateChanged() {
         chooseContext.setEnabled(useContextAtCursor.isSelected());
-    }
-
-    public static void main(String[] args) {
-        JFrame test = new JFrame("Config test");
-        test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        final JPanel comp = new JPanel(new BorderLayout());
-        comp.add(new ConfigUI(new Config()), BorderLayout.CENTER);
-        test.getContentPane().add(comp);
-        test.setSize(450, 450);
-        test.setVisible(true);
     }
 }
