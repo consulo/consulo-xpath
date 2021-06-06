@@ -1,12 +1,5 @@
 package org.intellij.plugins.xpathView.search;
 
-import gnu.trove.THashSet;
-
-import java.util.Collection;
-import java.util.Collections;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
@@ -28,6 +21,12 @@ import com.intellij.psi.search.PsiSearchScopeUtil;
 import com.intellij.util.Processor;
 import com.intellij.util.xmlb.annotations.Attribute;
 import com.intellij.util.xmlb.annotations.Tag;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * Copyright 2006 Sascha Weinreuter
@@ -215,7 +214,7 @@ public final class SearchScope
 					if(searchScope.isSearchInLibraries())
 					{
 						final OrderEnumerator enumerator = OrderEnumerator.orderEntries(project).withoutModuleSourceEntries().withoutDepModules();
-						final Collection<VirtualFile> libraryFiles = new THashSet<>();
+						final Collection<VirtualFile> libraryFiles = new HashSet<>();
 						Collections.addAll(libraryFiles, enumerator.getClassesRoots());
 						Collections.addAll(libraryFiles, enumerator.getSourceRoots());
 						final Processor<VirtualFile> adapter = virtualFile1 -> iterator.processFile(virtualFile1);
