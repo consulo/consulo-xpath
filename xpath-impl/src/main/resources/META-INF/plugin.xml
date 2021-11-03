@@ -6,6 +6,10 @@
 	<version>SNAPSHOT</version>
 	<vendor email="sascha.weinreuter@cit.de">Sascha Weinreuter</vendor>
 
+	<tags>
+		<tag>pattern.language</tag>
+	</tags>
+
 	<depends>com.intellij.xml</depends>
 
 	<extensionPoints>
