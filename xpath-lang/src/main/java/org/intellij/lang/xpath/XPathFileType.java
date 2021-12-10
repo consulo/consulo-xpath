@@ -15,12 +15,13 @@
  */
 package org.intellij.lang.xpath;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
 import icons.XpathIcons;
+
+import javax.annotation.Nonnull;
 
 public final class XPathFileType extends LanguageFileType
 {
@@ -41,9 +42,9 @@ public final class XPathFileType extends LanguageFileType
 
 	@Override
 	@Nonnull
-	public String getDescription()
+	public LocalizeValue getDescription()
 	{
-		return "XPath";
+		return LocalizeValue.localizeTODO("XPath");
 	}
 
 	@Override
