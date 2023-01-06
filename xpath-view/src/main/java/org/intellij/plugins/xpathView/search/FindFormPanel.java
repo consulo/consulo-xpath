@@ -15,9 +15,9 @@
  */
 package org.intellij.plugins.xpathView.search;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
 import consulo.disposer.Disposer;
+import consulo.module.Module;
+import consulo.project.Project;
 import org.intellij.plugins.xpathView.ui.InputForm;
 import org.intellij.plugins.xpathView.ui.InputFormPanel;
 

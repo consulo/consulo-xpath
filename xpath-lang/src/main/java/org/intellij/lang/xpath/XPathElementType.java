@@ -15,15 +15,15 @@
  */
 package org.intellij.lang.xpath;
 
-import com.intellij.lang.Language;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.Language;
+import consulo.language.ast.IElementType;
 
 public class XPathElementType extends IElementType {
-    XPathElementType(String s) {
-        this(s, XPathFileType.XPATH.getLanguage());
-    }
+  XPathElementType(String s) {
+    this(s, XPathFileType.XPATH.getLanguage());
+  }
 
-    protected XPathElementType(String s, Language language) {
-        super(s, language);
-    }
+  protected XPathElementType(String s, Language language) {
+    super(s, language);
+  }
 }

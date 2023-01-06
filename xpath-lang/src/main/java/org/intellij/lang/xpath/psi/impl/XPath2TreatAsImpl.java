@@ -15,13 +15,13 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.psi.XPath2ElementVisitor;
 import org.intellij.lang.xpath.psi.XPath2TreatAs;
 import org.intellij.lang.xpath.psi.XPath2TypeElement;
 import org.intellij.lang.xpath.psi.XPathType;
+
+import javax.annotation.Nonnull;
 
 public class XPath2TreatAsImpl extends XPath2ElementImpl implements XPath2TreatAs {
   public XPath2TreatAsImpl(ASTNode node) {

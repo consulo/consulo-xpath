@@ -15,9 +15,9 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import javax.annotation.Nonnull;
+import consulo.language.psi.PsiReference;
 
-import com.intellij.psi.PsiReference;
+import javax.annotation.Nonnull;
 
 public interface XPathVariableReference extends XPathExpression, QNameElement, PsiReference {
     @Nonnull

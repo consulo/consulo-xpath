@@ -15,27 +15,21 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.TokenSet;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiNamedElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.context.VariableContext;
-import org.intellij.lang.xpath.psi.PrefixedName;
-import org.intellij.lang.xpath.psi.XPathElementVisitor;
-import org.intellij.lang.xpath.psi.XPathType;
-import org.intellij.lang.xpath.psi.XPathVariable;
-import org.intellij.lang.xpath.psi.XPathVariableDeclaration;
-import org.intellij.lang.xpath.psi.XPathVariableHolder;
-import org.intellij.lang.xpath.psi.XPathVariableReference;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.IncorrectOperationException;
+import org.intellij.lang.xpath.psi.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class XPathVariableReferenceImpl extends XPathElementImpl implements XPathVariableReference {
     private static final TokenSet QNAME_FILTER = TokenSet.create(XPathTokenTypes.VARIABLE_PREFIX, XPathTokenTypes.VARIABLE_NAME);

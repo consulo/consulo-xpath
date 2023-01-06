@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.psi.XPath2ElementVisitor;
 import org.intellij.lang.xpath.psi.XPathElementVisitor;
 

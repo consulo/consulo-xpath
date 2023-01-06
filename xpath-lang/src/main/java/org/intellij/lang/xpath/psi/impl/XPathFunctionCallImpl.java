@@ -15,361 +15,305 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.xml.namespace.QName;
-
+import consulo.application.AllIcons;
+import consulo.language.ast.ASTNode;
+import consulo.language.impl.psi.LightElement;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiReference;
+import consulo.language.util.IncorrectOperationException;
+import consulo.navigation.ItemPresentation;
+import consulo.navigation.NavigationItem;
+import consulo.ui.image.Image;
+import consulo.util.lang.Pair;
 import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.context.functions.Function;
-import org.intellij.lang.xpath.psi.PrefixedName;
-import org.intellij.lang.xpath.psi.XPathElementVisitor;
-import org.intellij.lang.xpath.psi.XPathExpression;
-import org.intellij.lang.xpath.psi.XPathFunction;
-import org.intellij.lang.xpath.psi.XPathFunctionCall;
-import org.intellij.lang.xpath.psi.XPathType;
-import com.intellij.icons.AllIcons;
-import com.intellij.lang.ASTNode;
-import com.intellij.navigation.ItemPresentation;
-import com.intellij.navigation.NavigationItem;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.impl.light.LightElement;
-import com.intellij.util.IncorrectOperationException;
-import consulo.ui.image.Image;
+import org.intellij.lang.xpath.psi.*;
 
-public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunctionCall
-{
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.xml.namespace.QName;
 
-	public XPathFunctionCallImpl(ASTNode node)
-	{
-		super(node);
-	}
+public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunctionCall {
 
-	@Override
-	@Nonnull
-	public XPathExpression[] getArgumentList()
-	{
-		final ASTNode[] nodes = getNode().getChildren(XPath2ElementTypes.EXPRESSIONS);
-		final XPathExpression[] expressions = new XPathExpression[nodes.length];
-		for(int i = 0; i < expressions.length; i++)
-		{
-			expressions[i] = (XPathExpression) nodes[i].getPsi();
-		}
-		return expressions;
-	}
+  public XPathFunctionCallImpl(ASTNode node) {
+    super(node);
+  }
 
-	@Override
-	public PsiElement add(@Nonnull PsiElement psiElement) throws IncorrectOperationException
-	{
-		if(psiElement instanceof XPathExpression)
-		{
-			if(getNode().getChildren(XPath2ElementTypes.EXPRESSIONS).length > 0)
-			{
-				final XPathExpression child = XPathChangeUtil.createExpression(this, "f(a,b)");
-				final ASTNode comma = child.getNode().findChildByType(XPathTokenTypes.COMMA);
-				assert comma != null;
-				final PsiElement psi = comma.getPsi();
-				assert psi != null;
-				add(psi);
-			}
-		}
-		final ASTNode paren = getNode().findChildByType(XPathTokenTypes.RPAREN);
-		if(paren != null)
-		{
-			return super.addBefore(psiElement, paren.getPsi());
-		}
-		return super.add(psiElement);
-	}
+  @Override
+  @Nonnull
+  public XPathExpression[] getArgumentList() {
+    final ASTNode[] nodes = getNode().getChildren(XPath2ElementTypes.EXPRESSIONS);
+    final XPathExpression[] expressions = new XPathExpression[nodes.length];
+    for (int i = 0; i < expressions.length; i++) {
+      expressions[i] = (XPathExpression)nodes[i].getPsi();
+    }
+    return expressions;
+  }
 
-	@Override
-	@Nonnull
-	public String getFunctionName()
-	{
-		final ASTNode node = getNameNode();
-		final String name = node != null ? node.getText() : null;
-		assert name != null : unexpectedPsiAssertion();
-		return name;
-	}
+  @Override
+  public PsiElement add(@Nonnull PsiElement psiElement) throws IncorrectOperationException {
+    if (psiElement instanceof XPathExpression) {
+      if (getNode().getChildren(XPath2ElementTypes.EXPRESSIONS).length > 0) {
+        final XPathExpression child = XPathChangeUtil.createExpression(this, "f(a,b)");
+        final ASTNode comma = child.getNode().findChildByType(XPathTokenTypes.COMMA);
+        assert comma != null;
+        final PsiElement psi = comma.getPsi();
+        assert psi != null;
+        add(psi);
+      }
+    }
+    final ASTNode paren = getNode().findChildByType(XPathTokenTypes.RPAREN);
+    if (paren != null) {
+      return super.addBefore(psiElement, paren.getPsi());
+    }
+    return super.add(psiElement);
+  }
 
-	@Nullable
-	protected ASTNode getNameNode()
-	{
-		return getNode().findChildByType(XPathTokenTypes.FUNCTION_NAME);
-	}
+  @Override
+  @Nonnull
+  public String getFunctionName() {
+    final ASTNode node = getNameNode();
+    final String name = node != null ? node.getText() : null;
+    assert name != null : unexpectedPsiAssertion();
+    return name;
+  }
 
-	@Nullable
-	protected ASTNode getPrefixNode()
-	{
-		return getNode().findChildByType(XPathTokenTypes.EXT_PREFIX);
-	}
+  @Nullable
+  protected ASTNode getNameNode() {
+    return getNode().findChildByType(XPathTokenTypes.FUNCTION_NAME);
+  }
 
-	@Override
-	@Nonnull
-	public PrefixedName getQName()
-	{
-		final ASTNode node = getNameNode();
-		assert node != null : unexpectedPsiAssertion();
-		return new PrefixedNameImpl(getPrefixNode(), node);
-	}
+  @Nullable
+  protected ASTNode getPrefixNode() {
+    return getNode().findChildByType(XPathTokenTypes.EXT_PREFIX);
+  }
 
-	@Override
-	@Nullable
-	public XPathFunction resolve()
-	{
-		final Reference reference = getReference();
-		return reference != null ? reference.resolve() : null;
-	}
+  @Override
+  @Nonnull
+  public PrefixedName getQName() {
+    final ASTNode node = getNameNode();
+    assert node != null : unexpectedPsiAssertion();
+    return new PrefixedNameImpl(getPrefixNode(), node);
+  }
 
-	@Override
-	@Nullable
-	public Reference getReference()
-	{
-		final ASTNode nameNode = getNameNode();
-		if(nameNode != null)
-		{
-			return new Reference(nameNode);
-		}
-		return null;
-	}
+  @Override
+  @Nullable
+  public XPathFunction resolve() {
+    final Reference reference = getReference();
+    return reference != null ? reference.resolve() : null;
+  }
 
-	@Override
-	@Nonnull
-	public PsiReference[] getReferences()
-	{
-		if(getPrefixNode() != null && getNameNode() != null)
-		{
-			return new PsiReference[]{
-					getReference(),
-					new PrefixReferenceImpl(this, getPrefixNode())
-			};
-		}
-		return super.getReferences();
-	}
+  @Override
+  @Nullable
+  public Reference getReference() {
+    final ASTNode nameNode = getNameNode();
+    if (nameNode != null) {
+      return new Reference(nameNode);
+    }
+    return null;
+  }
 
-	@Override
-	@Nonnull
-	public XPathType getType()
-	{
-		final XPathFunction f = resolve();
-		if(f == null)
-		{
-			return XPathType.UNKNOWN;
-		}
-		final Function function = f.getDeclaration();
-		return function != null ? function.getReturnType() : XPathType.UNKNOWN;
-	}
+  @Override
+  @Nonnull
+  public PsiReference[] getReferences() {
+    if (getPrefixNode() != null && getNameNode() != null) {
+      return new PsiReference[]{
+        getReference(),
+        new PrefixReferenceImpl(this, getPrefixNode())
+      };
+    }
+    return super.getReferences();
+  }
 
-	class Reference extends ReferenceBase
-	{
-		private volatile Pair<String, XPathFunction> myFunction;
+  @Override
+  @Nonnull
+  public XPathType getType() {
+    final XPathFunction f = resolve();
+    if (f == null) {
+      return XPathType.UNKNOWN;
+    }
+    final Function function = f.getDeclaration();
+    return function != null ? function.getReturnType() : XPathType.UNKNOWN;
+  }
 
-		public Reference(ASTNode node)
-		{
-			super(XPathFunctionCallImpl.this, node);
-		}
+  class Reference extends ReferenceBase {
+    private volatile Pair<String, XPathFunction> myFunction;
 
-		@Override
-		@Nullable
-		public XPathFunction resolve()
-		{
-			if(myFunction != null && myFunction.first.equals(getQName().toString()))
-			{
-				return myFunction.second;
-			}
-			else
-			{
-				final XPathFunctionCallImpl call = XPathFunctionCallImpl.this;
-				final ContextProvider contextProvider = call.getXPathContext();
-				final QName name = contextProvider.getQName(call);
-				if(name == null)
-				{
-					return null;
-				}
+    public Reference(ASTNode node) {
+      super(XPathFunctionCallImpl.this, node);
+    }
 
-				final Function functionDecl = contextProvider.getFunctionContext().resolve(name, getArgumentList().length);
-				final XPathFunction impl = functionDecl == null ? null : functionDecl instanceof XPathFunction ? (XPathFunction) functionDecl : new
-						FunctionImpl(functionDecl);
-				return (myFunction = Pair.create(getQName().toString(), impl)).second;
-			}
-		}
+    @Override
+    @Nullable
+    public XPathFunction resolve() {
+      if (myFunction != null && myFunction.first.equals(getQName().toString())) {
+        return myFunction.second;
+      }
+      else {
+        final XPathFunctionCallImpl call = XPathFunctionCallImpl.this;
+        final ContextProvider contextProvider = call.getXPathContext();
+        final QName name = contextProvider.getQName(call);
+        if (name == null) {
+          return null;
+        }
 
-		@Override
-		@Nonnull
-		public Object[] getVariants()
-		{
-			return EMPTY_ARRAY;
-		}
+        final Function functionDecl = contextProvider.getFunctionContext().resolve(name, getArgumentList().length);
+        final XPathFunction impl = functionDecl == null ? null : functionDecl instanceof XPathFunction ? (XPathFunction)functionDecl : new
+          FunctionImpl(functionDecl);
+        return (myFunction = Pair.create(getQName().toString(), impl)).second;
+      }
+    }
 
-		@Override
-		public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException
-		{
-			final XPathFunctionCall child = (XPathFunctionCall) XPathChangeUtil.createExpression(getElement(), newElementName + "()");
+    @Override
+    @Nonnull
+    public Object[] getVariants() {
+      return EMPTY_ARRAY;
+    }
 
-			final PrefixedNameImpl newName = ((PrefixedNameImpl) child.getQName());
-			final PrefixedNameImpl oldName = ((PrefixedNameImpl) getQName());
+    @Override
+    public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
+      final XPathFunctionCall child = (XPathFunctionCall)XPathChangeUtil.createExpression(getElement(), newElementName + "()");
 
-			final ASTNode localNode = newName.getLocalNode();
-			getNode().replaceChild(oldName.getLocalNode(), localNode);
+      final PrefixedNameImpl newName = ((PrefixedNameImpl)child.getQName());
+      final PrefixedNameImpl oldName = ((PrefixedNameImpl)getQName());
 
-			final PsiElement psi = getNode().getPsi();
-			assert psi != null;
-			return psi;
-		}
+      final ASTNode localNode = newName.getLocalNode();
+      getNode().replaceChild(oldName.getLocalNode(), localNode);
 
-		class FunctionImpl extends LightElement implements XPathFunction, ItemPresentation, NavigationItem
-		{
-			private final Function myFunctionDecl;
+      final PsiElement psi = getNode().getPsi();
+      assert psi != null;
+      return psi;
+    }
 
-			public FunctionImpl(Function functionDecl)
-			{
-				super(getElement().getManager(), getElement().getContainingFile().getLanguage());
-				myFunctionDecl = functionDecl;
-			}
+    class FunctionImpl extends LightElement implements XPathFunction, ItemPresentation, NavigationItem {
+      private final Function myFunctionDecl;
 
-			@Override
-			public PsiElement getContext()
-			{
-				return XPathFunctionCallImpl.this;
-			}
+      public FunctionImpl(Function functionDecl) {
+        super(getElement().getManager(), getElement().getContainingFile().getLanguage());
+        myFunctionDecl = functionDecl;
+      }
 
-			@Override
-			public String getName()
-			{
-				return myFunctionDecl != null ? myFunctionDecl.getName() : getFunctionName();
-			}
+      @Override
+      public PsiElement getContext() {
+        return XPathFunctionCallImpl.this;
+      }
 
-			@Override
-			public String toString()
-			{
-				return "Function: " + getName();
-			}
+      @Override
+      public String getName() {
+        return myFunctionDecl != null ? myFunctionDecl.getName() : getFunctionName();
+      }
 
-			@Override
-			@SuppressWarnings({"ConstantConditions"})
-			public String getText()
-			{
-				return getName();
-			}
+      @Override
+      public String toString() {
+        return "Function: " + getName();
+      }
 
-			@Override
-			public ItemPresentation getPresentation()
-			{
-				return this;
-			}
+      @Override
+      @SuppressWarnings({"ConstantConditions"})
+      public String getText() {
+        return getName();
+      }
 
-			@Override
-			@Nullable
-			public Image getIcon()
-			{
-				return AllIcons.Nodes.Function;
-			}
+      @Override
+      public ItemPresentation getPresentation() {
+        return this;
+      }
 
-			@Override
-			@Nullable
-			public String getLocationString()
-			{
-				return null;
-			}
+      @Override
+      @Nullable
+      public Image getIcon() {
+        return AllIcons.Nodes.Function;
+      }
 
-			@Override
-			@Nullable
-			public String getPresentableText()
-			{
-				return myFunctionDecl != null ? myFunctionDecl.buildSignature() +
-						": " + myFunctionDecl.getReturnType().getName() : null;
-			}
+      @Override
+      @Nullable
+      public String getLocationString() {
+        return null;
+      }
 
-			@Override
-			public void accept(@Nonnull PsiElementVisitor visitor)
-			{
-			}
+      @Override
+      @Nullable
+      public String getPresentableText() {
+        return myFunctionDecl != null ? myFunctionDecl.buildSignature() +
+          ": " + myFunctionDecl.getReturnType().getName() : null;
+      }
 
-			@Override
-			public PsiElement copy()
-			{
-				return this;
-			}
+      @Override
+      public void accept(@Nonnull PsiElementVisitor visitor) {
+      }
 
-			@Override
-			public PsiElement setName(@Nonnull String name) throws IncorrectOperationException
-			{
-				throw new IncorrectOperationException();
-			}
+      @Override
+      public PsiElement copy() {
+        return this;
+      }
 
-			@Override
-			public boolean isValid()
-			{
-				return true;
-			}
+      @Override
+      public PsiElement setName(@Nonnull String name) throws IncorrectOperationException {
+        throw new IncorrectOperationException();
+      }
 
-			@Override
-			public int hashCode()
-			{
-				final String name = getName();
-				return name != null ? name.hashCode() : 0;
-			}
+      @Override
+      public boolean isValid() {
+        return true;
+      }
 
-			@Override
-			public boolean equals(Object obj)
-			{
-				if(obj == null || obj.getClass() != getClass())
-				{
-					return false;
-				}
-				final String name = ((FunctionImpl) obj).getName();
-				return name != null && name.equals(getName()) || getName() == null;
-			}
+      @Override
+      public int hashCode() {
+        final String name = getName();
+        return name != null ? name.hashCode() : 0;
+      }
 
-			@Override
-			public Function getDeclaration()
-			{
-				return myFunctionDecl;
-			}
+      @Override
+      public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != getClass()) {
+          return false;
+        }
+        final String name = ((FunctionImpl)obj).getName();
+        return name != null && name.equals(getName()) || getName() == null;
+      }
 
-			@Override
-			public boolean isWritable()
-			{
-				return false;
-			}
+      @Override
+      public Function getDeclaration() {
+        return myFunctionDecl;
+      }
 
-			@Override
-			public boolean isPhysical()
-			{
-				// hack
-				// required to prevent renaming of functions. Shouldn't IDEA check for isWritable()?
-				// com.intellij.refactoring.rename.PsiElementRenameHandler:
-				// if (!PsiManager.getInstance(project).isInProject(element) && element.isPhysical()) { ... }
-				return true;
-			}
+      @Override
+      public boolean isWritable() {
+        return false;
+      }
 
-			@Override
-			public ContextProvider getXPathContext()
-			{
-				return ContextProvider.getContextProvider(getElement());
-			}
+      @Override
+      public boolean isPhysical() {
+        // hack
+        // required to prevent renaming of functions. Shouldn't IDEA check for isWritable()?
+        // com.intellij.refactoring.rename.PsiElementRenameHandler:
+        // if (!PsiManager.getInstance(project).isInProject(element) && element.isPhysical()) { ... }
+        return true;
+      }
 
-			@Override
-			public XPathVersion getXPathVersion()
-			{
-				return getElement().getXPathVersion();
-			}
+      @Override
+      public ContextProvider getXPathContext() {
+        return ContextProvider.getContextProvider(getElement());
+      }
 
-			@Override
-			public void accept(XPathElementVisitor visitor)
-			{
-				visitor.visitXPathFunction(this);
-			}
-		}
-	}
+      @Override
+      public XPathVersion getXPathVersion() {
+        return getElement().getXPathVersion();
+      }
 
-	@Override
-	public void accept(XPathElementVisitor visitor)
-	{
-		visitor.visitXPathFunctionCall(this);
-	}
+      @Override
+      public void accept(XPathElementVisitor visitor) {
+        visitor.visitXPathFunction(this);
+      }
+    }
+  }
+
+  @Override
+  public void accept(XPathElementVisitor visitor) {
+    visitor.visitXPathFunctionCall(this);
+  }
 }

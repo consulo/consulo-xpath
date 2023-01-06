@@ -22,21 +22,21 @@
  */
 package org.intellij.lang.xpath.validation.inspections.quickfix;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInsight.FileModificationService;
-import com.intellij.codeInspection.LocalQuickFixAndIntentionActionOnPsiElement;
-import com.intellij.codeInspection.SuppressIntentionAction;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.util.IncorrectOperationException;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.FileModificationService;
+import consulo.language.editor.inspection.LocalQuickFixAndIntentionActionOnPsiElement;
+import consulo.language.editor.intention.SuppressIntentionAction;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.project.Project;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.validation.inspections.XPathInspection;
+
+import javax.annotation.Nonnull;
 
 public interface XPathQuickFixFactory {
   Fix<XPathExpression>[] createImplicitTypeConversionFixes(XPathExpression expression, XPathType type, boolean explicit);
@@ -71,13 +71,14 @@ public interface XPathQuickFixFactory {
                        @Nonnull PsiFile file,
                        Editor editor, @Nonnull PsiElement startElement,
                        @Nonnull PsiElement endElement) {
-      if(!FileModificationService.getInstance().prepareFileForWrite(file)) {
+      if (!FileModificationService.getInstance().prepareFileForWrite(file)) {
         return;
       }
 
       try {
         invokeImpl(project, file);
-      } catch (IncorrectOperationException e) {
+      }
+      catch (IncorrectOperationException e) {
         Logger.getInstance(getClass().getName()).error(e);
       }
     }

@@ -15,19 +15,16 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen.extensions;
 
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
 import org.intellij.lang.xpath.context.functions.Parameter;
 import org.intellij.lang.xpath.psi.XPathType;
-
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-
 import org.jaxen.Context;
 import org.jaxen.Function;
 import org.jaxen.FunctionCallException;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public abstract class BasicFileInfoFunction extends FunctionImplementation implements Function {
     public BasicFileInfoFunction(String name, XPathType returnType, Parameter... parameters) {

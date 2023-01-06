@@ -15,14 +15,13 @@
  */
 package org.intellij.plugins.xpathView.eval;
 
+import consulo.project.Project;
+import consulo.project.ui.wm.ToolWindowId;
+import consulo.project.ui.wm.ToolWindowManager;
+import consulo.ui.ex.toolWindow.ToolWindow;
 import org.intellij.plugins.xpathView.Config;
 import org.intellij.plugins.xpathView.HistoryElement;
 import org.intellij.plugins.xpathView.ui.InputExpressionDialog;
-
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.wm.ToolWindowManager;
-import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.openapi.wm.ToolWindowId;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;

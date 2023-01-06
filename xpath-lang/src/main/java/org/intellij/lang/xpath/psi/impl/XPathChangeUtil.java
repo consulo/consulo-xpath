@@ -16,18 +16,18 @@
 
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.LocalTimeCounter;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.project.Project;
+import consulo.util.lang.LocalTimeCounter;
+import consulo.virtualFileSystem.fileType.FileType;
 import org.intellij.lang.xpath.XPathFile;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathVariableReference;
+
+import javax.annotation.Nonnull;
 
 public class XPathChangeUtil {
     private XPathChangeUtil() {
@@ -55,6 +55,7 @@ public class XPathChangeUtil {
 
     @Nonnull
     public static XPathFile createXPathFile(Project project, String text, FileType fileType) {
-        return (XPathFile)PsiFileFactory.getInstance(project).createFileFromText("dummy." + fileType.getDefaultExtension(), fileType, text, LocalTimeCounter.currentTime(), true);
+        return (XPathFile)PsiFileFactory.getInstance(project).createFileFromText("dummy." + fileType.getDefaultExtension(), fileType, text, LocalTimeCounter
+          .currentTime(), true);
     }
 }

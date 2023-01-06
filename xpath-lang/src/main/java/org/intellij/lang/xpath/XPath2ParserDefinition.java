@@ -15,123 +15,111 @@
  */
 package org.intellij.lang.xpath;
 
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.IFileElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.file.FileViewProvider;
+import consulo.language.lexer.Lexer;
+import consulo.language.parser.PsiParser;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.version.LanguageVersion;
+import org.intellij.lang.xpath.psi.impl.*;
+
 import javax.annotation.Nonnull;
 
-import org.intellij.lang.xpath.psi.impl.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.PsiParser;
-import com.intellij.lexer.Lexer;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.TokenSet;
-import consulo.lang.LanguageVersion;
-
 /*
-* Created by IntelliJ IDEA.
-* User: sweinreuter
-* Date: 04.01.11
-*/
-public class XPath2ParserDefinition extends XPathParserDefinition
-{
-	@Nonnull
-	@Override
-	public Lexer createLexer(@Nonnull LanguageVersion languageVersion)
-	{
-		return XPathLexer.create(true);
-	}
+ * Created by IntelliJ IDEA.
+ * User: sweinreuter
+ * Date: 04.01.11
+ */
+@ExtensionImpl
+public class XPath2ParserDefinition extends XPathParserDefinition {
+  @Nonnull
+  @Override
+  public Language getLanguage() {
+    return XPath2Language.INSTANCE;
+  }
 
-	@Override
-	@Nonnull
-	public IFileElementType getFileNodeType()
-	{
-		return XPath2ElementTypes.FILE;
-	}
+  @Nonnull
+  @Override
+  public Lexer createLexer(@Nonnull LanguageVersion languageVersion) {
+    return XPathLexer.create(true);
+  }
 
-	@Nonnull
-	@Override
-	public PsiParser createParser(@Nonnull LanguageVersion languageVersion)
-	{
-		return new XPath2Parser();
-	}
+  @Override
+  @Nonnull
+  public IFileElementType getFileNodeType() {
+    return XPath2ElementTypes.FILE;
+  }
 
-	@Nonnull
-	@Override
-	public TokenSet getCommentTokens(LanguageVersion languageVersion)
-	{
-		return TokenSet.create(XPath2TokenTypes.COMMENT);
-	}
+  @Nonnull
+  @Override
+  public PsiParser createParser(@Nonnull LanguageVersion languageVersion) {
+    return new XPath2Parser();
+  }
 
-	@Override
-	protected PsiElement createElement(IElementType type, ASTNode node)
-	{
-		final PsiElement element = super.createElement(type, node);
-		if(element != null)
-		{
-			return element;
-		}
+  @Nonnull
+  @Override
+  public TokenSet getCommentTokens(LanguageVersion languageVersion) {
+    return TokenSet.create(XPath2TokenTypes.COMMENT);
+  }
 
-		if(type == XPath2ElementTypes.VARIABLE_DECL)
-		{
-			return new XPath2VariableImpl(node);
-		}
-		else if(type == XPath2ElementTypes.CONTEXT_ITEM)
-		{
-			return new XPathStepImpl(node);
-		}
-		else if(type == XPath2ElementTypes.IF)
-		{
-			return new XPath2IfImpl(node);
-		}
-		else if(type == XPath2ElementTypes.QUANTIFIED)
-		{
-			return new XPath2QuantifiedExprImpl(node);
-		}
-		else if(type == XPath2ElementTypes.FOR)
-		{
-			return new XPath2ForImpl(node);
-		}
-		else if(type == XPath2ElementTypes.BINDING_SEQ)
-		{
-			return new XPath2VariableDeclarationImpl(node);
-		}
-		else if(type == XPath2ElementTypes.SEQUENCE)
-		{
-			return new XPath2SequenceImpl(node);
-		}
-		else if(type == XPath2ElementTypes.RANGE_EXPRESSION)
-		{
-			return new XPath2RangeExpressionImpl(node);
-		}
-		else if(type == XPath2ElementTypes.CASTABLE_AS)
-		{
-			return new XPath2CastableImpl(node);
-		}
-		else if(type == XPath2ElementTypes.CAST_AS)
-		{
-			return new XPath2CastImpl(node);
-		}
-		else if(type == XPath2ElementTypes.INSTANCE_OF)
-		{
-			return new XPath2InstanceOfImpl(node);
-		}
-		else if(type == XPath2ElementTypes.TREAT_AS)
-		{
-			return new XPath2TreatAsImpl(node);
-		}
-		else if(XPath2ElementTypes.TYPE_ELEMENTS.contains(type))
-		{
-			return new XPath2TypeElementImpl(node);
-		}
+  @Override
+  protected PsiElement createElement(IElementType type, ASTNode node) {
+    final PsiElement element = super.createElement(type, node);
+    if (element != null) {
+      return element;
+    }
 
-		return null;
-	}
+    if (type == XPath2ElementTypes.VARIABLE_DECL) {
+      return new XPath2VariableImpl(node);
+    }
+    else if (type == XPath2ElementTypes.CONTEXT_ITEM) {
+      return new XPathStepImpl(node);
+    }
+    else if (type == XPath2ElementTypes.IF) {
+      return new XPath2IfImpl(node);
+    }
+    else if (type == XPath2ElementTypes.QUANTIFIED) {
+      return new XPath2QuantifiedExprImpl(node);
+    }
+    else if (type == XPath2ElementTypes.FOR) {
+      return new XPath2ForImpl(node);
+    }
+    else if (type == XPath2ElementTypes.BINDING_SEQ) {
+      return new XPath2VariableDeclarationImpl(node);
+    }
+    else if (type == XPath2ElementTypes.SEQUENCE) {
+      return new XPath2SequenceImpl(node);
+    }
+    else if (type == XPath2ElementTypes.RANGE_EXPRESSION) {
+      return new XPath2RangeExpressionImpl(node);
+    }
+    else if (type == XPath2ElementTypes.CASTABLE_AS) {
+      return new XPath2CastableImpl(node);
+    }
+    else if (type == XPath2ElementTypes.CAST_AS) {
+      return new XPath2CastImpl(node);
+    }
+    else if (type == XPath2ElementTypes.INSTANCE_OF) {
+      return new XPath2InstanceOfImpl(node);
+    }
+    else if (type == XPath2ElementTypes.TREAT_AS) {
+      return new XPath2TreatAsImpl(node);
+    }
+    else if (XPath2ElementTypes.TYPE_ELEMENTS.contains(type)) {
+      return new XPath2TypeElementImpl(node);
+    }
 
-	@Override
-	public PsiFile createFile(FileViewProvider viewProvider)
-	{
-		return new XPathFile(viewProvider, XPathFileType.XPATH2);
-	}
+    return null;
+  }
+
+  @Override
+  public PsiFile createFile(FileViewProvider viewProvider) {
+    return new XPathFile(viewProvider, XPathFileType.XPATH2);
+  }
 }

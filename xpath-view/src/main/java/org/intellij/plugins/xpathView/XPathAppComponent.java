@@ -15,19 +15,23 @@
  */
 package org.intellij.plugins.xpathView;
 
-import com.intellij.codeInsight.hint.HintManagerImpl;
-import com.intellij.codeInsight.hint.HintUtil;
-import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.ScrollType;
-import com.intellij.openapi.editor.markup.RangeHighlighter;
-import com.intellij.openapi.keymap.KeymapUtil;
-import com.intellij.openapi.project.DumbAware;
-import com.intellij.ui.Gray;
-import com.intellij.ui.JBColor;
-import com.intellij.ui.LightweightHint;
-import consulo.awt.TargetAWT;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.application.dumb.DumbAware;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.ScrollType;
+import consulo.codeEditor.markup.RangeHighlighter;
+import consulo.ide.impl.idea.codeInsight.hint.HintManagerImpl;
+import consulo.ide.impl.idea.ui.LightweightHint;
+import consulo.language.editor.LangDataKeys;
+import consulo.language.editor.ui.awt.HintUtil;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.ex.Gray;
+import consulo.ui.ex.JBColor;
+import consulo.ui.ex.action.*;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
+import consulo.ui.ex.keymap.util.KeymapUtil;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.intellij.plugins.xpathView.util.HighlighterUtil;
@@ -44,135 +48,120 @@ import java.util.List;
  * ESC-Action to clear highlighters.<br>
  */
 @Singleton
-public class XPathAppComponent
-{
-	private static final String ACTION_FIND_NEXT = "FindNext";
-	private static final String ACTION_FIND_PREVIOUS = "FindPrevious";
+@ServiceAPI(value = ComponentScope.APPLICATION, lazy = false)
+@ServiceImpl
+public class XPathAppComponent {
+  private static final String ACTION_FIND_NEXT = "FindNext";
+  private static final String ACTION_FIND_PREVIOUS = "FindPrevious";
 
-	private AnAction nextAction;
-	private AnAction prevAction;
+  private AnAction nextAction;
+  private AnAction prevAction;
 
-	@Inject
-	XPathAppComponent(ActionManager actionManager)
-	{
-		nextAction = actionManager.getAction(ACTION_FIND_NEXT);
-		prevAction = actionManager.getAction(ACTION_FIND_PREVIOUS);
+  @Inject
+  XPathAppComponent(ActionManager actionManager) {
+    nextAction = actionManager.getAction(ACTION_FIND_NEXT);
+    prevAction = actionManager.getAction(ACTION_FIND_PREVIOUS);
 
-		actionManager.unregisterAction(ACTION_FIND_NEXT);
-		actionManager.unregisterAction(ACTION_FIND_PREVIOUS);
-		actionManager.registerAction(ACTION_FIND_NEXT, new MyFindAction(nextAction, false));
-		actionManager.registerAction(ACTION_FIND_PREVIOUS, new MyFindAction(prevAction, true));
-	}
+    actionManager.unregisterAction(ACTION_FIND_NEXT);
+    actionManager.unregisterAction(ACTION_FIND_PREVIOUS);
+    actionManager.registerAction(ACTION_FIND_NEXT, new MyFindAction(nextAction, false));
+    actionManager.registerAction(ACTION_FIND_PREVIOUS, new MyFindAction(prevAction, true));
+  }
 
-	class MyFindAction extends AnAction implements DumbAware
-	{
-		private final AnAction origAction;
-		private final boolean isPrev;
-		private boolean wrapAround;
+  class MyFindAction extends AnAction implements DumbAware {
+    private final AnAction origAction;
+    private final boolean isPrev;
+    private boolean wrapAround;
 
-		public MyFindAction(AnAction origAction, boolean isPrev)
-		{
-			this.origAction = origAction;
-			this.isPrev = isPrev;
+    public MyFindAction(AnAction origAction, boolean isPrev) {
+      this.origAction = origAction;
+      this.isPrev = isPrev;
 
-			copyFrom(origAction);
-			setEnabledInModalContext(origAction.isEnabledInModalContext());
-		}
+      copyFrom(origAction);
+      setEnabledInModalContext(origAction.isEnabledInModalContext());
+    }
 
-		@RequiredUIAccess
-		public void actionPerformed(@Nonnull AnActionEvent event)
-		{
-			final Editor editor = event.getData(LangDataKeys.EDITOR);
-			if(editor != null)
-			{
-				if(HighlighterUtil.hasHighlighters(editor))
-				{
-					final int offset = editor.getCaretModel().getOffset();
-					final List<RangeHighlighter> hl = HighlighterUtil.getHighlighters(editor);
-					int diff = Integer.MAX_VALUE;
-					RangeHighlighter next = null;
-					for(RangeHighlighter highlighter : hl)
-					{
-						if(isPrev)
-						{
-							if(highlighter.getStartOffset() < offset && offset - highlighter.getStartOffset() < diff)
-							{
-								diff = offset - highlighter.getStartOffset();
-								next = highlighter;
-							}
-						}
-						else
-						{
-							if(highlighter.getStartOffset() > offset && highlighter.getStartOffset() - offset < diff)
-							{
-								diff = highlighter.getStartOffset() - offset;
-								next = highlighter;
-							}
-						}
-					}
+    @RequiredUIAccess
+    public void actionPerformed(@Nonnull AnActionEvent event) {
+      final Editor editor = event.getData(LangDataKeys.EDITOR);
+      if (editor != null) {
+        if (HighlighterUtil.hasHighlighters(editor)) {
+          final int offset = editor.getCaretModel().getOffset();
+          final List<RangeHighlighter> hl = HighlighterUtil.getHighlighters(editor);
+          int diff = Integer.MAX_VALUE;
+          RangeHighlighter next = null;
+          for (RangeHighlighter highlighter : hl) {
+            if (isPrev) {
+              if (highlighter.getStartOffset() < offset && offset - highlighter.getStartOffset() < diff) {
+                diff = offset - highlighter.getStartOffset();
+                next = highlighter;
+              }
+            }
+            else {
+              if (highlighter.getStartOffset() > offset && highlighter.getStartOffset() - offset < diff) {
+                diff = highlighter.getStartOffset() - offset;
+                next = highlighter;
+              }
+            }
+          }
 
-					final int startOffset;
-					if(next != null)
-					{
-						startOffset = next.getStartOffset();
-					}
-					else if(wrapAround)
-					{
-						startOffset = hl.get(isPrev ? hl.size() - 1 : 0).getStartOffset();
-					}
-					else
-					{
-						final String info = (isPrev ? "First" : "Last") + " XPath match reached. Press " + (isPrev ? getShortcutText(prevAction) : getShortcutText(nextAction)) + " to search from the" +
-								" " + (isPrev ? "bottom" : "top");
+          final int startOffset;
+          if (next != null) {
+            startOffset = next.getStartOffset();
+          }
+          else if (wrapAround) {
+            startOffset = hl.get(isPrev ? hl.size() - 1 : 0).getStartOffset();
+          }
+          else {
+            final String info =
+              (isPrev ? "First" : "Last") + " XPath match reached. Press " + (isPrev ? getShortcutText(prevAction) : getShortcutText(
+                nextAction)) + " to search from the" +
+                " " + (isPrev ? "bottom" : "top");
 
-						showEditorHint(info, editor);
+            showEditorHint(info, editor);
 
-						wrapAround = true;
-						return;
-					}
-					editor.getScrollingModel().scrollTo(editor.offsetToLogicalPosition(startOffset), ScrollType.MAKE_VISIBLE);
-					editor.getCaretModel().moveToOffset(startOffset);
-					wrapAround = false;
-					return;
-				}
-			}
-			origAction.actionPerformed(event);
-		}
+            wrapAround = true;
+            return;
+          }
+          editor.getScrollingModel().scrollTo(editor.offsetToLogicalPosition(startOffset), ScrollType.MAKE_VISIBLE);
+          editor.getCaretModel().moveToOffset(startOffset);
+          wrapAround = false;
+          return;
+        }
+      }
+      origAction.actionPerformed(event);
+    }
 
-		public void update(AnActionEvent event)
-		{
-			super.update(event);
-			origAction.update(event);
-		}
+    public void update(AnActionEvent event) {
+      super.update(event);
+      origAction.update(event);
+    }
 
-		public boolean displayTextInToolbar()
-		{
-			return origAction.displayTextInToolbar();
-		}
+    public boolean displayTextInToolbar() {
+      return origAction.displayTextInToolbar();
+    }
 
-		public void setDefaultIcon(boolean b)
-		{
-			origAction.setDefaultIcon(b);
-		}
+    public void setDefaultIcon(boolean b) {
+      origAction.setDefaultIcon(b);
+    }
 
-		public boolean isDefaultIcon()
-		{
-			return origAction.isDefaultIcon();
-		}
-	}
+    public boolean isDefaultIcon() {
+      return origAction.isDefaultIcon();
+    }
+  }
 
-	public static void showEditorHint(final String info, final Editor editor)
-	{
-		final JLabel label = new JLabel(info);
-		label.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.WHITE, Gray._128), BorderFactory.createEmptyBorder(3, 5, 3, 5)));
-		label.setForeground(JBColor.foreground());
-		label.setBackground(TargetAWT.to(HintUtil.getInformationColor()));
-		label.setOpaque(true);
-		label.setFont(label.getFont().deriveFont(Font.BOLD));
+  public static void showEditorHint(final String info, final Editor editor) {
+    final JLabel label = new JLabel(info);
+    label.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.WHITE, Gray._128),
+                                                       BorderFactory.createEmptyBorder(3, 5, 3, 5)));
+    label.setForeground(JBColor.foreground());
+    label.setBackground(TargetAWT.to(HintUtil.getInformationColor()));
+    label.setOpaque(true);
+    label.setFont(label.getFont().deriveFont(Font.BOLD));
 
-		final LightweightHint h = new LightweightHint(label);
-		final Point point = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
-		SwingUtilities.convertPointToScreen(point, editor.getContentComponent());
+    final LightweightHint h = new LightweightHint(label);
+    final Point point = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
+    SwingUtilities.convertPointToScreen(point, editor.getContentComponent());
 
         /* === HintManager API Info ===
 
@@ -196,27 +185,23 @@ public class XPathAppComponent
                 public static final int HIDE_IF_OUT_OF_EDITOR = 0x40;
                 public static final int UPDATE_BY_SCROLLING = 0x80;
         */
-		final int flags = HintManagerImpl.HIDE_BY_ANY_KEY | HintManagerImpl.HIDE_BY_SCROLLING;
-		HintManagerImpl.getInstanceImpl().showEditorHint(h, editor, point, flags, 0, false);
-	}
+    final int flags = HintManagerImpl.HIDE_BY_ANY_KEY | HintManagerImpl.HIDE_BY_SCROLLING;
+    HintManagerImpl.getInstanceImpl().showEditorHint(h, editor, point, flags, 0, false);
+  }
 
-	public static String getShortcutText(final String actionId)
-	{
-		return getShortcutText(ActionManager.getInstance().getAction(actionId));
-	}
+  public static String getShortcutText(final String actionId) {
+    return getShortcutText(ActionManager.getInstance().getAction(actionId));
+  }
 
-	public static String getShortcutText(final AnAction action)
-	{
-		final ShortcutSet shortcutSet = action.getShortcutSet();
-		final Shortcut[] shortcuts = shortcutSet.getShortcuts();
-		for(final Shortcut shortcut : shortcuts)
-		{
-			final String text = KeymapUtil.getShortcutText(shortcut);
-			if(text.length() > 0)
-			{
-				return text;
-			}
-		}
-		return ActionManager.getInstance().getId(action);
-	}
+  public static String getShortcutText(final AnAction action) {
+    final ShortcutSet shortcutSet = action.getShortcutSet();
+    final Shortcut[] shortcuts = shortcutSet.getShortcuts();
+    for (final Shortcut shortcut : shortcuts) {
+      final String text = KeymapUtil.getShortcutText(shortcut);
+      if (text.length() > 0) {
+        return text;
+      }
+    }
+    return ActionManager.getInstance().getId(action);
+  }
 }

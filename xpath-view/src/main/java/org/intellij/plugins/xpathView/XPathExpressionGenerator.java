@@ -15,20 +15,20 @@
  */
 package org.intellij.plugins.xpathView;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.XmlElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.logging.Logger;
+import consulo.xml.psi.XmlElementVisitor;
+import consulo.xml.psi.xml.*;
 import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.support.jaxen.PsiDocumentNavigator;
 import org.intellij.plugins.xpathView.util.MyPsiUtil;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
-import javax.annotation.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

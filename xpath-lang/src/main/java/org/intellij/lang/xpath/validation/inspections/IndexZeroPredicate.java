@@ -15,18 +15,20 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.Language;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.scheme.InspectionManager;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
 public class IndexZeroPredicate extends XPathInspection {
     protected Visitor createVisitor(InspectionManager manager, boolean isOnTheFly) {
         return new MyVisitor(manager, isOnTheFly);
@@ -62,8 +64,8 @@ public class IndexZeroPredicate extends XPathInspection {
                 if (expr.getType() == XPathType.NUMBER) {
                     if (isZero(expr)) {
                         addProblem(myManager.createProblemDescriptor(expr,
-                                "Use of 0 as predicate index", (LocalQuickFix)null,
-                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING, myOnTheFly));
+                                                                     "Use of 0 as predicate index", (LocalQuickFix)null,
+                                                                     ProblemHighlightType.GENERIC_ERROR_OR_WARNING, myOnTheFly));
                     }
                 } else if (expr instanceof XPathBinaryExpression && expr.getType() == XPathType.BOOLEAN) {
                     final XPathBinaryExpression expression = (XPathBinaryExpression)expr;

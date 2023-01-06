@@ -15,12 +15,12 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.psi.PsiElement;
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.XPathVersion;
+
+import javax.annotation.Nonnull;
 
 @SuppressWarnings({"NullableProblems"})
 public interface XPathElement extends PsiElement {

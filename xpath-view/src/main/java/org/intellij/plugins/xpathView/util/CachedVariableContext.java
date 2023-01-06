@@ -22,7 +22,7 @@
  */
 package org.intellij.plugins.xpathView.util;
 
-import com.intellij.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlElement;
 import org.jaxen.UnresolvableException;
 import org.jaxen.VariableContext;
 import org.jaxen.XPath;

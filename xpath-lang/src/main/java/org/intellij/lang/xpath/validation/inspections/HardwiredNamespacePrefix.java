@@ -15,13 +15,12 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.Language;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.scheme.InspectionManager;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.XPathBinaryExpression;
@@ -31,72 +30,78 @@ import org.intellij.lang.xpath.psi.XPathString;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
 public class HardwiredNamespacePrefix extends XPathInspection {
-    public boolean isEnabledByDefault() {
-        return true;
-    }
+  public boolean isEnabledByDefault() {
+    return true;
+  }
 
-    protected Visitor createVisitor(final InspectionManager manager, final boolean isOnTheFly) {
-        return new Visitor(manager, isOnTheFly) {
-            protected void checkExpression(XPathExpression expression) {
-                if (!(expression instanceof XPathBinaryExpression)) {
-                    return;
-                }
-                final XPathBinaryExpression expr = (XPathBinaryExpression)expression;
-                if (expr.getOperator() == XPathTokenTypes.EQ) {
-                    final XPathExpression lop = expr.getLOperand();
-                    final XPathExpression rop = expr.getROperand();
-
-                    if (isNameComparison(lop, rop)) {
-                        assert rop != null;
-                        final ProblemDescriptor p = manager.createProblemDescriptor(rop, "Hardwired namespace prefix", isOnTheFly,
-                                                                                    LocalQuickFix.EMPTY_ARRAY,
-                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
-                        addProblem(p);
-                    } else if (isNameComparison(rop, lop)) {
-                        assert lop != null;
-                        final ProblemDescriptor p = manager.createProblemDescriptor(lop, "Hardwired namespace prefix", isOnTheFly,
-                                                                                    LocalQuickFix.EMPTY_ARRAY,
-                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
-                        addProblem(p);
-                    } else if (isNameFunctionCall(lop)) {
-                        // TODO
-                    } else if (isNameFunctionCall(rop)) {
-                        // TODO
-                    }
-                }
-            }
-        };
-    }
-
-    private static boolean isNameComparison(XPathExpression op1, XPathExpression op2) {
-        if (!isNameFunctionCall(op1)) return false;
-        if (!(op2 instanceof XPathString)) {
-            return false;
+  protected Visitor createVisitor(final InspectionManager manager, final boolean isOnTheFly) {
+    return new Visitor(manager, isOnTheFly) {
+      protected void checkExpression(XPathExpression expression) {
+        if (!(expression instanceof XPathBinaryExpression)) {
+          return;
         }
-        final String value = ((XPathString)op2).getValue();
-        return value != null && value.contains(":");
-    }
+        final XPathBinaryExpression expr = (XPathBinaryExpression)expression;
+        if (expr.getOperator() == XPathTokenTypes.EQ) {
+          final XPathExpression lop = expr.getLOperand();
+          final XPathExpression rop = expr.getROperand();
 
-    private static boolean isNameFunctionCall(XPathExpression op1) {
-        if (!(op1 instanceof XPathFunctionCall)) {
-            return false;
+          if (isNameComparison(lop, rop)) {
+            assert rop != null;
+            final ProblemDescriptor p = manager.createProblemDescriptor(rop, "Hardwired namespace prefix", isOnTheFly,
+                                                                        LocalQuickFix.EMPTY_ARRAY,
+                                                                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
+            addProblem(p);
+          }
+          else if (isNameComparison(rop, lop)) {
+            assert lop != null;
+            final ProblemDescriptor p = manager.createProblemDescriptor(lop, "Hardwired namespace prefix", isOnTheFly,
+                                                                        LocalQuickFix.EMPTY_ARRAY,
+                                                                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
+            addProblem(p);
+          }
+          else if (isNameFunctionCall(lop)) {
+            // TODO
+          }
+          else if (isNameFunctionCall(rop)) {
+            // TODO
+          }
         }
-        final XPathFunctionCall fc = (XPathFunctionCall)op1;
-        return "name".equals(fc.getFunctionName());
-    }
+      }
+    };
+  }
 
-    @Nls
-    @Nonnull
-    public String getDisplayName() {
-        return "Hardwired Namespace Prefix";
+  private static boolean isNameComparison(XPathExpression op1, XPathExpression op2) {
+    if (!isNameFunctionCall(op1)) return false;
+    if (!(op2 instanceof XPathString)) {
+      return false;
     }
+    final String value = ((XPathString)op2).getValue();
+    return value != null && value.contains(":");
+  }
 
-    @NonNls
-    @Nonnull
-    public String getShortName() {
-        return "HardwiredNamespacePrefix";
+  private static boolean isNameFunctionCall(XPathExpression op1) {
+    if (!(op1 instanceof XPathFunctionCall)) {
+      return false;
     }
+    final XPathFunctionCall fc = (XPathFunctionCall)op1;
+    return "name".equals(fc.getFunctionName());
+  }
+
+  @Nls
+  @Nonnull
+  public String getDisplayName() {
+    return "Hardwired Namespace Prefix";
+  }
+
+  @NonNls
+  @Nonnull
+  public String getShortName() {
+    return "HardwiredNamespacePrefix";
+  }
 
   protected boolean acceptsLanguage(Language language) {
     return language == XPathFileType.XPATH.getLanguage() || language == XPathFileType.XPATH2.getLanguage();

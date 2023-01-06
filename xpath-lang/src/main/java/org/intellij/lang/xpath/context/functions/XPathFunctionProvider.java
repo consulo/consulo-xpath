@@ -15,30 +15,27 @@
  */
 package org.intellij.lang.xpath.context.functions;
 
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
+import consulo.application.Application;
+import consulo.util.lang.Pair;
+import org.intellij.lang.xpath.context.ContextType;
+
+import javax.annotation.Nonnull;
+import javax.xml.namespace.QName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.namespace.QName;
-
-import org.intellij.lang.xpath.context.ContextType;
-import javax.annotation.Nonnull;
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.util.Pair;
-
+@ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class XPathFunctionProvider {
-    public static final ExtensionPointName<XPathFunctionProvider> EXTENSION_POINT_NAME =
-            ExtensionPointName.create("com.intellij.xpath.functionProvider");
-
     @Nonnull
     public abstract Map<QName, ? extends Function> getFunctions(ContextType contextType);
 
     public static List<Pair<QName, ? extends Function>> getAvailableFunctions(ContextType type) {
-        final XPathFunctionProvider[] components = Extensions.getExtensions(EXTENSION_POINT_NAME);
         final ArrayList<Pair<QName, ? extends Function>> list = new ArrayList<Pair<QName, ? extends Function>>();
-        for (XPathFunctionProvider provider : components) {
+        for (XPathFunctionProvider provider : Application.get().getExtensionPoint(XPathFunctionProvider.class)) {
             final Map<QName, ? extends Function> functions = provider.getFunctions(type);
 
             final Set<QName> names = functions.keySet();

@@ -15,95 +15,85 @@
  */
 package org.intellij.plugins.xpathView;
 
-import com.intellij.lang.dtd.DTDLanguage;
-import com.intellij.openapi.actionSystem.*;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.xml.XmlFile;
+import consulo.codeEditor.Editor;
+import consulo.fileEditor.FileEditorManager;
+import consulo.language.editor.PlatformDataKeys;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.ex.action.ActionPlaces;
+import consulo.ui.ex.action.AnAction;
+import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.Presentation;
+import consulo.xml.lang.dtd.DTDLanguage;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.xpath.view.XPathViewConfig;
 
 import javax.annotation.Nonnull;
 
-public abstract class XPathAction extends AnAction
-{
-	protected XPathAction()
-	{
-	}
+public abstract class XPathAction extends AnAction {
+  protected XPathAction() {
+  }
 
-	@RequiredUIAccess
-	public void update(@Nonnull AnActionEvent event)
-	{
-		super.update(event);
-		final Presentation presentation = event.getPresentation();
+  @RequiredUIAccess
+  public void update(@Nonnull AnActionEvent event) {
+    super.update(event);
+    final Presentation presentation = event.getPresentation();
 
-		// keep track of enabled status
-		presentation.setEnabled(isEnabled(event, true));
+    // keep track of enabled status
+    presentation.setEnabled(isEnabled(event, true));
 
-		// provide icon for toolbar
-		if(ActionPlaces.MAIN_TOOLBAR.equals(event.getPlace()))
-		{
-			updateToolbar(event);
-		}
-		else if(ActionPlaces.MAIN_MENU.equals(event.getPlace()))
-		{
-			updateMainMenu(event);
-		}
-		else if(ActionPlaces.EDITOR_POPUP.equals(event.getPlace()))
-		{
-			presentation.setVisible(presentation.isEnabled());
-		}
-	}
+    // provide icon for toolbar
+    if (ActionPlaces.MAIN_TOOLBAR.equals(event.getPlace())) {
+      updateToolbar(event);
+    }
+    else if (ActionPlaces.MAIN_MENU.equals(event.getPlace())) {
+      updateMainMenu(event);
+    }
+    else if (ActionPlaces.EDITOR_POPUP.equals(event.getPlace())) {
+      presentation.setVisible(presentation.isEnabled());
+    }
+  }
 
-	protected void updateMainMenu(AnActionEvent event)
-	{
-		final boolean b = XPathViewConfig.getInstance().getState().SHOW_IN_MAIN_MENU;
-		event.getPresentation().setVisible(b && isEnabled(event, false));
-	}
+  protected void updateMainMenu(AnActionEvent event) {
+    final boolean b = XPathViewConfig.getInstance().getState().SHOW_IN_MAIN_MENU;
+    event.getPresentation().setVisible(b && isEnabled(event, false));
+  }
 
-	protected void updateToolbar(AnActionEvent event)
-	{
-		event.getPresentation().setVisible(XPathViewConfig.getInstance().getState().SHOW_IN_TOOLBAR);
-	}
+  protected void updateToolbar(AnActionEvent event) {
+    event.getPresentation().setVisible(XPathViewConfig.getInstance().getState().SHOW_IN_TOOLBAR);
+  }
 
-	protected boolean isEnabled(AnActionEvent event, boolean checkAvailable)
-	{
-		final Project project = event.getProject();
-		if(project == null)
-		{
-			// no active project
-			return false;
-		}
+  protected boolean isEnabled(AnActionEvent event, boolean checkAvailable) {
+    final Project project = event.getData(Project.KEY);
+    if (project == null) {
+      // no active project
+      return false;
+    }
 
-		Editor editor = event.getData(PlatformDataKeys.EDITOR);
-		if(editor == null)
-		{
-			FileEditorManager fem = FileEditorManager.getInstance(project);
-			editor = fem.getSelectedTextEditor();
-		}
-		if(editor == null)
-		{
-			return false;
-		}
+    Editor editor = event.getData(PlatformDataKeys.EDITOR);
+    if (editor == null) {
+      FileEditorManager fem = FileEditorManager.getInstance(project);
+      editor = fem.getSelectedTextEditor();
+    }
+    if (editor == null) {
+      return false;
+    }
 
-		// do we have an xml file?
-		final PsiDocumentManager cem = PsiDocumentManager.getInstance(project);
-		final PsiFile psiFile = cem.getPsiFile(editor.getDocument());
-		// this is also true for DTD documents...
-		if(!(psiFile instanceof XmlFile))
-		{
-			return false;
-		}
-		else if(psiFile.getLanguage() == DTDLanguage.INSTANCE)
-		{
-			return false;
-		}
+    // do we have an xml file?
+    final PsiDocumentManager cem = PsiDocumentManager.getInstance(project);
+    final PsiFile psiFile = cem.getPsiFile(editor.getDocument());
+    // this is also true for DTD documents...
+    if (!(psiFile instanceof XmlFile)) {
+      return false;
+    }
+    else if (psiFile.getLanguage() == DTDLanguage.INSTANCE) {
+      return false;
+    }
 
-		return !checkAvailable || isEnabledAt((XmlFile) psiFile, editor.getCaretModel().getOffset());
-	}
+    return !checkAvailable || isEnabledAt((XmlFile)psiFile, editor.getCaretModel().getOffset());
+  }
 
-	protected abstract boolean isEnabledAt(XmlFile xmlFile, int offset);
+  protected abstract boolean isEnabledAt(XmlFile xmlFile, int offset);
 }

@@ -15,18 +15,18 @@
  */
 package org.intellij.lang.xpath;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.extapi.psi.PsiFileBase;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElementVisitor;
+import consulo.language.file.FileViewProvider;
+import consulo.language.impl.psi.PsiFileBase;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.virtualFileSystem.fileType.FileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathExpression;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class XPathFile extends PsiFileBase implements XPathElement {
 

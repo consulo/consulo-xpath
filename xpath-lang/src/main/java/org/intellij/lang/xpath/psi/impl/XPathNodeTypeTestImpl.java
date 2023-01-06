@@ -15,13 +15,13 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.XPathTokenTypes;
-import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.NodeType;
+import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathNodeTypeTest;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import com.intellij.lang.ASTNode;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

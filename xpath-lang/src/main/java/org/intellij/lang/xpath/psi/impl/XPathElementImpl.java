@@ -15,16 +15,14 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.injection.InjectedLanguageManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.impl.PsiTreeDebugBuilder;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.ast.ASTNode;
+import consulo.language.impl.DebugUtil;
+import consulo.language.impl.psi.ASTWrapperPsiElement;
+import consulo.language.inject.InjectedLanguageManager;
+import consulo.language.inject.InjectedLanguageManagerUtil;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.util.IncorrectOperationException;
 import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.XPathElementTypes;
 import org.intellij.lang.xpath.XPathFile;
@@ -33,6 +31,8 @@ import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathElementVisitor;
+
+import javax.annotation.Nonnull;
 
 public class XPathElementImpl extends ASTWrapperPsiElement implements XPathElement {
 
@@ -63,7 +63,8 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
     assert newNode != null;
     if (next != null) {
       node.addChild(newNode, next);
-    } else {
+    }
+    else {
       node.addChild(newNode);
     }
     return node.getPsi();
@@ -103,7 +104,7 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
   }
 
   @Nonnull
-  @SuppressWarnings({ "ConstantConditions", "EmptyMethod" })
+  @SuppressWarnings({"ConstantConditions", "EmptyMethod"})
   public final ASTNode getNode() {
     return super.getNode();
   }
@@ -124,15 +125,16 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
   }
 
   protected String unexpectedPsiAssertion() {
-    final PsiTreeDebugBuilder builder = new PsiTreeDebugBuilder();
-    return "Unexpected PSI structure: " + builder.psiToString(this) + "--\ninside: " + builder.psiToString(getContainingFile());
+    return "Unexpected PSI structure: " + DebugUtil.psiToString(this, true, false) + "--\ninside: " + DebugUtil.psiToString(
+      getContainingFile(), true, false);
   }
 
   @Override
   public final void accept(@Nonnull PsiElementVisitor visitor) {
     if (visitor instanceof XPathElementVisitor) {
       accept((XPathElementVisitor)visitor);
-    } else {
+    }
+    else {
       super.accept(visitor);
     }
   }
@@ -142,7 +144,7 @@ public class XPathElementImpl extends ASTWrapperPsiElement implements XPathEleme
   }
 
   public final String getUnescapedText() {
-    if (InjectedLanguageUtil.isInInjectedLanguagePrefixSuffix(this)) {
+    if (InjectedLanguageManagerUtil.isInInjectedLanguagePrefixSuffix(this)) {
       // do not attempt to decode text if PsiElement is part of prefix/suffix
       return getText();
     }

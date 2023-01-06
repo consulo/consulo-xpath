@@ -15,24 +15,21 @@
  */
 package org.intellij.plugins.xpathView.util;
 
+import consulo.codeEditor.Editor;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.annotation.AnnotatorUtil;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.psi.*;
+import consulo.logging.Logger;
+import consulo.xml.psi.xml.*;
+
 import javax.annotation.Nonnull;
-
-import com.intellij.lang.annotation.AnnotationSession;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
-import com.intellij.psi.xml.*;
-import com.intellij.lang.annotation.Annotator;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.LanguageAnnotators;
-import com.intellij.codeInsight.daemon.impl.AnnotationHolderImpl;
-
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class MyPsiUtil {
-    private static final Logger LOG = Logger.getInstance("org.intellij.plugins.xpathView.util.MyPsiUtil");
+    private static final Logger LOG = Logger.getInstance(MyPsiUtil.class);
 
     private MyPsiUtil() {
     }
@@ -161,25 +158,16 @@ public class MyPsiUtil {
         });
         if (error[0] != null) return error[0];
 
-        final Annotator annotator = LanguageAnnotators.INSTANCE.forLanguage(file.getLanguage());
         file.accept(new PsiRecursiveElementVisitor() {
             public void visitElement(PsiElement element) {
-                annotator.annotate(element, new AnnotationHolderImpl(new AnnotationSession(file)) {
-                    public Annotation createErrorAnnotation(@Nonnull ASTNode astNode, String string) {
-                        error[0] = string;
-                        return super.createErrorAnnotation(astNode, string);
+                List<Annotation> annotations = AnnotatorUtil.runAnnotators(file, element);
+                for (Annotation annotation : annotations) {
+                    if (annotation.getSeverity() == HighlightSeverity.ERROR) {
+                        error[0] = annotation.getMessage();
+                        return;
                     }
-
-                    public Annotation createErrorAnnotation(@Nonnull PsiElement element, String string) {
-                        error[0] = string;
-                        return super.createErrorAnnotation(element, string);
-                    }
-
-                    public Annotation createErrorAnnotation(@Nonnull TextRange textRange, String string) {
-                        error[0] = string;
-                        return super.createErrorAnnotation(textRange, string);
-                    }
-                });
+                }
+                
                 super.visitElement(element);
             }
         });

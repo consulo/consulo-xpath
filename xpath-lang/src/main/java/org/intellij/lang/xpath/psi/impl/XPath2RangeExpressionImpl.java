@@ -15,10 +15,11 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.XPath2TokenTypes;
 import org.intellij.lang.xpath.XPathElementType;
 import org.intellij.lang.xpath.psi.*;
+
 import javax.annotation.Nonnull;
 
 public class XPath2RangeExpressionImpl extends XPath2ElementImpl implements XPath2RangeExpression {

@@ -15,9 +15,9 @@
  */
 package org.intellij.lang.xpath;
 
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.IFileElementType;
+import consulo.language.ast.TokenSet;
 
 public final class XPath2ElementTypes {
   public static final IFileElementType FILE = new IFileElementType("XPATH2_FILE", XPathFileType.XPATH2.getLanguage());

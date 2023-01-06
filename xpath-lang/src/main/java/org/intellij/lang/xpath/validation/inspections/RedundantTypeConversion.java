@@ -15,10 +15,11 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.Language;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.scheme.InspectionManager;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPath2SequenceType;
@@ -28,11 +29,12 @@ import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import javax.swing.*;
 
+@ExtensionImpl
 public class RedundantTypeConversion extends XPathInspection {
     @NonNls
     private static final String SHORT_NAME = "RedundantTypeConversion";
@@ -84,8 +86,8 @@ public class RedundantTypeConversion extends XPathInspection {
                     LocalQuickFix[] fixes = fixFactory.createRedundantTypeConversionFixes(expression);
 
                     addProblem(myManager.createProblemDescriptor(expression,
-                            "Redundant conversion to type '" + convertedType.getName() + "'", myOnTheFly, fixes,
-                            ProblemHighlightType.GENERIC_ERROR_OR_WARNING));
+                                                                 "Redundant conversion to type '" + convertedType.getName() + "'", myOnTheFly, fixes,
+                                                                 ProblemHighlightType.GENERIC_ERROR_OR_WARNING));
                 } else if (CHECK_ANY) {
                     final XPathType expectedType = ExpectedTypeUtil.getExpectedType(expression);
                     if (expectedType == XPathType.ANY) {

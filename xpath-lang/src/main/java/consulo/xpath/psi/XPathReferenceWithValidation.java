@@ -1,7 +1,7 @@
 package consulo.xpath.psi;
 
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.psi.PsiReference;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiReference;
 
 /**
  * @author VISTALL

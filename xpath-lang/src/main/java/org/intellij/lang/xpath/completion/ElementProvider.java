@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.completion;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 
 public interface ElementProvider {
     PsiElement getElement();

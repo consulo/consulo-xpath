@@ -15,10 +15,10 @@
  */
 package org.intellij.lang.xpath.completion;
 
-import com.intellij.codeInsight.lookup.LookupValueWithPriority;
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.util.Iconable;
-import com.intellij.psi.PsiElement;
+import consulo.application.AllIcons;
+import consulo.component.util.Iconable;
+import consulo.language.editor.completion.lookup.LookupValueWithPriority;
+import consulo.language.psi.PsiElement;
 import consulo.ui.image.Image;
 
 public class VariableLookup extends AbstractLookup implements Lookup, Iconable, LookupValueWithPriority, ElementProvider {

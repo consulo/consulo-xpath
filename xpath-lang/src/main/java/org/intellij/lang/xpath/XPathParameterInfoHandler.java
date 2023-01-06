@@ -15,33 +15,31 @@
  */
 package org.intellij.lang.xpath;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInsight.CodeInsightBundle;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.parameterInfo.*;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.ArrayUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.document.util.TextRange;
+import consulo.language.Language;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.CodeInsightBundle;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.editor.parameterInfo.*;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ArrayUtil;
 import org.intellij.lang.xpath.context.functions.Function;
 import org.intellij.lang.xpath.psi.XPathFunction;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@ExtensionImpl
 public class XPathParameterInfoHandler implements ParameterInfoHandler<XPathFunctionCall, XPathFunction> {
     public boolean couldShowInLookup() {
         return false;
     }
 
     public Object[] getParametersForLookup(LookupElement lookupElement, ParameterInfoContext parameterInfoContext) {
-      return ArrayUtil.EMPTY_OBJECT_ARRAY;
-    }
-
-    public Object[] getParametersForDocumentation(XPathFunction xPathFunction, ParameterInfoContext parameterInfoContext) {
       return ArrayUtil.EMPTY_OBJECT_ARRAY;
     }
 
@@ -87,14 +85,6 @@ public class XPathParameterInfoHandler implements ParameterInfoHandler<XPathFunc
         context.setCurrentParameter(currentParameterIndex);
     }
 
-    public String getParameterCloseChars() {
-        return "(,)";
-    }
-
-    public boolean tracksParameterIndex() {
-        return true;
-    }
-
     public void updateUI(XPathFunction function, ParameterInfoUIContext context) {
         final Function declaration = function.getDeclaration();
         if (declaration != null) {
@@ -131,5 +121,11 @@ public class XPathParameterInfoHandler implements ParameterInfoHandler<XPathFunc
     @SuppressWarnings({ "UnresolvedPropertyKey" })
     private static String noParamsMessage() {
         return CodeInsightBundle.message("parameter.info.no.parameters");
+    }
+
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XPathLanguage.INSTANCE;
     }
 }

@@ -15,37 +15,33 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen;
 
+import consulo.annotation.component.ServiceImpl;
+import consulo.logging.Logger;
+import consulo.util.lang.Pair;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
+import jakarta.inject.Singleton;
+import org.intellij.lang.xpath.context.functions.Function;
+import org.intellij.lang.xpath.context.functions.XPathFunctionProvider;
 import org.intellij.plugins.xpathView.XPathExpressionGenerator;
 import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.support.jaxen.extensions.FunctionImplementation;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.intellij.plugins.xpathView.util.NamespaceCollector;
-
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
-
-import org.intellij.lang.xpath.context.functions.Function;
-import org.intellij.lang.xpath.context.functions.XPathFunctionProvider;
+import org.jaxen.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import org.jaxen.JaxenException;
-import org.jaxen.SimpleNamespaceContext;
-import org.jaxen.UnresolvableException;
-import org.jaxen.XPath;
-import org.jaxen.XPathFunctionContext;
-
 import javax.xml.namespace.QName;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-class XPathSupportImpl extends XPathSupport {
-    private static final Logger LOG = Logger.getInstance("org.intellij.plugins.xpathView.support.jaxen.XPathSupportImpl");
+@Singleton
+@ServiceImpl
+public class XPathSupportImpl extends XPathSupport {
+    private static final Logger LOG = Logger.getInstance(XPathSupportImpl.class);
 
     public XPath createXPath(@Nonnull XmlFile file, String expression) throws JaxenException {
         final PsiXPath xpath = new PsiXPath(file, expression);

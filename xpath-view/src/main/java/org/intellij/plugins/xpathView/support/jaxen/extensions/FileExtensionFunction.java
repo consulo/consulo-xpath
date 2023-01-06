@@ -15,12 +15,12 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen.extensions;
 
+import consulo.language.psi.PsiFile;
+import consulo.virtualFileSystem.VirtualFile;
 import org.intellij.lang.xpath.context.functions.Parameter;
 import org.intellij.lang.xpath.psi.XPathType;
-import javax.annotation.Nullable;
 
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
+import javax.annotation.Nullable;
 
 class FileExtensionFunction extends BasicFileInfoFunction {
     public FileExtensionFunction() {

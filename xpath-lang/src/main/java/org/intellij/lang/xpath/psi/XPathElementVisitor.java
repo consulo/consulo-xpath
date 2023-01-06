@@ -15,7 +15,8 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import com.intellij.psi.PsiElementVisitor;
+
+import consulo.language.psi.PsiElementVisitor;
 import org.intellij.lang.xpath.XPathFile;
 
 /*

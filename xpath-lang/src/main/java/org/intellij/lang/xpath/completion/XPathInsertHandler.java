@@ -15,12 +15,14 @@
  */
 package org.intellij.lang.xpath.completion;
 
-import com.intellij.codeInsight.completion.*;
-import com.intellij.codeInsight.lookup.*;
-import com.intellij.openapi.editor.CaretModel;
-import com.intellij.openapi.editor.EditorModificationUtil;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.diagnostic.Logger;
+import consulo.codeEditor.CaretModel;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.util.EditorModificationUtil;
+import consulo.language.editor.completion.CompletionInitializationContext;
+import consulo.language.editor.completion.lookup.InsertHandler;
+import consulo.language.editor.completion.lookup.InsertionContext;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.logging.Logger;
 
 class XPathInsertHandler implements InsertHandler {
     private static final Logger LOG = Logger.getInstance(XPathInsertHandler.class.getName());
@@ -82,7 +84,7 @@ class XPathInsertHandler implements InsertHandler {
         adjustIdentifierEnd(context, item);
 
         final int idEndOffset = context.getOffsetMap().getOffset(CompletionInitializationContext.IDENTIFIER_END_OFFSET);
-        final boolean isOverwrite = c == com.intellij.codeInsight.lookup.Lookup.REPLACE_SELECT_CHAR;
+        final boolean isOverwrite = c == consulo.language.editor.completion.lookup.Lookup.REPLACE_SELECT_CHAR;
         if (idEndOffset != context.getSelectionEndOffset() && isOverwrite) {
             context.getEditor().getDocument().deleteString(context.getSelectionEndOffset(), idEndOffset);
         }

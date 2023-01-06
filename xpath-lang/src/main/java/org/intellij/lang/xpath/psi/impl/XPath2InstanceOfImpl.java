@@ -15,8 +15,9 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.psi.*;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

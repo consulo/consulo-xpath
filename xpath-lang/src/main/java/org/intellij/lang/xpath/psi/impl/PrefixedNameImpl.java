@@ -15,12 +15,11 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.psi.PrefixedName;
 
-import com.intellij.lang.ASTNode;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class PrefixedNameImpl implements PrefixedName {
     private final ASTNode prefixNode;

@@ -15,23 +15,26 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen;
 
-import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
-import com.intellij.psi.xml.*;
 import com.intellij.xml.XmlAttributeDescriptor;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.logging.Logger;
+import consulo.util.lang.StringUtil;
+import consulo.util.lang.ref.Ref;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.util.VirtualFileUtil;
+import consulo.xml.lang.xml.XMLLanguage;
+import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.psi.xml.*;
 import org.intellij.plugins.xpathView.util.MyPsiUtil;
 import org.jaxen.DefaultNavigator;
 import org.jaxen.FunctionCallException;
 import org.jaxen.UnsupportedAxisException;
 import org.jaxen.XPath;
 import org.jaxen.saxpath.SAXPathException;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -173,7 +176,7 @@ public class PsiDocumentNavigator extends DefaultNavigator {
 
     public Object getDocument(String url) throws FunctionCallException {
         LOG.debug("enter: getDocument: " + url);
-        final VirtualFile virtualFile = VfsUtil.findRelativeFile(url, file.getVirtualFile());
+        final VirtualFile virtualFile = VirtualFileUtil.findRelativeFile(url, file.getVirtualFile());
         if (virtualFile != null) {
             LOG.debug("document() -> VirtualFile = " + virtualFile.getPath());
             final PsiFile file = this.file.getManager().findFile(virtualFile);

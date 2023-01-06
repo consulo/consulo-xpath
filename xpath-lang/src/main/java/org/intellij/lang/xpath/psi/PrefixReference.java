@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import com.intellij.psi.PsiReference;
+import consulo.language.psi.PsiReference;
 
 public interface PrefixReference extends PsiReference {
     boolean isUnresolved();

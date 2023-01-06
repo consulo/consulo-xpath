@@ -15,15 +15,16 @@
  */
 package org.intellij.lang.xpath;
 
-import javax.annotation.Nonnull;
-import com.intellij.openapi.fileTypes.FileTypeConsumer;
-import com.intellij.openapi.fileTypes.FileTypeFactory;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.virtualFileSystem.fileType.FileTypeConsumer;
+import consulo.virtualFileSystem.fileType.FileTypeFactory;
 
-public class XPathSupportLoader extends FileTypeFactory
-{
-	public void createFileTypes(final @Nonnull FileTypeConsumer consumer)
-	{
-		consumer.consume(XPathFileType.XPATH, XPathFileType.XPATH.getDefaultExtension());
-		consumer.consume(XPathFileType.XPATH2, XPathFileType.XPATH2.getDefaultExtension());
-	}
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
+public class XPathSupportLoader extends FileTypeFactory {
+  public void createFileTypes(final @Nonnull FileTypeConsumer consumer) {
+    consumer.consume(XPathFileType.XPATH, XPathFileType.XPATH.getDefaultExtension());
+    consumer.consume(XPathFileType.XPATH2, XPathFileType.XPATH2.getDefaultExtension());
+  }
 }

@@ -15,9 +15,9 @@
  */
 package org.intellij.plugins.xpathView.ui;
 
-import com.intellij.ui.IdeBorderFactory;
-import consulo.awt.TargetAWT;
 import consulo.ui.ColorBox;
+import consulo.ui.ex.awt.IdeBorderFactory;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
 import org.intellij.plugins.xpathView.Config;
 
 import javax.annotation.Nonnull;

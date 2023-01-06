@@ -15,10 +15,7 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.XPathElementType;
 import org.intellij.lang.xpath.XPathTokenTypes;
@@ -26,6 +23,9 @@ import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathPrefixExpression;
 import org.intellij.lang.xpath.psi.XPathType;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class XPathPrefixExpressionImpl extends XPathElementImpl implements XPathPrefixExpression {
     public XPathPrefixExpressionImpl(ASTNode node) {

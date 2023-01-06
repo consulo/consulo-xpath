@@ -15,11 +15,10 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import javax.annotation.Nullable;
-
+import consulo.language.psi.PsiNamedElement;
 import org.intellij.lang.xpath.context.functions.Function;
 
-import com.intellij.psi.PsiNamedElement;
+import javax.annotation.Nullable;
 
 public interface XPathFunction extends XPathElement, PsiNamedElement {
     @Nullable

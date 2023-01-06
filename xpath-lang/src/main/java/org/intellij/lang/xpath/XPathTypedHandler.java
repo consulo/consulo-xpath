@@ -15,17 +15,19 @@
  */
 package org.intellij.lang.xpath;
 
-import com.intellij.codeInsight.AutoPopupController;
-import com.intellij.codeInsight.editorActions.TypedHandlerDelegate;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.AutoPopupController;
+import consulo.language.editor.action.TypedHandlerDelegate;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
 
 /*
 * Created by IntelliJ IDEA.
 * User: sweinreuter
 * Date: 28.04.11
 */
+@ExtensionImpl
 public class XPathTypedHandler extends TypedHandlerDelegate {
   @Override
   public Result checkAutoPopup(char charTyped, Project project, Editor editor, PsiFile file) {

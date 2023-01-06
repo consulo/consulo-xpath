@@ -15,14 +15,14 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.XPath2Type;
 import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathNumber;
 import org.intellij.lang.xpath.psi.XPathType;
+
+import javax.annotation.Nonnull;
 
 public class XPathNumberImpl extends XPathElementImpl implements XPathNumber {
   public XPathNumberImpl(ASTNode node) {

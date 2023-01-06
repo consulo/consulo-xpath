@@ -15,6 +15,7 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen.extensions;
 
+import consulo.annotation.component.ExtensionImpl;
 import org.intellij.lang.xpath.context.ContextType;
 import org.intellij.lang.xpath.context.functions.Function;
 import org.intellij.lang.xpath.context.functions.Parameter;
@@ -35,7 +36,8 @@ import java.util.Map;
 /**
  * Simple implementation that adds extension functions for file-type, file-name and file-extension
  */
-class XPathFunctionProviderImpl extends XPathFunctionProvider {
+@ExtensionImpl
+public class XPathFunctionProviderImpl extends XPathFunctionProvider {
     private final Map<QName, FunctionImplementation> myFunctions = new HashMap<QName, FunctionImplementation>();
 
     public XPathFunctionProviderImpl() {

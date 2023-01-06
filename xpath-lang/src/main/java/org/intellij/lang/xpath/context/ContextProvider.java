@@ -15,15 +15,16 @@
  */
 package org.intellij.lang.xpath.context;
 
-import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
-import com.intellij.lang.Language;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlFile;
+import consulo.application.Application;
+import consulo.application.ApplicationManager;
+import consulo.language.Language;
+import consulo.language.editor.DaemonCodeAnalyzer;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
 import consulo.util.dataholder.Key;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlFile;
 import consulo.xpath.context.NamespaceContextProvider;
 import org.intellij.lang.xpath.XPathFile;
 import org.intellij.lang.xpath.XPathFileType;
@@ -38,153 +39,156 @@ import javax.xml.namespace.QName;
 import java.util.Set;
 
 public abstract class ContextProvider {
-    /**
-     * ContextProvider instance, must be available (aka @NotNull) at every XPathFile instance by getCopyableUserData().
-     * It gets lost with putUserData()!
-     */
-    private static final Key<ContextProvider> KEY = Key.create("CONTEXT_PROVIDER");
-    private static final Key<Boolean> XML_FILE_WITH_XPATH_INJECTTION = Key.create("XML_FILE_WITH_XPATH_INJECTTION");
+  /**
+   * ContextProvider instance, must be available (aka @NotNull) at every XPathFile instance by getCopyableUserData().
+   * It gets lost with putUserData()!
+   */
+  private static final Key<ContextProvider> KEY = Key.create("CONTEXT_PROVIDER");
+  private static final Key<Boolean> XML_FILE_WITH_XPATH_INJECTTION = Key.create("XML_FILE_WITH_XPATH_INJECTTION");
 
-    private volatile FunctionContext myFunctionContext;
+  private volatile FunctionContext myFunctionContext;
 
-    protected ContextProvider() {
+  protected ContextProvider() {
+  }
+
+  @Nonnull
+  public abstract ContextType getContextType();
+
+  @Nullable
+  public abstract XmlElement getContextElement();
+
+  @Nullable
+  public abstract NamespaceContext getNamespaceContext();
+
+  @Nullable
+  public abstract VariableContext getVariableContext();
+
+  @Nonnull
+  public FunctionContext getFunctionContext() {
+    FunctionContext context = myFunctionContext;
+    if (context == null) {
+      context = createFunctionContext();
     }
+    return (myFunctionContext = context);
+  }
 
-    @Nonnull
-    public abstract ContextType getContextType();
+  protected FunctionContext createFunctionContext() {
+    return DefaultFunctionContext.getInstance(getContextType());
+  }
 
-    @Nullable
-    public abstract XmlElement getContextElement();
+  @Nonnull
+  public XPathQuickFixFactory getQuickFixFactory() {
+    return XPathQuickFixFactoryImpl.INSTANCE;
+  }
 
-    @Nullable
-    public abstract NamespaceContext getNamespaceContext();
+  @Nullable
+  public abstract Set<QName> getAttributes(boolean forValidation);
 
-    @Nullable
-    public abstract VariableContext getVariableContext();
+  @Nullable
+  public abstract Set<QName> getElements(boolean forValidation);
 
-    @Nonnull
-    public FunctionContext getFunctionContext() {
-      FunctionContext context = myFunctionContext;
-      if (context == null) {
-        context = createFunctionContext();
+  public void attachTo(PsiFile file) {
+    assert file instanceof XPathFile;
+    file.putCopyableUserData(KEY, this);
+  }
+
+  protected final void attachTo(XmlElement context) {
+    context.putCopyableUserData(KEY, this);
+  }
+
+  @SuppressWarnings({"ClassReferencesSubclass"})
+  public static void copy(@Nonnull PsiFile file1, @Nonnull XPathFile file2) {
+    final ContextProvider contextProvider = getContextProvider(file1);
+    if (!(contextProvider instanceof DefaultProvider)) {
+      contextProvider.attachTo(file2);
+    }
+  }
+
+  @Nonnull
+  public static ContextProvider getContextProvider(PsiFile psiFile) {
+    ContextProvider provider = psiFile.getCopyableUserData(KEY);
+    if (provider != null && provider.isValid()) {
+      return provider;
+    }
+    final PsiElement context = psiFile.getContext();
+    if (context != null) {
+      provider = context.getCopyableUserData(KEY);
+      if (provider != null && provider.isValid()) {
+        return provider;
       }
-      return (myFunctionContext = context);
     }
+    return getFromExtensionOrDefault(psiFile);
+  }
 
-    protected FunctionContext createFunctionContext() {
-      return DefaultFunctionContext.getInstance(getContextType());
+  protected boolean isValid() {
+    final XmlElement contextElement = getContextElement();
+    return contextElement != null && contextElement.isValid();
+  }
+
+  @SuppressWarnings({"ClassReferencesSubclass"})
+  private static ContextProvider getFromExtensionOrDefault(PsiFile psiFile) {
+    if (psiFile instanceof XPathFile) {
+      final ContextProvider instance = ContextProviderExtension.getInstance((XPathFile)psiFile);
+      if (instance != null) {
+        instance.attachTo(psiFile);
+        return instance;
+      }
     }
+    return new DefaultProvider(PsiTreeUtil.getContextOfType(psiFile, XmlElement.class, true), psiFile.getLanguage());
+  }
 
-    @Nonnull
-    public XPathQuickFixFactory getQuickFixFactory() {
-        return XPathQuickFixFactoryImpl.INSTANCE;
-    }
+  @SuppressWarnings({"ClassReferencesSubclass"})
+  @Nonnull
+  public static ContextProvider getContextProvider(PsiElement element) {
+    return element instanceof XPathElement ?
+      getContextProvider(element instanceof XPathFile ?
+                           (PsiFile)element :
+                           element.getContainingFile()) :
+      new DefaultProvider(PsiTreeUtil.getParentOfType(element, XmlElement.class, false));
+  }
 
-    @Nullable
-    public abstract Set<QName> getAttributes(boolean forValidation);
+  public PsiFile[] getRelatedFiles(XPathFile file) {
+    return PsiFile.EMPTY_ARRAY;
+  }
 
-    @Nullable
-    public abstract Set<QName> getElements(boolean forValidation);
+  @Nonnull
+  public XPathType getExpectedType(XPathExpression expr) {
+    return XPathType.UNKNOWN;
+  }
 
-    public void attachTo(PsiFile file) {
-        assert file instanceof XPathFile;
-        file.putCopyableUserData(KEY, this);
-    }
+  @Nullable
+  public QName getQName(QNameElement element) {
+    final PrefixedName qname = element.getQName();
+    return qname != null ? getQName(qname, element) : null;
+  }
 
-    protected final void attachTo(XmlElement context) {
-        context.putCopyableUserData(KEY, this);
-    }
-
-    @SuppressWarnings({ "ClassReferencesSubclass" })
-    public static void copy(@Nonnull PsiFile file1, @Nonnull XPathFile file2) {
-        final ContextProvider contextProvider = getContextProvider(file1);
-        if (!(contextProvider instanceof DefaultProvider)) {
-            contextProvider.attachTo(file2);
+  @Nullable
+  public QName getQName(@Nonnull PrefixedName qName, XPathElement context) {
+    final String prefix = qName.getPrefix();
+    final NamespaceContext namespaceContext = getNamespaceContext();
+    if (namespaceContext != null) {
+      if (prefix != null) {
+        final XmlElement element = PsiTreeUtil.getContextOfType(context, XmlElement.class, true);
+        final String namespaceURI = namespaceContext.getNamespaceURI(prefix, element);
+        return namespaceURI != null && namespaceURI.length() > 0 ? new QName(namespaceURI, qName.getLocalName(), prefix) : null;
+      }
+      else if (context.getXPathVersion() == XPathVersion.V2) {
+        if (isDefaultCapableElement(context)) {
+          final String namespace = namespaceContext.getDefaultNamespace(getContextElement());
+          if (namespace != null) {
+            return new QName(namespace, qName.getLocalName());
+          }
         }
+      }
+      return new QName(null, qName.getLocalName(), "");
     }
-
-    @Nonnull
-    public static ContextProvider getContextProvider(PsiFile psiFile) {
-        ContextProvider provider = psiFile.getCopyableUserData(KEY);
-        if (provider != null && provider.isValid()) {
-            return provider;
-        }
-        final PsiElement context = psiFile.getContext();
-        if (context != null) {
-            provider = context.getCopyableUserData(KEY);
-            if (provider != null && provider.isValid()) {
-                return provider;
-            }
-        }
-        return getFromExtensionOrDefault(psiFile);
+    else if (qName.getPrefix() == null) {
+      return QName.valueOf(qName.getLocalName());
     }
-
-    protected boolean isValid() {
-        final XmlElement contextElement = getContextElement();
-        return contextElement != null && contextElement.isValid();
+    else {
+      return null;
     }
-
-    @SuppressWarnings({ "ClassReferencesSubclass" })
-    private static ContextProvider getFromExtensionOrDefault(PsiFile psiFile) {
-        if (psiFile instanceof XPathFile) {
-            final ContextProvider instance = ContextProviderExtension.getInstance((XPathFile)psiFile);
-            if (instance != null) {
-                instance.attachTo(psiFile);
-                return instance;
-            }
-        }
-        return new DefaultProvider(PsiTreeUtil.getContextOfType(psiFile, XmlElement.class, true), psiFile.getLanguage());
-    }
-
-    @SuppressWarnings({ "ClassReferencesSubclass" })
-    @Nonnull
-    public static ContextProvider getContextProvider(PsiElement element) {
-        return element instanceof XPathElement ?
-                getContextProvider(element instanceof XPathFile ?
-                        (PsiFile)element :
-                        element.getContainingFile()) :
-                new DefaultProvider(PsiTreeUtil.getParentOfType(element, XmlElement.class, false));
-    }
-
-    public PsiFile[] getRelatedFiles(XPathFile file) {
-        return PsiFile.EMPTY_ARRAY;
-    }
-
-    @Nonnull
-    public XPathType getExpectedType(XPathExpression expr) {
-        return XPathType.UNKNOWN;
-    }
-
-    @Nullable
-    public QName getQName(QNameElement element) {
-        final PrefixedName qname = element.getQName();
-        return qname != null ? getQName(qname, element) : null;
-    }
-
-    @Nullable
-    public QName getQName(@Nonnull PrefixedName qName, XPathElement context) {
-        final String prefix = qName.getPrefix();
-        final NamespaceContext namespaceContext = getNamespaceContext();
-        if (namespaceContext != null) {
-            if (prefix != null) {
-                final XmlElement element = PsiTreeUtil.getContextOfType(context, XmlElement.class, true);
-                final String namespaceURI = namespaceContext.getNamespaceURI(prefix, element);
-                return namespaceURI != null && namespaceURI.length() > 0 ? new QName(namespaceURI, qName.getLocalName(), prefix) : null;
-            } else if (context.getXPathVersion() == XPathVersion.V2){
-              if (isDefaultCapableElement(context)) {
-                final String namespace = namespaceContext.getDefaultNamespace(getContextElement());
-                if (namespace != null) {
-                  return new QName(namespace, qName.getLocalName());
-                }
-              }
-            }
-            return new QName(null, qName.getLocalName(), "");
-        } else if (qName.getPrefix() == null) {
-            return QName.valueOf(qName.getLocalName());
-        } else {
-            return null;
-        }
-    }
+  }
 
   private static boolean isDefaultCapableElement(XPathElement context) {
     // http://www.w3.org/TR/xslt20/#unprefixed-qnames
@@ -193,91 +197,98 @@ public abstract class ContextProvider {
   }
 
   public static boolean hasXPathInjections(XmlFile file) {
-      return Boolean.TRUE.equals(file.getUserData(XML_FILE_WITH_XPATH_INJECTTION));
+    return Boolean.TRUE.equals(file.getUserData(XML_FILE_WITH_XPATH_INJECTTION));
+  }
+
+  public static final class DefaultProvider extends ContextProvider {
+    public static NamespaceContext NULL_NAMESPACE_CONTEXT = null;
+
+    private final XmlElement myContextElement;
+    private final ContextType myContextType;
+    private final NamespaceContext myNamespaceContext;
+
+    DefaultProvider(XmlElement contextElement) {
+      myContextElement = contextElement;
+      myContextType = ContextType.PLAIN;
+
+      if (myContextElement != null) {
+        myNamespaceContext = Application.get()
+                                        .getExtensionPoint(NamespaceContextProvider.class)
+                                        .computeSafeIfAny(it -> it.getNamespaceContext(myContextElement));
+        setXPathInjected(myContextElement.getContainingFile());
+      }
+      else {
+        myNamespaceContext = NULL_NAMESPACE_CONTEXT;
+      }
     }
 
-    public static final class DefaultProvider extends ContextProvider {
-      public static NamespaceContext NULL_NAMESPACE_CONTEXT = null;
+    public DefaultProvider(XmlElement element, Language language) {
+      myContextElement = element;
+      myContextType = language == XPathFileType.XPATH2.getLanguage() ? ContextType.PLAIN_V2 : ContextType.PLAIN;
 
-      private final XmlElement myContextElement;
-        private final ContextType myContextType;
-        private final NamespaceContext myNamespaceContext;
+      if (myContextElement != null) {
+        myNamespaceContext = Application.get()
+                                        .getExtensionPoint(NamespaceContextProvider.class)
+                                        .computeSafeIfAny(it -> it.getNamespaceContext(myContextElement));
+        
+        setXPathInjected(myContextElement.getContainingFile());
+      }
+      else {
+        myNamespaceContext = NULL_NAMESPACE_CONTEXT;
+      }
+    }
 
-        DefaultProvider(XmlElement contextElement) {
-            myContextElement = contextElement;
-            myContextType = ContextType.PLAIN;
+    private static void setXPathInjected(final PsiFile file) {
+      final Boolean flag = file.getUserData(XML_FILE_WITH_XPATH_INJECTTION);
 
-            if (myContextElement != null) {
-              myNamespaceContext = NamespaceContextProvider.EP_NAME.composite().getNamespaceContext(myContextElement);
-              setXPathInjected(myContextElement.getContainingFile());
-            } else {
-              myNamespaceContext = NULL_NAMESPACE_CONTEXT;
-            }
-        }
-
-        public DefaultProvider(XmlElement element, Language language) {
-          myContextElement = element;
-          myContextType = language == XPathFileType.XPATH2.getLanguage() ? ContextType.PLAIN_V2 : ContextType.PLAIN;
-
-          if (myContextElement != null) {
-            myNamespaceContext = NamespaceContextProvider.EP_NAME.composite().getNamespaceContext(myContextElement);
-            setXPathInjected(myContextElement.getContainingFile());
-          } else {
-            myNamespaceContext = NULL_NAMESPACE_CONTEXT;
-          }
-        }
-
-        private static void setXPathInjected(final PsiFile file) {
-          final Boolean flag = file.getUserData(XML_FILE_WITH_XPATH_INJECTTION);
-
-          // This is a very ugly hack, but it is required to make the implicit usages provider recognize namespace declarations used from
-          // within injected XPath fragments during IDEA startup. Otherwise, the namespace declarations may be marked as unused until the
-          // first edit in the file.
-          // Another (possibly perferred) solution might be to make org.intellij.lang.xpath.xslt.impl.XsltImplicitUsagesProvider run
-          // unconditionally or - even better - pull its functionality into the platform.
-          if (flag == null) {
-            ApplicationManager.getApplication().invokeLater(new Runnable() {
-              @Override
-              public void run() {
-                if (file.getUserData(XML_FILE_WITH_XPATH_INJECTTION) == null) {
-                  file.putUserData(XML_FILE_WITH_XPATH_INJECTTION, Boolean.TRUE);
-                  if (!ApplicationManager.getApplication().isUnitTestMode()) { // TODO workaround for highlighting tests
-                    DaemonCodeAnalyzer.getInstance(file.getProject()).restart(file);
-                  }
-                }
+      // This is a very ugly hack, but it is required to make the implicit usages provider recognize namespace declarations used from
+      // within injected XPath fragments during IDEA startup. Otherwise, the namespace declarations may be marked as unused until the
+      // first edit in the file.
+      // Another (possibly perferred) solution might be to make org.intellij.lang.xpath.xslt.impl.XsltImplicitUsagesProvider run
+      // unconditionally or - even better - pull its functionality into the platform.
+      if (flag == null) {
+        ApplicationManager.getApplication().invokeLater(new Runnable() {
+          @Override
+          public void run() {
+            if (file.getUserData(XML_FILE_WITH_XPATH_INJECTTION) == null) {
+              file.putUserData(XML_FILE_WITH_XPATH_INJECTTION, Boolean.TRUE);
+              if (!ApplicationManager.getApplication().isUnitTestMode()) { // TODO workaround for highlighting tests
+                DaemonCodeAnalyzer.getInstance(file.getProject()).restart(file);
               }
-            });
+            }
           }
-        }
-
-        @Nonnull
-        public ContextType getContextType() {
-            return myContextType;
-        }
-
-        @Nullable
-        public XmlElement getContextElement() {
-            return myContextElement;
-        }
-
-        @Nullable
-        public NamespaceContext getNamespaceContext() {
-          return myNamespaceContext;
-        }
-
-        @Nullable
-        public VariableContext getVariableContext() {
-            return null;
-        }
-
-        @Nullable
-        public Set<QName> getAttributes(boolean forValidation) {
-            return null;
-        }
-
-        @Nullable
-        public Set<QName> getElements(boolean forValidation) {
-            return null;
-        }
+        });
+      }
     }
+
+    @Nonnull
+    public ContextType getContextType() {
+      return myContextType;
+    }
+
+    @Nullable
+    public XmlElement getContextElement() {
+      return myContextElement;
+    }
+
+    @Nullable
+    public NamespaceContext getNamespaceContext() {
+      return myNamespaceContext;
+    }
+
+    @Nullable
+    public VariableContext getVariableContext() {
+      return null;
+    }
+
+    @Nullable
+    public Set<QName> getAttributes(boolean forValidation) {
+      return null;
+    }
+
+    @Nullable
+    public Set<QName> getElements(boolean forValidation) {
+      return null;
+    }
+  }
 }

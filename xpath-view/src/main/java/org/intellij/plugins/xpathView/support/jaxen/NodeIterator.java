@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

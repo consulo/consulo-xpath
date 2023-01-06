@@ -15,17 +15,18 @@
  */
 package org.intellij.lang.xpath.validation;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiFile;
-import com.intellij.util.IncorrectOperationException;
+import consulo.codeEditor.Editor;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.intention.SyntheticIntentionAction;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.impl.XPathChangeUtil;
 
-class ExpressionReplacementFix implements IntentionAction {
+import javax.annotation.Nonnull;
+
+class ExpressionReplacementFix implements SyntheticIntentionAction {
   private final String myReplacement;
   private final String myDisplay;
   private final XPathExpression myExpr;
@@ -44,12 +45,6 @@ class ExpressionReplacementFix implements IntentionAction {
   @Override
   public String getText() {
     return "Replace with '" + myDisplay + "'";
-  }
-
-  @Nonnull
-  @Override
-  public String getFamilyName() {
-    return "XPath2";
   }
 
   @Override

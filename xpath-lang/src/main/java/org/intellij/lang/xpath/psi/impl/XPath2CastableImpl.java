@@ -15,11 +15,10 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.psi.*;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class XPath2CastableImpl extends XPath2ElementImpl implements XPath2Castable {

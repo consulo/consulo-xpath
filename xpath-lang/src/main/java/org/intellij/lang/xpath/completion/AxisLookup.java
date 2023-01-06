@@ -15,11 +15,12 @@
  */
 package org.intellij.lang.xpath.completion;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.util.Iconable;
+import consulo.application.AllIcons;
+import consulo.component.util.Iconable;
 import consulo.ui.image.Image;
 
-public class AxisLookup extends AbstractLookup implements Iconable {
+public class AxisLookup extends AbstractLookup implements Iconable
+{
     public AxisLookup(String name) {
         super(name + "::", name);
     }

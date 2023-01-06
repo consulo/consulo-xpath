@@ -15,16 +15,17 @@
  */
 package org.intellij.lang.xpath;
 
-import com.intellij.lexer.FlexAdapter;
-import com.intellij.lexer.Lexer;
-import com.intellij.lexer.LexerPosition;
-import com.intellij.lexer.LookAheadLexer;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.lexer.FlexAdapter;
+import consulo.language.lexer.Lexer;
+import consulo.language.lexer.LexerPosition;
+import consulo.language.lexer.LookAheadLexer;
 
 import java.io.IOException;
 
-public final class XPathLexer extends LookAheadLexer {
+public final class XPathLexer extends LookAheadLexer
+{
   private static final TokenSet WS_OR_COMMENT = TokenSet.create(XPathTokenTypes.WHITESPACE, XPath2TokenTypes.COMMENT);
 
   private final boolean myXPath2Syntax;

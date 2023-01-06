@@ -15,12 +15,13 @@
  */
 package org.intellij.lang.xpath;
 
-import com.intellij.codeInsight.editorActions.ExtendWordSelectionHandler;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.SmartList;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.codeEditor.Editor;
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.action.ExtendWordSelectionHandler;
+import consulo.language.psi.PsiElement;
+import consulo.util.collection.SmartList;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.List;
  * Date: 08.10.2009
  * Time: 21:06:04
  */
+@ExtensionImpl
 public class XPathStringLiteralSelectioner implements ExtendWordSelectionHandler {
   public boolean canSelect(PsiElement e) {
     ASTNode astNode = e.getNode();

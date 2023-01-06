@@ -3,8 +3,10 @@
 /* It's an automatically generated code. Do not modify it. */
 package org.intellij.lang.xpath;
 
-import com.intellij.lexer.FlexLexer;
-import com.intellij.psi.tree.IElementType;
+
+import consulo.language.ast.IElementType;
+import consulo.language.lexer.FlexLexer;
+import consulo.util.lang.CharArrayUtil;
 
 @SuppressWarnings({"ALL"})
 
@@ -928,7 +930,7 @@ abstract class _XPathLexer implements FlexLexer {
 
   public void reset(CharSequence buffer, int start, int end,int initialState){
     zzBuffer = buffer;
-    zzBufferArray = com.intellij.util.text.CharArrayUtil.fromSequenceWithoutCopying(buffer);
+    zzBufferArray = CharArrayUtil.fromSequenceWithoutCopying(buffer);
     zzCurrentPos = zzMarkedPos = zzStartRead = start;
     zzPushbackPos = 0;
     zzAtEOF  = false;

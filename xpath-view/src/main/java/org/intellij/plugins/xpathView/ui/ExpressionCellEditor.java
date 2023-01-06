@@ -15,11 +15,11 @@
  */
 package org.intellij.plugins.xpathView.ui;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiDocumentManager;
-import com.intellij.ui.EditorTextField;
+import consulo.codeEditor.Editor;
+import consulo.document.Document;
+import consulo.language.editor.ui.awt.EditorTextField;
+import consulo.language.psi.PsiDocumentManager;
+import consulo.project.Project;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;

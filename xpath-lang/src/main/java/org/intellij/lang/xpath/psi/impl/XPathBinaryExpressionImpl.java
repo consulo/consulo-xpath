@@ -15,20 +15,22 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.tree.TokenSet;
-import org.intellij.lang.xpath.*;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.TokenSet;
+import org.intellij.lang.xpath.XPath2ElementTypes;
+import org.intellij.lang.xpath.XPath2TokenTypes;
+import org.intellij.lang.xpath.XPathElementType;
+import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class XPathBinaryExpressionImpl extends XPathElementImpl implements XPathBinaryExpression {
     private static final TokenSet BINARY_OPERATIONS = TokenSet.orSet(XPathTokenTypes.BINARY_OPERATIONS,
-          XPath2TokenTypes.COMP_OPS,
-          XPath2TokenTypes.MULT_OPS,
-          TokenSet.create(XPath2TokenTypes.TO, XPath2TokenTypes.INSTANCE, XPath2TokenTypes.EXCEPT, XPath2TokenTypes.INTERSECT, XPath2TokenTypes.UNION));
+                                                                     XPath2TokenTypes.COMP_OPS,
+                                                                     XPath2TokenTypes.MULT_OPS,
+                                                                     TokenSet.create(XPath2TokenTypes.TO, XPath2TokenTypes.INSTANCE, XPath2TokenTypes.EXCEPT, XPath2TokenTypes.INTERSECT, XPath2TokenTypes.UNION));
 
     public XPathBinaryExpressionImpl(ASTNode node) {
         super(node);

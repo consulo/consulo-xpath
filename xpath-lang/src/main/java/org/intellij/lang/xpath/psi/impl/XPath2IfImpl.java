@@ -15,12 +15,13 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.util.ArrayUtil;
+import consulo.language.ast.ASTNode;
+import consulo.util.collection.ArrayUtil;
 import org.intellij.lang.xpath.psi.XPath2ElementVisitor;
 import org.intellij.lang.xpath.psi.XPath2If;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathType;
+
 import javax.annotation.Nonnull;
 
 public class XPath2IfImpl extends XPath2ElementImpl implements XPath2If {

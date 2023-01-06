@@ -15,19 +15,19 @@
  */
 package org.intellij.plugins.xpathView.util;
 
-import com.intellij.codeInsight.highlighting.HighlightManager;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.LogicalPosition;
-import com.intellij.openapi.editor.markup.RangeHighlighter;
-import com.intellij.openapi.editor.markup.TextAttributes;
-import com.intellij.openapi.fileTypes.FileTypeManager;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.codeEditor.Editor;
+import consulo.codeEditor.LogicalPosition;
+import consulo.codeEditor.markup.RangeHighlighter;
+import consulo.colorScheme.TextAttributes;
+import consulo.document.util.TextRange;
+import consulo.language.codeStyle.CodeStyleSettingsManager;
+import consulo.language.editor.highlight.HighlightManager;
+import consulo.language.file.FileTypeManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
+import consulo.xml.psi.xml.XmlTag;
 import org.intellij.plugins.xpathView.Config;
 
 import java.util.*;

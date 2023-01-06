@@ -15,9 +15,9 @@
  */
 package org.intellij.lang.xpath.context.functions;
 
-import com.intellij.openapi.util.Pair;
-import javax.annotation.Nullable;
+import consulo.util.lang.Pair;
 
+import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.Map;
 

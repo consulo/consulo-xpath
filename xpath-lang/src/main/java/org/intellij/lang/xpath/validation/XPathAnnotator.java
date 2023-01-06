@@ -15,14 +15,19 @@
  */
 package org.intellij.lang.xpath.validation;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.xml.namespace.QName;
-
+import consulo.document.util.TextRange;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.editor.PsiEquivalenceUtil;
+import consulo.language.editor.annotation.Annotation;
+import consulo.language.editor.annotation.AnnotationHolder;
+import consulo.language.editor.annotation.Annotator;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.xpath.psi.XPathReferenceWithValidation;
 import org.intellij.lang.xpath.XPath2TokenTypes;
 import org.intellij.lang.xpath.XPathElementType;
 import org.intellij.lang.xpath.XPathTokenTypes;
@@ -36,19 +41,13 @@ import org.intellij.lang.xpath.psi.*;
 import org.intellij.lang.xpath.psi.impl.PrefixedNameImpl;
 import org.intellij.lang.xpath.psi.impl.XPathChangeUtil;
 import org.intellij.lang.xpath.psi.impl.XPathNumberImpl;
-import com.intellij.codeInsight.PsiEquivalenceUtil;
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.annotation.Annotation;
-import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.Annotator;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.util.PsiTreeUtil;
-import consulo.xpath.psi.XPathReferenceWithValidation;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.xml.namespace.QName;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class XPathAnnotator extends XPath2ElementVisitor implements Annotator {
 

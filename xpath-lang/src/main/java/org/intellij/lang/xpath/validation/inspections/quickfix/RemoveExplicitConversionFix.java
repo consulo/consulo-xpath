@@ -15,15 +15,16 @@
  */
 package org.intellij.lang.xpath.validation.inspections.quickfix;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.project.Project;
 import org.intellij.lang.xpath.psi.XPathBinaryExpression;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
+
 import javax.annotation.Nonnull;
 
 public class RemoveExplicitConversionFix extends ReplaceElementFix<XPathExpression> {

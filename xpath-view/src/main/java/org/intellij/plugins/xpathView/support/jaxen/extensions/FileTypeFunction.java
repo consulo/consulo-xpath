@@ -15,10 +15,9 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen.extensions;
 
+import consulo.language.psi.PsiFile;
 import org.intellij.lang.xpath.context.functions.Parameter;
 import org.intellij.lang.xpath.psi.XPathType;
-
-import com.intellij.psi.PsiFile;
 
 class FileTypeFunction extends BasicFileInfoFunction {
     public FileTypeFunction() {
@@ -26,6 +25,6 @@ class FileTypeFunction extends BasicFileInfoFunction {
     }
 
     protected String extractInfo(PsiFile psiFile) {
-        return psiFile.getFileType().getName();
+        return psiFile.getFileType().getId();
     }
 }

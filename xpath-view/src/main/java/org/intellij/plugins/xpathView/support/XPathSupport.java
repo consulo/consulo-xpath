@@ -15,19 +15,22 @@
  */
 package org.intellij.plugins.xpathView.support;
 
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.ide.ServiceManager;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 import org.intellij.lang.xpath.context.ContextType;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 
+@ServiceAPI(ComponentScope.APPLICATION)
 public abstract class XPathSupport {
     public static final ContextType TYPE = ContextType.lookupOrCreate("INTERACTIVE");
 

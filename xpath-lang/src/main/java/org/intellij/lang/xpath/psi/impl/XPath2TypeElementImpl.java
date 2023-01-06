@@ -15,16 +15,16 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiReferenceService;
-import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.util.ArrayUtil;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.TokenSet;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.PsiReferenceService;
+import consulo.language.psi.ReferenceProvidersRegistry;
+import consulo.util.collection.ArrayUtil;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import javax.xml.namespace.QName;
 
 public class XPath2TypeElementImpl extends XPath2ElementImpl implements XPath2TypeElement {

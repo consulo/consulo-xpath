@@ -15,19 +15,19 @@
  */
 package org.intellij.lang.xpath.context.functions;
 
-import com.intellij.lexer.FilterLexer;
-import com.intellij.lexer.Lexer;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.lexer.FilterLexer;
+import consulo.language.lexer.Lexer;
+import consulo.util.lang.Pair;
 import org.intellij.lang.xpath.XPath2TokenTypes;
 import org.intellij.lang.xpath.XPathLexer;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.XPath2SequenceType;
 import org.intellij.lang.xpath.psi.XPath2Type;
 import org.intellij.lang.xpath.psi.XPathType;
-import javax.annotation.Nullable;
 
+import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class FunctionDeclarationParsing {
 
   public static Pair<String, ? extends Function> parseFuntionDeclaration(String decl) {
     final Lexer lexer = new FilterLexer(XPathLexer.create(true),
-            new FilterLexer.SetFilter(TokenSet.create(XPathTokenTypes.WHITESPACE)));
+                                        new FilterLexer.SetFilter(TokenSet.create(XPathTokenTypes.WHITESPACE)));
     lexer.start(decl);
 
     String prefix = "";

@@ -16,10 +16,22 @@
 
 package org.intellij.lang.xpath;
 
-import com.intellij.codeInsight.editorActions.SimpleTokenSetQuoteHandler;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.action.FileQuoteHandler;
+import consulo.language.editor.action.SimpleTokenSetQuoteHandler;
+import consulo.virtualFileSystem.fileType.FileType;
 
-public class XPathQuoteHandler extends SimpleTokenSetQuoteHandler {
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
+public class XPathQuoteHandler extends SimpleTokenSetQuoteHandler implements FileQuoteHandler {
     public XPathQuoteHandler() {
         super(XPathTokenTypes.STRING_LITERAL);
+    }
+
+    @Nonnull
+    @Override
+    public FileType getFileType() {
+        return XPathFileType.XPATH;
     }
 }

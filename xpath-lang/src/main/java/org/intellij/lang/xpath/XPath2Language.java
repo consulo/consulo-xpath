@@ -15,56 +15,19 @@
  */
 package org.intellij.lang.xpath;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.Commenter;
-import com.intellij.lang.Language;
-import com.intellij.openapi.fileTypes.SingleLazyInstanceSyntaxHighlighterFactory;
-import com.intellij.openapi.fileTypes.SyntaxHighlighter;
+import consulo.language.Language;
 
 public final class XPath2Language extends Language {
-    public static final String ID = "XPath2";
+  public static final XPath2Language INSTANCE = new XPath2Language();
+  
+  public static final String ID = "XPath2";
 
-    XPath2Language() {
-        super(Language.findLanguageByID(XPathLanguage.ID), ID);
-    }
+  XPath2Language() {
+    super(XPathLanguage.INSTANCE, ID);
+  }
 
   @Override
   public XPathFileType getAssociatedFileType() {
     return XPathFileType.XPATH2;
-  }
-
-  public static class XPathSyntaxHighlighterFactory extends SingleLazyInstanceSyntaxHighlighterFactory {
-    @Nonnull
-    protected SyntaxHighlighter createHighlighter() {
-      return new XPathHighlighter(true);
-    }
-  }
-
-  public static class XPath2Commenter implements Commenter  {
-    @Override
-    public String getLineCommentPrefix() {
-      return null;
-    }
-
-    @Override
-    public String getBlockCommentPrefix() {
-      return "(:";
-    }
-
-    @Override
-    public String getBlockCommentSuffix() {
-      return ":)";
-    }
-
-    @Override
-    public String getCommentedBlockCommentPrefix() {
-      return getBlockCommentPrefix();
-    }
-
-    @Override
-    public String getCommentedBlockCommentSuffix() {
-      return getBlockCommentSuffix();
-    }
   }
 }

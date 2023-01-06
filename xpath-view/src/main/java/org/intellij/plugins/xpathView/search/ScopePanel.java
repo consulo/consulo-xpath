@@ -15,22 +15,21 @@
  */
 package org.intellij.plugins.xpathView.search;
 
-import com.intellij.application.options.ModuleListCellRenderer;
-import com.intellij.ide.util.scopeChooser.ScopeChooserCombo;
-import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.ComboBox;
-import com.intellij.openapi.ui.TextFieldWithBrowseButton;
-import com.intellij.ui.ComboboxWithBrowseButton;
-import com.intellij.ui.DocumentAdapter;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
+import consulo.fileChooser.FileChooserDescriptorFactory;
+import consulo.module.Module;
+import consulo.module.ModuleManager;
+import consulo.module.ui.awt.ModuleListCellRenderer;
+import consulo.project.Project;
+import consulo.ui.ex.awt.ComboBox;
+import consulo.ui.ex.awt.ComboboxWithBrowseButton;
+import consulo.ui.ex.awt.TextFieldWithBrowseButton;
+import consulo.ui.ex.awt.event.DocumentAdapter;
+import consulo.ui.ex.awt.scopeChooser.ScopeChooserCombo;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import java.awt.event.ItemEvent;

@@ -15,10 +15,10 @@
  */
 package org.intellij.lang.xpath;
 
-import com.intellij.lang.Language;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.Language;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.IFileElementType;
+import consulo.language.ast.TokenSet;
 
 public final class XPathElementTypes {
     public static final IElementType EMBEDDED_CONTENT = new IElementType("EMBEDDED_CONTENT", Language.findInstance(XPathLanguage.class));

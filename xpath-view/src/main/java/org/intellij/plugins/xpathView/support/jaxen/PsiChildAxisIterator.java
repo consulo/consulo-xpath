@@ -15,11 +15,11 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.psi.xml.XmlToken;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiWhiteSpace;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.psi.xml.XmlToken;
 
 class PsiChildAxisIterator extends NodeIterator {
     public PsiChildAxisIterator(Object contextNode) {

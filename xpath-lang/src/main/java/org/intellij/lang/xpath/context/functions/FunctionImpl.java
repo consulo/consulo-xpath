@@ -15,11 +15,10 @@
  */
 package org.intellij.lang.xpath.context.functions;
 
-import com.intellij.openapi.util.text.StringUtil;
-
+import consulo.util.lang.StringUtil;
 import org.intellij.lang.xpath.psi.XPathType;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 
 public class FunctionImpl implements Function {
@@ -55,7 +54,7 @@ public class FunctionImpl implements Function {
   @Override
   public String buildSignature() {
     final StringBuilder sb = new StringBuilder(getName()).append("(");
-    sb.append(StringUtil.join(Arrays.asList(parameters), StringUtil.createToStringFunction(Parameter.class), ", "));
+    sb.append(StringUtil.join(Arrays.asList(parameters), Parameter::toString, ", "));
     return sb.append(")").toString();
   }
 

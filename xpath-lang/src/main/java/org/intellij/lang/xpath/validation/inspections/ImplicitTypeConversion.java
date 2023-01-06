@@ -22,13 +22,14 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.lang.Language;
-import com.intellij.openapi.util.InvalidDataException;
-import com.intellij.openapi.util.WriteExternalException;
-import com.intellij.util.Alarm;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.ui.ex.awt.util.Alarm;
+import consulo.util.xml.serializer.InvalidDataException;
+import consulo.util.xml.serializer.WriteExternalException;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPathExpression;
@@ -38,15 +39,16 @@ import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.BitSet;
 
 // TODO: Option to flag literals: <number> = '123', <string> = 123, etc.
+@ExtensionImpl
 public class ImplicitTypeConversion extends XPathInspection {
     @NonNls
     private static final String SHORT_NAME = "ImplicitTypeConversion";
@@ -149,8 +151,8 @@ public class ImplicitTypeConversion extends XPathInspection {
                 }
 
                 addProblem(myManager.createProblemDescriptor(expression,
-                        "Expression should be of type '" + type.getName() + "'", myOnTheFly, fixes,
-                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING));
+                                                             "Expression should be of type '" + type.getName() + "'", myOnTheFly, fixes,
+                                                             ProblemHighlightType.GENERIC_ERROR_OR_WARNING));
             }
         }
 

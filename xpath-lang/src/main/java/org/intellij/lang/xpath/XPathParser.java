@@ -15,15 +15,15 @@
  */
 package org.intellij.lang.xpath;
 
-import javax.annotation.Nonnull;
+import consulo.application.ApplicationManager;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.parser.PsiBuilder;
+import consulo.language.parser.PsiParser;
+import consulo.language.version.LanguageVersion;
 
-import com.intellij.lang.ASTNode;
-import consulo.lang.LanguageVersion;
-import com.intellij.lang.PsiBuilder;
-import com.intellij.lang.PsiParser;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
+import javax.annotation.Nonnull;
 
 public class XPathParser implements PsiParser {
   private static final boolean DBG_MODE = Boolean.getBoolean(XPathParser.class.getName() + ".debug") || ApplicationManager.getApplication().isUnitTestMode();

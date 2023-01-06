@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 
 public interface XPathToken extends XPathElement {
     IElementType getTokenType();

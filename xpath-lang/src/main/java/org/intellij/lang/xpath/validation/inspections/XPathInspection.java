@@ -15,31 +15,49 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.codeInspection.*;
-import com.intellij.lang.Language;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiRecursiveElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.SmartList;
+import consulo.document.util.TextRange;
+import consulo.language.Language;
+import consulo.language.editor.inspection.CustomSuppressableInspectionTool;
+import consulo.language.editor.inspection.LocalInspectionTool;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.language.editor.intention.SuppressIntentionAction;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiRecursiveElementVisitor;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.SmartList;
+import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.intellij.lang.xpath.psi.XPathPredicate;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public abstract class XPathInspection extends LocalInspectionTool implements CustomSuppressableInspectionTool {
 
     @Nonnull
     public String getGroupDisplayName() {
-        return "XPath";
+        return "General";
     }
 
-    public SuppressIntentionAction[] getSuppressActions(@Nullable PsiElement element) {
+  @Nullable
+  @Override
+  public Language getLanguage() {
+    return XPathFileType.XPATH.getLanguage();
+  }
+
+  @Nonnull
+  @Override
+  public HighlightDisplayLevel getDefaultLevel() {
+    return HighlightDisplayLevel.WARNING;
+  }
+
+  public SuppressIntentionAction[] getSuppressActions(@Nullable PsiElement element) {
         final XPathElement e = PsiTreeUtil.getContextOfType(element, XPathElement.class, false);
         return ContextProvider.getContextProvider(e != null ? e : element).getQuickFixFactory().getSuppressActions(this);
     }

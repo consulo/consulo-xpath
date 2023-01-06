@@ -15,17 +15,17 @@
  */
 package org.intellij.lang.xpath.context.functions;
 
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.Pair;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.Pair;
 import org.intellij.lang.xpath.context.ContextType;
-import javax.annotation.Nullable;
 
+import javax.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /*
 * Created by IntelliJ IDEA.
@@ -71,10 +71,10 @@ public abstract class AbstractFunctionContext implements FunctionContext {
     return Collections.unmodifiableMap(map);
   }
 
-  protected static synchronized FunctionContext getInstance(ContextType contextType, Factory<FunctionContext> factory) {
+  protected static synchronized FunctionContext getInstance(ContextType contextType, Supplier<FunctionContext> factory) {
     FunctionContext context = ourInstances.get(contextType);
     if (context == null) {
-      context = factory.create();
+      context = factory.get();
       ourInstances.put(contextType, context);
     }
     return context;

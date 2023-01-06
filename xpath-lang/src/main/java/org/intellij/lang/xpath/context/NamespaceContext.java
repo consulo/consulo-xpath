@@ -15,31 +15,33 @@
  */
 package org.intellij.lang.xpath.context;
 
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.xml.XmlElement;
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.xml.psi.xml.XmlElement;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 
 public interface NamespaceContext {
-    @Nullable
-    String getNamespaceURI(String prefix, XmlElement context);
+  @Nullable
+  String getNamespaceURI(String prefix, XmlElement context);
 
-    @Nullable
-    String getPrefixForURI(String uri, XmlElement context);
+  @Nullable
+  String getPrefixForURI(String uri, XmlElement context);
 
-    @Nonnull
-    Collection<String> getKnownPrefixes(XmlElement context);
+  @Nonnull
+  Collection<String> getKnownPrefixes(XmlElement context);
 
-    /** resolve to NS-Attribute's name-token */
-    @Nullable
-    PsiElement resolve(String prefix, XmlElement context);
+  /**
+   * resolve to NS-Attribute's name-token
+   */
+  @Nullable
+  PsiElement resolve(String prefix, XmlElement context);
 
-    IntentionAction[] getUnresolvedNamespaceFixes(PsiReference reference, String localName);
+  IntentionAction[] getUnresolvedNamespaceFixes(PsiReference reference, String localName);
 
-    @Nullable
-    String getDefaultNamespace(XmlElement context);
+  @Nullable
+  String getDefaultNamespace(XmlElement context);
 }

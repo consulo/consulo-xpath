@@ -1,13 +1,16 @@
 package consulo.xpath.view;
 
-import javax.annotation.Nonnull;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.component.persist.PersistentStateComponent;
+import consulo.component.persist.State;
+import consulo.component.persist.Storage;
+import consulo.ide.ServiceManager;
 import jakarta.inject.Singleton;
-
 import org.intellij.plugins.xpathView.Config;
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL
@@ -15,26 +18,24 @@ import com.intellij.openapi.components.Storage;
  */
 @Singleton
 @State(name = "XPathView.XPathViewPlugin", storages = @Storage("xpath.xml"))
-public class XPathViewConfig implements PersistentStateComponent<Config>
-{
-	@Nonnull
-	public static XPathViewConfig getInstance()
-	{
-		return ServiceManager.getService(XPathViewConfig.class);
-	}
+@ServiceAPI(ComponentScope.APPLICATION)
+@ServiceImpl
+public class XPathViewConfig implements PersistentStateComponent<Config> {
+  @Nonnull
+  public static XPathViewConfig getInstance() {
+    return ServiceManager.getService(XPathViewConfig.class);
+  }
 
-	private Config myConfig = new Config();
+  private Config myConfig = new Config();
 
-	@Nonnull
-	@Override
-	public Config getState()
-	{
-		return myConfig;
-	}
+  @Nonnull
+  @Override
+  public Config getState() {
+    return myConfig;
+  }
 
-	@Override
-	public void loadState(Config config)
-	{
-		myConfig = config;
-	}
+  @Override
+  public void loadState(Config config) {
+    myConfig = config;
+  }
 }

@@ -15,48 +15,41 @@
  */
 package org.intellij.lang.xpath;
 
-import com.intellij.lang.Language;
-import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.language.Language;
+import consulo.language.file.LanguageFileType;
 import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
-import icons.XpathIcons;
 
 import javax.annotation.Nonnull;
 
-public final class XPathFileType extends LanguageFileType
-{
-	public static final XPathFileType XPATH = new XPathFileType(new XPathLanguage());
-	public static final XPathFileType XPATH2 = new XPathFileType(new XPath2Language());
+public final class XPathFileType extends LanguageFileType {
+  public static final XPathFileType XPATH = new XPathFileType(XPathLanguage.INSTANCE);
+  public static final XPathFileType XPATH2 = new XPathFileType(XPath2Language.INSTANCE);
 
-	private XPathFileType(Language language)
-	{
-		super(language);
-	}
+  private XPathFileType(Language language) {
+    super(language);
+  }
 
-	@Override
-	@Nonnull
-	public String getId()
-	{
-		return getLanguage().getID();
-	}
+  @Override
+  @Nonnull
+  public String getId() {
+    return getLanguage().getID();
+  }
 
-	@Override
-	@Nonnull
-	public LocalizeValue getDescription()
-	{
-		return LocalizeValue.localizeTODO("XPath");
-	}
+  @Override
+  @Nonnull
+  public LocalizeValue getDescription() {
+    return LocalizeValue.localizeTODO("XPath");
+  }
 
-	@Override
-	@Nonnull
-	public String getDefaultExtension()
-	{
-		return getLanguage().getID().toLowerCase();
-	}
+  @Override
+  @Nonnull
+  public String getDefaultExtension() {
+    return getLanguage().getID().toLowerCase();
+  }
 
-	@Override
-	public Image getIcon()
-	{
-		return XpathIcons.Xpath;
-	}
+  @Override
+  public Image getIcon() {
+    return XpathIcons.Xpath;
+  }
 }

@@ -15,26 +15,26 @@
  */
 package org.intellij.lang.xpath.context;
 
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.psi.PsiElement;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import consulo.language.editor.intention.IntentionAction;
+import consulo.language.psi.PsiElement;
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathVariable;
 import org.intellij.lang.xpath.psi.XPathVariableReference;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public interface VariableContext<VarType> {
-    @Nonnull
-    VarType[] getVariablesInScope(XPathElement element);
+  @Nonnull
+  VarType[] getVariablesInScope(XPathElement element);
 
-    boolean canResolve();
+  boolean canResolve();
 
-    @Nullable
-    XPathVariable resolve(XPathVariableReference reference);
+  @Nullable
+  XPathVariable resolve(XPathVariableReference reference);
 
-    @Nonnull
-    IntentionAction[] getUnresolvedVariableFixes(XPathVariableReference reference);
+  @Nonnull
+  IntentionAction[] getUnresolvedVariableFixes(XPathVariableReference reference);
 
-    boolean isReferenceTo(PsiElement element, XPathVariableReference reference);
+  boolean isReferenceTo(PsiElement element, XPathVariableReference reference);
 }

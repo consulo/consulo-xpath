@@ -15,14 +15,13 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.TokenSet;
 import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.XPathElementTypes;
 import org.intellij.lang.xpath.psi.*;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class XPathFilterExpressionImpl extends XPathElementImpl implements XPathFilterExpression {

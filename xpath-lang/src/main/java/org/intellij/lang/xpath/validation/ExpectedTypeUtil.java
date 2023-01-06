@@ -22,8 +22,8 @@
  */
 package org.intellij.lang.xpath.validation;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.psi.util.PsiTreeUtil;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.lang.Comparing;
 import org.intellij.lang.xpath.XPath2TokenTypes;
 import org.intellij.lang.xpath.XPathElementType;
 import org.intellij.lang.xpath.XPathTokenTypes;
@@ -31,9 +31,9 @@ import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.context.functions.Function;
 import org.intellij.lang.xpath.context.functions.Parameter;
 import org.intellij.lang.xpath.psi.*;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import javax.xml.namespace.QName;
 
 public class ExpectedTypeUtil {

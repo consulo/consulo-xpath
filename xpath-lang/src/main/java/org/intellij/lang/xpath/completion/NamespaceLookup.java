@@ -15,9 +15,9 @@
  */
 package org.intellij.lang.xpath.completion;
 
-import com.intellij.openapi.util.Iconable;
+import consulo.component.util.Iconable;
 import consulo.ui.image.Image;
-import icons.XpathIcons;
+import org.intellij.lang.xpath.XpathIcons;
 
 public class NamespaceLookup extends AbstractLookup implements Lookup, Iconable {
     public NamespaceLookup(String name) {

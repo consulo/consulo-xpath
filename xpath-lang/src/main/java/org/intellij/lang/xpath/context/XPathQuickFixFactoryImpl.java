@@ -22,9 +22,8 @@
  */
 package org.intellij.lang.xpath.context;
 
-import com.intellij.codeInspection.SuppressIntentionAction;
-import com.intellij.psi.PsiElement;
-
+import consulo.language.editor.intention.SuppressIntentionAction;
+import consulo.language.psi.PsiElement;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.intellij.lang.xpath.psi.XPathType;

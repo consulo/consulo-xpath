@@ -15,11 +15,11 @@
  */
 package org.intellij.lang.xpath.completion;
 
-import org.intellij.lang.xpath.psi.XPathNodeTest;
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.util.Iconable;
+import consulo.application.AllIcons;
+import consulo.component.util.Iconable;
 import consulo.ui.image.Image;
-import icons.XpathIcons;
+import org.intellij.lang.xpath.XpathIcons;
+import org.intellij.lang.xpath.psi.XPathNodeTest;
 
 public class NodeLookup extends AbstractLookup implements Lookup, Iconable {
     private final XPathNodeTest.PrincipalType principalType;

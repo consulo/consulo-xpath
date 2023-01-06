@@ -15,8 +15,7 @@
  */
 package org.intellij.lang.xpath.context.functions;
 
-import com.intellij.openapi.util.Factory;
-import com.intellij.openapi.util.Pair;
+import consulo.util.lang.Pair;
 import org.intellij.lang.xpath.context.ContextType;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.XPathType;
@@ -365,11 +364,6 @@ public class DefaultFunctionContext extends AbstractFunctionContext {
   }
 
   public static FunctionContext getInstance(final ContextType type) {
-    return AbstractFunctionContext.getInstance(type, new Factory<FunctionContext>() {
-      @Override
-      public FunctionContext create() {
-        return new DefaultFunctionContext(type);
-      }
-    });
+    return AbstractFunctionContext.getInstance(type, () -> new DefaultFunctionContext(type));
   }
 }

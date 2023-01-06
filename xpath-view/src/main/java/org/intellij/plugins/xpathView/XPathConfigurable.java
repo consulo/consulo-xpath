@@ -15,8 +15,10 @@
  */
 package org.intellij.plugins.xpathView;
 
-import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.options.SearchableConfigurable;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.configurable.ApplicationConfigurable;
+import consulo.configurable.ConfigurationException;
+import consulo.configurable.SearchableConfigurable;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xpath.view.XPathViewConfig;
 import org.intellij.plugins.xpathView.ui.ConfigUI;
@@ -25,67 +27,59 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.*;
 
-public class XPathConfigurable implements SearchableConfigurable
-{
-	private ConfigUI configUI;
+@ExtensionImpl
+public class XPathConfigurable implements SearchableConfigurable, ApplicationConfigurable {
+  private ConfigUI configUI;
 
-	public String getDisplayName()
-	{
-		return "XPath Viewer";
-	}
+  @Nonnull
+  public String getDisplayName() {
+    return "XPath";
+  }
 
-	@Nullable
-	public String getHelpTopic()
-	{
-		return "xpath.settings";
-	}
+  @Nullable
+  public String getHelpTopic() {
+    return "xpath.settings";
+  }
 
-	@Nonnull
-	public String getId()
-	{
-		return getHelpTopic();
-	}
+  @Nonnull
+  public String getId() {
+    return "xpath.settings";
+  }
 
-	public Runnable enableSearch(String option)
-	{
-		return null;
-	}
+  @Nullable
+  @Override
+  public String getParentId() {
+    return "editor";
+  }
 
-	@RequiredUIAccess
-	public JComponent createComponent()
-	{
-		configUI = new ConfigUI(XPathViewConfig.getInstance().getState());
+  @RequiredUIAccess
+  public JComponent createComponent() {
+    configUI = new ConfigUI(XPathViewConfig.getInstance().getState());
 
-		return configUI;
-	}
+    return configUI;
+  }
 
-	@RequiredUIAccess
-	public boolean isModified()
-	{
-		return configUI != null && !configUI.getConfig().equals(XPathViewConfig.getInstance().getState());
-	}
+  @RequiredUIAccess
+  public boolean isModified() {
+    return configUI != null && !configUI.getConfig().equals(XPathViewConfig.getInstance().getState());
+  }
 
-	@RequiredUIAccess
-	public void apply() throws ConfigurationException
-	{
-		if(configUI != null)
-		{
-			XPathViewConfig.getInstance().loadState(configUI.getConfig());
-		}
-	}
+  @RequiredUIAccess
+  public void apply() throws ConfigurationException {
+    if (configUI != null) {
+      XPathViewConfig.getInstance().loadState(configUI.getConfig());
+    }
+  }
 
-	@RequiredUIAccess
-	public void reset()
-	{
-		if(configUI != null)
-		{
-			configUI.setConfig(XPathViewConfig.getInstance().getState());
-		}
-	}
+  @RequiredUIAccess
+  public void reset() {
+    if (configUI != null) {
+      configUI.setConfig(XPathViewConfig.getInstance().getState());
+    }
+  }
 
-	@RequiredUIAccess
-	public void disposeUIResources()
-	{
-		configUI = null;
-	}
+  @RequiredUIAccess
+  public void disposeUIResources() {
+    configUI = null;
+  }
 }

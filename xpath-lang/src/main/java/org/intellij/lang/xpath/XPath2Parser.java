@@ -15,11 +15,11 @@
  */
 package org.intellij.lang.xpath;
 
-import javax.annotation.Nullable;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.parser.PsiBuilder;
 
-import com.intellij.lang.PsiBuilder;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
+import javax.annotation.Nullable;
 
 /*
 * Created by IntelliJ IDEA.

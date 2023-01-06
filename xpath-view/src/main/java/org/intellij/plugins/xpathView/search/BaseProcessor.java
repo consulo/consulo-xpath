@@ -15,12 +15,12 @@
  */
 package org.intellij.plugins.xpathView.search;
 
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.Processor;
-import com.intellij.ide.highlighter.XmlLikeFileType;
+import consulo.application.progress.ProgressIndicator;
+import consulo.application.progress.ProgressManager;
+import consulo.application.util.function.Processor;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.ide.highlighter.XmlLikeFileType;
 
 public abstract class BaseProcessor implements Processor<VirtualFile> {
     private final ProgressIndicator myIndicator = ProgressManager.getInstance().getProgressIndicator();

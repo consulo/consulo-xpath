@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen.extensions;
 
-import com.intellij.psi.PsiFile;
+import consulo.language.psi.PsiFile;
 import org.intellij.lang.xpath.context.functions.Parameter;
 import org.intellij.lang.xpath.psi.XPathType;
 

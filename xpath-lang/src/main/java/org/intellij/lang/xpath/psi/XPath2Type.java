@@ -15,12 +15,12 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.Condition;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.Comparing;
+import consulo.util.lang.function.Condition;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import javax.xml.namespace.QName;
 import java.util.HashMap;
 import java.util.List;

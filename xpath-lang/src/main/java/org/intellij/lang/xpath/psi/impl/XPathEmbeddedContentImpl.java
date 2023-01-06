@@ -15,15 +15,15 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import javax.annotation.Nonnull;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.resolve.PsiElementProcessor;
+import consulo.language.psi.resolve.PsiScopeProcessor;
+import consulo.language.psi.resolve.ResolveState;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.psi.xml.XmlTagChild;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.ResolveState;
-import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.search.PsiElementProcessor;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlTagChild;
+import javax.annotation.Nonnull;
 
 @SuppressWarnings({"ConstantConditions"})
 public class XPathEmbeddedContentImpl extends XPathElementImpl implements XmlTagChild {

@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package icons;
+package org.intellij.lang.xpath;
 
 import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.image.Image;
 import consulo.xpath.icon.XPathIconGroup;
 
 @Deprecated
-public class XpathIcons
-{
-	public static final Image Namespace = XPathIconGroup.namespace();
-	public static final Image Tag = PlatformIconGroup.nodesTag();
-	public static final Image Xpath = XPathIconGroup.xpath();
+public class XpathIcons {
+  public static final Image Namespace = XPathIconGroup.namespace();
+  public static final Image Tag = PlatformIconGroup.nodesTag();
+  public static final Image Xpath = XPathIconGroup.xpath();
 }

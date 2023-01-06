@@ -15,12 +15,13 @@
  */
 package org.intellij.lang.xpath.psi.impl;
 
-import org.intellij.lang.xpath.psi.XPathElementVisitor;
-import org.intellij.lang.xpath.psi.XPathAxisSpecifier;
-import org.intellij.lang.xpath.psi.Axis;
+import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.XPathTokenTypes;
+import org.intellij.lang.xpath.psi.Axis;
+import org.intellij.lang.xpath.psi.XPathAxisSpecifier;
+import org.intellij.lang.xpath.psi.XPathElementVisitor;
+
 import javax.annotation.Nonnull;
-import com.intellij.lang.ASTNode;
 
 public class XPathAxisSpecifierImpl extends XPathElementImpl implements XPathAxisSpecifier {
     public XPathAxisSpecifierImpl(ASTNode node) {

@@ -15,27 +15,21 @@
  */
 package org.intellij.plugins.xpathView.util;
 
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.psi.XmlRecursiveElementVisitor;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlDocument;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import consulo.logging.Logger;
+import consulo.xml.psi.XmlRecursiveElementVisitor;
+import consulo.xml.psi.xml.XmlAttribute;
+import consulo.xml.psi.xml.XmlDocument;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.psi.xml.XmlTag;
 
 import javax.xml.namespace.QName;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Helper class to collect all used namespaces and their prefixes from an xml document
  */
 public class NamespaceCollector extends XmlRecursiveElementVisitor {
-    private static final Logger LOG = Logger.getInstance("org.intellij.plugins.xpathView.util.NamespaceCollector");
+    private static final Logger LOG = Logger.getInstance(NamespaceCollector.class);
 
     public static class CollectedInfo {
         public final Set<Namespace> namespaces;

@@ -15,11 +15,11 @@
  */
 package org.intellij.lang.xpath.completion;
 
-import com.intellij.codeInsight.lookup.DeferredUserLookupValue;
-import com.intellij.codeInsight.lookup.LookupItem;
-import com.intellij.codeInsight.lookup.LookupValueWithPriority;
-import com.intellij.codeInsight.lookup.LookupValueWithUIHint;
-import com.intellij.openapi.project.Project;
+import consulo.language.editor.completion.lookup.DeferredUserLookupValue;
+import consulo.language.editor.completion.lookup.LookupItem;
+import consulo.language.editor.completion.lookup.LookupValueWithPriority;
+import consulo.language.editor.completion.lookup.LookupValueWithUIHint;
+import consulo.project.Project;
 
 import java.awt.*;
 
