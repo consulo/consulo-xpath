@@ -10,6 +10,7 @@ open module com.intellij.xpath.lang {
 
   // TODO [VISTALL] remove in future
   requires java.desktop;
+  requires forms.rt;
 
   exports consulo.xpath.context;
   exports consulo.xpath.icon;
