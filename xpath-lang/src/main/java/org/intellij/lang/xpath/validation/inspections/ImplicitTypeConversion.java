@@ -24,6 +24,7 @@ package org.intellij.lang.xpath.validation.inspections;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
+import consulo.language.editor.inspection.InspectionToolState;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.scheme.InspectionManager;
@@ -53,21 +54,13 @@ public class ImplicitTypeConversion extends XPathInspection {
     @NonNls
     private static final String SHORT_NAME = "ImplicitTypeConversion";
 
-    public long BITS = 1720;
-    private final BitSet OPTIONS = new BitSet(12);
-
-    public boolean FLAG_EXPLICIT_CONVERSION = true;
-    public boolean IGNORE_NODESET_TO_BOOLEAN_VIA_STRING = true;
-
     public ImplicitTypeConversion() {
-        update();
     }
 
-    private void update() {
-        for (int i=0; i<12; i++) {
-            final boolean b = (BITS & (1 << i)) != 0;
-            OPTIONS.set(i, b);
-        }
+    @Nonnull
+    @Override
+    public InspectionToolState<?> createStateProvider() {
+        return new ImplicitTypeConversionState();
     }
 
     @Nonnull
@@ -92,20 +85,6 @@ public class ImplicitTypeConversion extends XPathInspection {
     @Nullable
     public JComponent createOptionsPanel() {
         return new Options();
-    }
-
-    public void readSettings(@Nonnull Element node) throws InvalidDataException {
-        super.readSettings(node);
-        update();
-    }
-
-    public void writeSettings(@Nonnull Element node) throws WriteExternalException {
-        BITS = 0;
-        for (int i=11; i>=0; i--) {
-            BITS <<= 1;
-            if (OPTIONS.get(i)) BITS |= 1;
-        }
-        super.writeSettings(node);
     }
 
     protected boolean acceptsLanguage(Language language) {
