@@ -15,19 +15,16 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
-import consulo.document.util.TextRange;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.Language;
-import consulo.language.editor.inspection.CustomSuppressableInspectionTool;
-import consulo.language.editor.inspection.LocalInspectionTool;
-import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.*;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.intention.SuppressIntentionAction;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiElement;
-import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiRecursiveElementVisitor;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.util.collection.SmartList;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPathElement;
@@ -38,26 +35,25 @@ import org.intellij.lang.xpath.psi.XPathPredicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class XPathInspection extends LocalInspectionTool implements CustomSuppressableInspectionTool {
-
+public abstract class XPathInspection<S> extends LocalInspectionTool implements CustomSuppressableInspectionTool {
     @Nonnull
     public String getGroupDisplayName() {
         return "General";
     }
 
-  @Nullable
-  @Override
-  public Language getLanguage() {
-    return XPathFileType.XPATH.getLanguage();
-  }
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return XPathFileType.XPATH.getLanguage();
+    }
 
-  @Nonnull
-  @Override
-  public HighlightDisplayLevel getDefaultLevel() {
-    return HighlightDisplayLevel.WARNING;
-  }
+    @Nonnull
+    @Override
+    public HighlightDisplayLevel getDefaultLevel() {
+        return HighlightDisplayLevel.WARNING;
+    }
 
-  public SuppressIntentionAction[] getSuppressActions(@Nullable PsiElement element) {
+    public SuppressIntentionAction[] getSuppressActions(@Nullable PsiElement element) {
         final XPathElement e = PsiTreeUtil.getContextOfType(element, XPathElement.class, false);
         return ContextProvider.getContextProvider(e != null ? e : element).getQuickFixFactory().getSuppressActions(this);
     }
@@ -66,69 +62,64 @@ public abstract class XPathInspection extends LocalInspectionTool implements Cus
         return ContextProvider.getContextProvider(element.getContainingFile()).getQuickFixFactory().isSuppressedFor(element, this);
     }
 
-    protected abstract Visitor createVisitor(InspectionManager manager, boolean isOnTheFly);
+    protected abstract Visitor createVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, S state);
 
-    @Nullable
-    public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly) {
-        final Language language = file.getLanguage();
-        if (!acceptsLanguage(language)) return null;
-
-        final Visitor visitor = createVisitor(manager, isOnTheFly);
-
-        file.accept(visitor);
-
-        return visitor.getProblems();
+    @Nonnull
+    @Override
+    @SuppressWarnings("unchecked")
+    @RequiredReadAction
+    public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder,
+                                          boolean isOnTheFly,
+                                          @Nonnull LocalInspectionToolSession session,
+                                          @Nonnull Object state) {
+        if (!acceptsLanguage(holder.getFile().getLanguage())) {
+            return PsiElementVisitor.EMPTY_VISITOR;
+        }
+        return createVisitor(holder.getManager(), holder, isOnTheFly, (S) state);
     }
 
-  protected abstract boolean acceptsLanguage(Language language);
+    protected boolean acceptsLanguage(Language language) {
+        return language == XPathFileType.XPATH.getLanguage() || language == XPathFileType.XPATH2.getLanguage();
+    }
 
-  protected static abstract class Visitor extends PsiRecursiveElementVisitor {
+    protected static abstract class Visitor<S1> extends PsiRecursiveElementVisitor {
         protected final InspectionManager myManager;
-      protected boolean myOnTheFly;
-      private SmartList<ProblemDescriptor> myProblems;
+        private final ProblemsHolder myProblemsHolder;
+        protected boolean myOnTheFly;
+        protected S1 myState;
 
-      public Visitor(InspectionManager manager, boolean isOnTheFly) {
+        public Visitor(InspectionManager manager, ProblemsHolder problemsHolder, boolean isOnTheFly, S1 state) {
             myManager = manager;
-          this.myOnTheFly = isOnTheFly;
+            myState = state;
+            myProblemsHolder = problemsHolder;
+            myOnTheFly = isOnTheFly;
         }
 
         public void visitElement(PsiElement psiElement) {
             super.visitElement(psiElement);
 
-            if (myProblems != null) {
-                final TextRange textRange = psiElement.getTextRange();
-                for (ProblemDescriptor problem : myProblems) {
-                    if (textRange.contains(problem.getPsiElement().getTextRange())) {
-                        return;
-                    }
-                }
-            }
-
             if (psiElement instanceof XPathExpression) {
-                checkExpression(((XPathExpression)psiElement));
-            } else if (psiElement instanceof XPathNodeTest) {
-                checkNodeTest(((XPathNodeTest)psiElement));
-            } else if (psiElement instanceof XPathPredicate) {
-                checkPredicate((XPathPredicate)psiElement);
+                checkExpression(((XPathExpression) psiElement));
+            }
+            else if (psiElement instanceof XPathNodeTest) {
+                checkNodeTest(((XPathNodeTest) psiElement));
+            }
+            else if (psiElement instanceof XPathPredicate) {
+                checkPredicate((XPathPredicate) psiElement);
             }
         }
 
-        protected void checkExpression(XPathExpression expression) { }
+        protected void checkExpression(XPathExpression expression) {
+        }
 
-        protected void checkPredicate(XPathPredicate predicate) { }
+        protected void checkPredicate(XPathPredicate predicate) {
+        }
 
-        protected void checkNodeTest(XPathNodeTest nodeTest) { }
-
-        @Nullable
-        public ProblemDescriptor[] getProblems() {
-            return myProblems == null ? null : myProblems.toArray(new ProblemDescriptor[myProblems.size()]);
+        protected void checkNodeTest(XPathNodeTest nodeTest) {
         }
 
         protected void addProblem(ProblemDescriptor problem) {
-            if (myProblems == null) {
-                myProblems = new SmartList<ProblemDescriptor>();
-            }
-            myProblems.add(problem);
+            myProblemsHolder.registerProblem(problem);
         }
     }
 }

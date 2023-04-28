@@ -16,11 +16,10 @@
 package org.intellij.lang.xpath.validation.inspections;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.language.Language;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
-import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
@@ -29,9 +28,9 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 
 @ExtensionImpl
-public class IndexZeroPredicate extends XPathInspection {
-    protected Visitor createVisitor(InspectionManager manager, boolean isOnTheFly) {
-        return new MyVisitor(manager, isOnTheFly);
+public class IndexZeroPredicate extends XPathInspection<Object> {
+    protected Visitor createVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, Object state) {
+        return new MyVisitor(manager, holder, isOnTheFly, state);
     }
 
     @Nonnull
@@ -49,13 +48,9 @@ public class IndexZeroPredicate extends XPathInspection {
         return true;
     }
 
-  protected boolean acceptsLanguage(Language language) {
-    return language == XPathFileType.XPATH.getLanguage() || language == XPathFileType.XPATH2.getLanguage();
-  }
-
-  final static class MyVisitor extends Visitor {
-        MyVisitor(InspectionManager manager, boolean isOnTheFly) {
-            super(manager, isOnTheFly);
+    final static class MyVisitor extends Visitor<Object> {
+        MyVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, Object state) {
+            super(manager, holder, isOnTheFly, state);
         }
 
         protected void checkPredicate(XPathPredicate predicate) {
@@ -64,15 +59,16 @@ public class IndexZeroPredicate extends XPathInspection {
                 if (expr.getType() == XPathType.NUMBER) {
                     if (isZero(expr)) {
                         addProblem(myManager.createProblemDescriptor(expr,
-                                                                     "Use of 0 as predicate index", (LocalQuickFix)null,
-                                                                     ProblemHighlightType.GENERIC_ERROR_OR_WARNING, myOnTheFly));
+                                "Use of 0 as predicate index", (LocalQuickFix) null,
+                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING, myOnTheFly));
                     }
-                } else if (expr instanceof XPathBinaryExpression && expr.getType() == XPathType.BOOLEAN) {
-                    final XPathBinaryExpression expression = (XPathBinaryExpression)expr;
+                }
+                else if (expr instanceof XPathBinaryExpression && expr.getType() == XPathType.BOOLEAN) {
+                    final XPathBinaryExpression expression = (XPathBinaryExpression) expr;
                     if (!XPathTokenTypes.BOOLEAN_OPERATIONS.contains(expression.getOperator())) {
                         return;
                     }
-                    
+
                     final XPathExpression lOp = expression.getLOperand();
                     final XPathExpression rOp = expression.getROperand();
 
@@ -81,15 +77,16 @@ public class IndexZeroPredicate extends XPathInspection {
 
                         if (isPosition(rOp)) {
                             addProblem(myManager.createProblemDescriptor(expr,
-                                    "Comparing position() to 0", (LocalQuickFix)null,
+                                    "Comparing position() to 0", (LocalQuickFix) null,
                                     ProblemHighlightType.GENERIC_ERROR_OR_WARNING, myOnTheFly));
                         }
-                    } else if (isZero(rOp)) {
+                    }
+                    else if (isZero(rOp)) {
                         assert rOp != null;
 
                         if (isPosition(lOp)) {
                             addProblem(myManager.createProblemDescriptor(expr,
-                                    "Comparing position() to 0", (LocalQuickFix)null,
+                                    "Comparing position() to 0", (LocalQuickFix) null,
                                     ProblemHighlightType.GENERIC_ERROR_OR_WARNING, myOnTheFly));
                         }
                     }
@@ -104,9 +101,11 @@ public class IndexZeroPredicate extends XPathInspection {
                 return false;
             }
 
-            final XPathFunctionCall call = (XPathFunctionCall)expression;
+            final XPathFunctionCall call = (XPathFunctionCall) expression;
             final PrefixedName qName = call.getQName();
-            if (qName.getPrefix() != null) return false;
+            if (qName.getPrefix() != null) {
+                return false;
+            }
             return "position".equals(qName.getLocalName());
         }
 

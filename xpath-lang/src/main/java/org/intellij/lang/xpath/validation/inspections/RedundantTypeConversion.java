@@ -16,11 +16,10 @@
 package org.intellij.lang.xpath.validation.inspections;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.language.Language;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
-import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPath2SequenceType;
 import org.intellij.lang.xpath.psi.XPathExpression;
@@ -31,11 +30,9 @@ import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFact
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.*;
 
 @ExtensionImpl
-public class RedundantTypeConversion extends XPathInspection {
+public class RedundantTypeConversion extends XPathInspection<Object> {
     @NonNls
     private static final String SHORT_NAME = "RedundantTypeConversion";
 
@@ -56,23 +53,14 @@ public class RedundantTypeConversion extends XPathInspection {
         return true;
     }
 
-    protected Visitor createVisitor(InspectionManager manager, boolean isOnTheFly) {
-        return new MyElementVisitor(manager, isOnTheFly);
+    protected Visitor createVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, Object state) {
+        return new MyElementVisitor(manager, holder, isOnTheFly, state);
     }
 
-    @Nullable
-    public JComponent createOptionsPanel() {
-        return null;
-    }
+    final class MyElementVisitor extends Visitor<Object> {
 
-    protected boolean acceptsLanguage(Language language) {
-      return language == XPathFileType.XPATH.getLanguage() || language == XPathFileType.XPATH2.getLanguage();
-    }
-
-    final class MyElementVisitor extends Visitor {
-
-        MyElementVisitor(InspectionManager manager, boolean isOnTheFly) {
-            super(manager, isOnTheFly);
+        MyElementVisitor(InspectionManager manager, ProblemsHolder holder,boolean isOnTheFly, Object state) {
+            super(manager, holder, isOnTheFly, state);
         }
 
         protected void checkExpression(final @Nonnull XPathExpression expr) {

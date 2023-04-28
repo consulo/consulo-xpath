@@ -27,10 +27,9 @@ import consulo.language.Language;
 import consulo.language.editor.inspection.InspectionToolState;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.ui.ex.awt.util.Alarm;
-import consulo.util.xml.serializer.InvalidDataException;
-import consulo.util.xml.serializer.WriteExternalException;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPathExpression;
@@ -38,7 +37,6 @@ import org.intellij.lang.xpath.psi.XPathFunctionCall;
 import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
-import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -46,11 +44,10 @@ import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.BitSet;
 
 // TODO: Option to flag literals: <number> = '123', <string> = 123, etc.
 @ExtensionImpl
-public class ImplicitTypeConversion extends XPathInspection {
+public class ImplicitTypeConversion extends XPathInspection<ImplicitTypeConversionState> {
     @NonNls
     private static final String SHORT_NAME = "ImplicitTypeConversion";
 
@@ -78,29 +75,30 @@ public class ImplicitTypeConversion extends XPathInspection {
         return true;
     }
 
-    protected Visitor createVisitor(InspectionManager manager, boolean isOnTheFly) {
-        return new MyElementVisitor(manager, isOnTheFly);
+    protected Visitor createVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, ImplicitTypeConversionState state) {
+        ImplicitTypeConversionState inspectionState = (ImplicitTypeConversionState)state;
+        return new MyElementVisitor(manager, holder, isOnTheFly, inspectionState);
     }
 
     @Nullable
     public JComponent createOptionsPanel() {
-        return new Options();
+        return new Options(null);
     }
 
     protected boolean acceptsLanguage(Language language) {
       return language == XPathFileType.XPATH.getLanguage();
     }
 
-    final class MyElementVisitor extends Visitor {
-        MyElementVisitor(InspectionManager manager, boolean isOnTheFly) {
-            super(manager, isOnTheFly);
+    final class MyElementVisitor extends Visitor<ImplicitTypeConversionState> {
+        MyElementVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, ImplicitTypeConversionState inspectionState) {
+            super(manager, holder, isOnTheFly, inspectionState);
         }
 
         protected void checkExpression(@Nonnull XPathExpression expression) {
             final XPathType expectedType = ExpectedTypeUtil.getExpectedType(expression);
             // conversion to NODESET is impossible (at least not in a portable way) and is flagged by annotator
             if (expectedType != XPathType.NODESET && expectedType != XPathType.UNKNOWN) {
-                final boolean isExplicit = FLAG_EXPLICIT_CONVERSION &&
+                final boolean isExplicit = myState.FLAG_EXPLICIT_CONVERSION &&
                         ExpectedTypeUtil.isExplicitConversion(expression);
                 checkExpressionOfType(expression, expectedType, isExplicit);
             }
@@ -113,7 +111,7 @@ public class ImplicitTypeConversion extends XPathInspection {
             if (exprType != type && (explicit || isCheckedConversion(exprType, type))) {
                 if (explicit && exprType == XPathType.STRING && type == XPathType.BOOLEAN) {
                     final XPathExpression expr = ExpectedTypeUtil.unparenthesize(expression);
-                    if (expr instanceof XPathFunctionCall && IGNORE_NODESET_TO_BOOLEAN_VIA_STRING &&
+                    if (expr instanceof XPathFunctionCall && myState.IGNORE_NODESET_TO_BOOLEAN_VIA_STRING &&
                             ((XPathFunctionCall)expr).getArgumentList()[0].getType() == XPathType.NODESET)
                     {
                         return;
@@ -138,23 +136,24 @@ public class ImplicitTypeConversion extends XPathInspection {
         private boolean isCheckedConversion(XPathType exprType, XPathType type) {
 
             if (exprType == XPathType.NODESET) {
-                if (type == XPathType.STRING && OPTIONS.get(0)) return true;
-                if (type == XPathType.NUMBER && OPTIONS.get(4)) return true;
-                if (type == XPathType.BOOLEAN && OPTIONS.get(8)) return true;
+                if (type == XPathType.STRING && myState.OPTIONS.get(0)) return true;
+                if (type == XPathType.NUMBER && myState.OPTIONS.get(4)) return true;
+                if (type == XPathType.BOOLEAN && myState.OPTIONS.get(8)) return true;
             } else if (exprType == XPathType.STRING) {
-                if (type == XPathType.NUMBER && OPTIONS.get(5)) return true;
-                if (type == XPathType.BOOLEAN && OPTIONS.get(9)) return true;
+                if (type == XPathType.NUMBER && myState.OPTIONS.get(5)) return true;
+                if (type == XPathType.BOOLEAN && myState.OPTIONS.get(9)) return true;
             } else if (exprType == XPathType.NUMBER) {
-                if (type == XPathType.STRING && OPTIONS.get(2)) return true;
-                if (type == XPathType.BOOLEAN && OPTIONS.get(10)) return true;
+                if (type == XPathType.STRING && myState.OPTIONS.get(2)) return true;
+                if (type == XPathType.BOOLEAN && myState.OPTIONS.get(10)) return true;
             } else if (exprType == XPathType.BOOLEAN) {
-                if (type == XPathType.STRING && OPTIONS.get(3)) return true;
-                if (type == XPathType.NUMBER && OPTIONS.get(11)) return true;
+                if (type == XPathType.STRING && myState.OPTIONS.get(3)) return true;
+                if (type == XPathType.NUMBER && myState.OPTIONS.get(11)) return true;
             }
             return false;
         }
     }
 
+    // TODO rewrite to new UI
     public class Options extends JPanel {
         @SuppressWarnings({ "UNUSED_SYMBOL", "FieldCanBeLocal" })
         private JPanel root;
@@ -179,31 +178,31 @@ public class ImplicitTypeConversion extends XPathInspection {
                 {NS_B, S_B, N_B, B_B},
         };
 
-        public Options() {
+        public Options(ImplicitTypeConversionState state) {
             for (int i = 0; i < matrix.length; i++) {
                 JCheckBox[] row = matrix[i];
                 for (int j = 0; j < row.length; j++) {
                     JCheckBox to = row[j];
                     final int index = row.length * i + j;
-                    to.setSelected(OPTIONS.get(index));
+                    to.setSelected(state.OPTIONS.get(index));
                     to.addItemListener(new ItemListener() {
                         public void itemStateChanged(ItemEvent e) {
-                            OPTIONS.set(index, e.getStateChange() == ItemEvent.SELECTED);
+                            state.OPTIONS.set(index, e.getStateChange() == ItemEvent.SELECTED);
                         }
                     });
                     if (j == i + 1) to.setEnabled(false);
                 }
             }
-            myAlwaysFlagExplicitConversion.setSelected(FLAG_EXPLICIT_CONVERSION);
+            myAlwaysFlagExplicitConversion.setSelected(state.FLAG_EXPLICIT_CONVERSION);
             myAlwaysFlagExplicitConversion.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
-                    FLAG_EXPLICIT_CONVERSION = e.getStateChange() == ItemEvent.SELECTED;
+                    state.FLAG_EXPLICIT_CONVERSION = e.getStateChange() == ItemEvent.SELECTED;
                 }
             });
-            myIgnoreNodesetToString.setSelected(IGNORE_NODESET_TO_BOOLEAN_VIA_STRING);
+            myIgnoreNodesetToString.setSelected(state.IGNORE_NODESET_TO_BOOLEAN_VIA_STRING);
             myIgnoreNodesetToString.addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
-                    IGNORE_NODESET_TO_BOOLEAN_VIA_STRING = e.getStateChange() == ItemEvent.SELECTED;
+                    state.IGNORE_NODESET_TO_BOOLEAN_VIA_STRING = e.getStateChange() == ItemEvent.SELECTED;
                 }
             });
         }

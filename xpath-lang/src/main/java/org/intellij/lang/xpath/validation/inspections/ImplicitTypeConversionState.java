@@ -17,7 +17,7 @@ public class ImplicitTypeConversionState implements InspectionToolState<Implicit
   public boolean IGNORE_NODESET_TO_BOOLEAN_VIA_STRING = true;
 
   @Transient
-  private final BitSet OPTIONS = new BitSet(12);
+  public final BitSet OPTIONS = new BitSet(12);
 
   private void update() {
     for (int i = 0; i < 12; i++) {
