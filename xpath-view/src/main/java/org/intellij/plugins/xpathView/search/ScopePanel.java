@@ -18,6 +18,7 @@ package org.intellij.plugins.xpathView.search;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
 import consulo.fileChooser.FileChooserDescriptorFactory;
+import consulo.find.ui.ScopeChooserCombo;
 import consulo.module.Module;
 import consulo.module.ModuleManager;
 import consulo.module.ui.awt.ModuleListCellRenderer;
@@ -26,7 +27,6 @@ import consulo.ui.ex.awt.ComboBox;
 import consulo.ui.ex.awt.ComboboxWithBrowseButton;
 import consulo.ui.ex.awt.TextFieldWithBrowseButton;
 import consulo.ui.ex.awt.event.DocumentAdapter;
-import consulo.ui.ex.awt.scopeChooser.ScopeChooserCombo;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
