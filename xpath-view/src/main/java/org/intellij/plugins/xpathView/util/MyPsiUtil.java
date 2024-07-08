@@ -163,7 +163,7 @@ public class MyPsiUtil {
                 List<Annotation> annotations = AnnotatorUtil.runAnnotators(file, element);
                 for (Annotation annotation : annotations) {
                     if (annotation.getSeverity() == HighlightSeverity.ERROR) {
-                        error[0] = annotation.getMessage();
+                        error[0] = annotation.getMessage().get();
                         return;
                     }
                 }

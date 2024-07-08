@@ -15,6 +15,7 @@
  */
 package org.intellij.lang.xpath.validation;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
 import consulo.language.ast.IElementType;
@@ -23,10 +24,12 @@ import consulo.language.editor.annotation.Annotation;
 import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
 import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.localize.LocalizeValue;
 import consulo.xpath.psi.XPathReferenceWithValidation;
 import org.intellij.lang.xpath.XPath2TokenTypes;
 import org.intellij.lang.xpath.XPathElementType;
@@ -102,6 +105,7 @@ public final class XPathAnnotator extends XPath2ElementVisitor implements Annota
   }
 
   @Override
+  @RequiredReadAction
   public void visitXPath2TypeElement(XPath2TypeElement o) {
     final ContextProvider contextProvider = o.getXPathContext();
     checkPrefixReferences(myHolder, o, contextProvider);
@@ -111,9 +115,9 @@ public final class XPathAnnotator extends XPath2ElementVisitor implements Annota
       for (PsiReference reference : references) {
         if (reference instanceof XPathReferenceWithValidation) {
           if (!reference.isSoft() && reference.resolve() == null) {
-            final String message = ((XPathReferenceWithValidation)reference).getUnresolvedMessagePattern();
+            final LocalizeValue message = ProblemsHolder.unresolvedReferenceMessage(reference);
             final Annotation annotation =
-              myHolder.createErrorAnnotation(reference.getRangeInElement().shiftRight(o.getTextOffset()), message);
+              myHolder.createErrorAnnotation(reference.getRangeInElement().shiftRight(o.getTextOffset()), message.get());
             annotation.setHighlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
           }
         }
