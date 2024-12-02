@@ -21,7 +21,7 @@ import consulo.xpath.icon.XPathIconGroup;
 
 @Deprecated
 public class XpathIcons {
-  public static final Image Namespace = XPathIconGroup.namespace();
+  public static final Image Namespace = PlatformIconGroup.nodesNamespace();
   public static final Image Tag = PlatformIconGroup.nodesTag();
   public static final Image Xpath = XPathIconGroup.xpath();
 }
