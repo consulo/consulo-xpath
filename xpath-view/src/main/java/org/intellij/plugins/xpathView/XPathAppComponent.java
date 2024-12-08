@@ -23,13 +23,14 @@ import consulo.codeEditor.Editor;
 import consulo.codeEditor.ScrollType;
 import consulo.codeEditor.markup.RangeHighlighter;
 import consulo.ide.impl.idea.codeInsight.hint.HintManagerImpl;
-import consulo.ide.impl.idea.ui.LightweightHint;
+import consulo.ide.impl.idea.ui.LightweightHintImpl;
 import consulo.language.editor.LangDataKeys;
 import consulo.language.editor.ui.awt.HintUtil;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.Gray;
 import consulo.ui.ex.JBColor;
 import consulo.ui.ex.action.*;
+import consulo.ui.ex.awt.hint.LightweightHint;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.ui.ex.keymap.util.KeymapUtil;
 import jakarta.inject.Inject;
@@ -159,32 +160,10 @@ public class XPathAppComponent {
     label.setOpaque(true);
     label.setFont(label.getFont().deriveFont(Font.BOLD));
 
-    final LightweightHint h = new LightweightHint(label);
+    final LightweightHint h = new LightweightHintImpl(label);
     final Point point = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
     SwingUtilities.convertPointToScreen(point, editor.getContentComponent());
 
-        /* === HintManager API Info ===
-
-            public void showEditorHint(final LightweightHint hint,
-                                        final Editor editor,
-                                        Point p,
-                                        int flags,
-                                        int timeout,
-                                        boolean reviveOnEditorChange)
-
-
-            reviveOnEditorChange means hint should stay even if active editor have been changed. It's should rarely be true.
-
-            possible flags are:
-                public static final int HIDE_BY_ESCAPE = 0x01;
-                public static final int HIDE_BY_ANY_KEY = 0x02;
-                public static final int HIDE_BY_LOOKUP_ITEM_CHANGE = 0x04;
-                public static final int HIDE_BY_TEXT_CHANGE = 0x08;
-                public static final int HIDE_BY_OTHER_HINT = 0x10;
-                public static final int HIDE_BY_SCROLLING = 0x20;
-                public static final int HIDE_IF_OUT_OF_EDITOR = 0x40;
-                public static final int UPDATE_BY_SCROLLING = 0x80;
-        */
     final int flags = HintManagerImpl.HIDE_BY_ANY_KEY | HintManagerImpl.HIDE_BY_SCROLLING;
     HintManagerImpl.getInstanceImpl().showEditorHint(h, editor, point, flags, 0, false);
   }

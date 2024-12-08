@@ -19,7 +19,7 @@ import consulo.codeEditor.Editor;
 import consulo.codeEditor.markup.RangeHighlighter;
 import consulo.document.Document;
 import consulo.ide.impl.idea.codeInsight.hint.HintManagerImpl;
-import consulo.ide.impl.idea.ui.LightweightHint;
+import consulo.ide.impl.idea.ui.LightweightHintImpl;
 import consulo.language.editor.LangDataKeys;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiElement;
@@ -33,8 +33,9 @@ import consulo.ui.ex.action.ActionsBundle;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.Presentation;
 import consulo.ui.ex.awt.CopyPasteManager;
-import consulo.ui.ex.awt.HintHint;
 import consulo.ui.ex.awt.NonOpaquePanel;
+import consulo.ui.ex.awt.hint.HintHint;
+import consulo.ui.ex.awt.hint.LightweightHint;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
@@ -128,7 +129,7 @@ public class ShowXPathAction extends XPathAction {
 
         p.add(button, BorderLayout.EAST);
 
-        final LightweightHint hint = new LightweightHint(p) {
+        final LightweightHint hint = new LightweightHintImpl(p) {
             @Override
             public void hide() {
                 super.hide();
