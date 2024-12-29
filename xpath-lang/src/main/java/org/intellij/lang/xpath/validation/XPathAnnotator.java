@@ -45,8 +45,8 @@ import org.intellij.lang.xpath.psi.impl.PrefixedNameImpl;
 import org.intellij.lang.xpath.psi.impl.XPathChangeUtil;
 import org.intellij.lang.xpath.psi.impl.XPathNumberImpl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.Arrays;
 import java.util.HashSet;

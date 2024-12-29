@@ -34,7 +34,7 @@ import org.intellij.plugins.xpathView.util.Namespace;
 import org.jaxen.JaxenException;
 import org.jaxen.XPath;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.xml.namespace.QName;
 import java.util.Collections;
 import java.util.Set;

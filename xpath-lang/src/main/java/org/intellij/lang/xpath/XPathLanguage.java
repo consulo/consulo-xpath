@@ -19,7 +19,7 @@ import consulo.language.Language;
 import consulo.language.editor.highlight.SingleLazyInstanceSyntaxHighlighterFactory;
 import consulo.language.editor.highlight.SyntaxHighlighter;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public final class XPathLanguage extends Language {
   public static final XPathLanguage INSTANCE = new XPathLanguage();

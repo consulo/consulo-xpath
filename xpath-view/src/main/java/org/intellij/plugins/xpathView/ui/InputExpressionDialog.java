@@ -50,8 +50,8 @@ import org.intellij.plugins.xpathView.util.Namespace;
 import org.intellij.plugins.xpathView.util.NamespaceCollector;
 import org.intellij.plugins.xpathView.util.Variable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;

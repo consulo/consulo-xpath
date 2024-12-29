@@ -25,7 +25,7 @@ import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class RemoveExplicitConversionFix extends ReplaceElementFix<XPathExpression> {
 

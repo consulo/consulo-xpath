@@ -27,8 +27,8 @@ import org.intellij.lang.xpath.psi.PrefixedName;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.text.MessageFormat;
 import java.util.Set;

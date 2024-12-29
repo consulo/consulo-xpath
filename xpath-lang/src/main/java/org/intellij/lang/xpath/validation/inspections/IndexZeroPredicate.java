@@ -25,7 +25,7 @@ import org.intellij.lang.xpath.psi.*;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class IndexZeroPredicate extends XPathInspection<Object> {

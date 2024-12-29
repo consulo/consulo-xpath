@@ -29,7 +29,7 @@ import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class RedundantTypeConversion extends XPathInspection<Object> {

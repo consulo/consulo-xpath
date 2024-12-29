@@ -29,7 +29,7 @@ import org.intellij.lang.xpath.XPathLanguage;
 import org.intellij.lang.xpath.context.NamespaceContext;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.xml.namespace.QName;
 import java.util.Collection;
 import java.util.function.Function;

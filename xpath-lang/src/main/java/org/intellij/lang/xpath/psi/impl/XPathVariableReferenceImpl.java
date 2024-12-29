@@ -28,8 +28,8 @@ import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.context.VariableContext;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class XPathVariableReferenceImpl extends XPathElementImpl implements XPathVariableReference {
     private static final TokenSet QNAME_FILTER = TokenSet.create(XPathTokenTypes.VARIABLE_PREFIX, XPathTokenTypes.VARIABLE_NAME);

@@ -19,7 +19,7 @@ import consulo.document.Document;
 import consulo.util.lang.Comparing;
 import org.intellij.plugins.xpathView.HistoryElement;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.swing.*;
 import java.util.Arrays;
 

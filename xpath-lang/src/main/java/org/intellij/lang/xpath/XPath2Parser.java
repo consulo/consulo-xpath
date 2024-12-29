@@ -19,7 +19,7 @@ import consulo.language.ast.IElementType;
 import consulo.language.ast.TokenSet;
 import consulo.language.parser.PsiBuilder;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /*
 * Created by IntelliJ IDEA.

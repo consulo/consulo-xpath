@@ -20,7 +20,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import org.intellij.lang.xpath.context.functions.Parameter;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 class FileExtensionFunction extends BasicFileInfoFunction {
     public FileExtensionFunction() {

@@ -23,8 +23,8 @@ import org.intellij.lang.xpath.XPathElementType;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class XPathBinaryExpressionImpl extends XPathElementImpl implements XPathBinaryExpression {
     private static final TokenSet BINARY_OPERATIONS = TokenSet.orSet(XPathTokenTypes.BINARY_OPERATIONS,

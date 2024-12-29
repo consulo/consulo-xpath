@@ -20,7 +20,7 @@ import consulo.language.psi.util.PsiTreeUtil;
 import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPath2QuantifiedExprImpl extends XPath2ElementImpl implements XPath2QuantifiedExpr {
   public XPath2QuantifiedExprImpl(ASTNode node) {

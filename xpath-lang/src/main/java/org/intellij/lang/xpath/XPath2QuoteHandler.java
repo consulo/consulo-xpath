@@ -3,7 +3,7 @@ package org.intellij.lang.xpath;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.virtualFileSystem.fileType.FileType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XPath2QuoteHandler extends XPathQuoteHandler {

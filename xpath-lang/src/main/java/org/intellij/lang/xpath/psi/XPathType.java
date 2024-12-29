@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPathType {
     public static final XPathType UNKNOWN = new XPathType("unknown", true);

@@ -24,8 +24,8 @@ import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathPrefixExpression;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class XPathPrefixExpressionImpl extends XPathElementImpl implements XPathPrefixExpression {
     public XPathPrefixExpressionImpl(ASTNode node) {

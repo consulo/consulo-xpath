@@ -23,7 +23,7 @@ import consulo.language.psi.resolve.ResolveState;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.psi.xml.XmlTagChild;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @SuppressWarnings({"ConstantConditions"})
 public class XPathEmbeddedContentImpl extends XPathElementImpl implements XmlTagChild {

@@ -22,7 +22,7 @@ import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathNumber;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPathNumberImpl extends XPathElementImpl implements XPathNumber {
   public XPathNumberImpl(ASTNode node) {

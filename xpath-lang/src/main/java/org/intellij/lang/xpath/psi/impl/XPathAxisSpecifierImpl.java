@@ -21,7 +21,7 @@ import org.intellij.lang.xpath.psi.Axis;
 import org.intellij.lang.xpath.psi.XPathAxisSpecifier;
 import org.intellij.lang.xpath.psi.XPathElementVisitor;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPathAxisSpecifierImpl extends XPathElementImpl implements XPathAxisSpecifier {
     public XPathAxisSpecifierImpl(ASTNode node) {

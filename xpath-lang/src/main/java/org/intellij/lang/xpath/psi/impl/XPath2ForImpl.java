@@ -20,7 +20,7 @@ import consulo.language.psi.util.PsiTreeUtil;
 import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPath2ForImpl extends XPath2ElementImpl implements XPath2For {
   public XPath2ForImpl(ASTNode node) {

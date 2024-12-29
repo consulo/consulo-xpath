@@ -18,8 +18,8 @@ package org.intellij.lang.xpath.psi.impl;
 import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class XPath2InstanceOfImpl extends XPath2ElementImpl implements XPath2InstanceOf {
   public XPath2InstanceOfImpl(ASTNode node) {

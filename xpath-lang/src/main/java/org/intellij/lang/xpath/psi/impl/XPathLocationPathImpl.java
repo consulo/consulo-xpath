@@ -19,8 +19,8 @@ import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class XPathLocationPathImpl extends XPathElementImpl implements XPathLocationPath {
     public XPathLocationPathImpl(ASTNode node) {

@@ -29,7 +29,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.version.LanguageVersion;
 import org.intellij.lang.xpath.psi.impl.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /*
  * Created by IntelliJ IDEA.

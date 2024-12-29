@@ -30,8 +30,8 @@ import org.intellij.lang.xpath.context.functions.Function;
 import org.intellij.lang.xpath.psi.XPathFunction;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @ExtensionImpl
 public class XPathParameterInfoHandler implements ParameterInfoHandler<XPathFunctionCall, XPathFunction> {

@@ -19,7 +19,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Pair;
 import org.intellij.lang.xpath.context.ContextType;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.util.Collections;
 import java.util.HashMap;

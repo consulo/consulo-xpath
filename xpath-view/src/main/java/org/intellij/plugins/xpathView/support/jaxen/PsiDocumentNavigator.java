@@ -34,7 +34,7 @@ import org.jaxen.UnsupportedAxisException;
 import org.jaxen.XPath;
 import org.jaxen.saxpath.SAXPathException;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.Iterator;
 

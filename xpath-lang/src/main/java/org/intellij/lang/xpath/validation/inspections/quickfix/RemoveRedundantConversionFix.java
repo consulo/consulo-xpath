@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.validation.inspections.quickfix;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import org.intellij.lang.xpath.psi.XPathExpression;
 

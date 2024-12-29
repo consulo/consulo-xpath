@@ -32,7 +32,7 @@ import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathElementVisitor;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPathElementImpl extends ASTWrapperPsiElement implements XPathElement {
 

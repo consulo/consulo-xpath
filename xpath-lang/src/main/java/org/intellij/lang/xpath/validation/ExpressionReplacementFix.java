@@ -24,7 +24,7 @@ import consulo.project.Project;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.impl.XPathChangeUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 class ExpressionReplacementFix implements SyntheticIntentionAction {
   private final String myReplacement;

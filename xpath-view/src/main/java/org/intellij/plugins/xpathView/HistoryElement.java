@@ -19,7 +19,7 @@ import org.intellij.plugins.xpathView.util.Copyable;
 import org.intellij.plugins.xpathView.util.Namespace;
 import org.intellij.plugins.xpathView.util.Variable;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.Collection;
 import java.util.Collections;

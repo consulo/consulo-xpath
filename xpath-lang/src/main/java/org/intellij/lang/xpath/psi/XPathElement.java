@@ -20,7 +20,7 @@ import consulo.language.psi.PsiElement;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.XPathVersion;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @SuppressWarnings({"NullableProblems"})
 public interface XPathElement extends PsiElement {

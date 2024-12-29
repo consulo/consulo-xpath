@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.xpathView.util;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.Set;
 import java.util.Collection;

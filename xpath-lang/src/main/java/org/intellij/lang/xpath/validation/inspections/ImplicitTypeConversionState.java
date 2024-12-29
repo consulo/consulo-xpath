@@ -4,7 +4,7 @@ import consulo.language.editor.inspection.InspectionToolState;
 import consulo.util.xml.serializer.XmlSerializerUtil;
 import consulo.util.xml.serializer.annotation.Transient;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.BitSet;
 
 /**

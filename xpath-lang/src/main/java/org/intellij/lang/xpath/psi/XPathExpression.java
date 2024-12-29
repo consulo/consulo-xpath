@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public interface XPathExpression extends XPathElement {
     XPathExpression[] EMPTY_ARRAY = new XPathExpression[0];

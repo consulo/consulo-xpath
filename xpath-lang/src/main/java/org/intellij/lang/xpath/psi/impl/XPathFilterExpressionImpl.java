@@ -21,8 +21,8 @@ import org.intellij.lang.xpath.XPath2ElementTypes;
 import org.intellij.lang.xpath.XPathElementTypes;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class XPathFilterExpressionImpl extends XPathElementImpl implements XPathFilterExpression {
     public XPathFilterExpressionImpl(ASTNode node) {

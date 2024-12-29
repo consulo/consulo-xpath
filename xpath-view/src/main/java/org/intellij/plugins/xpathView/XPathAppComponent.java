@@ -37,7 +37,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.intellij.plugins.xpathView.util.HighlighterUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;

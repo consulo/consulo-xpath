@@ -21,7 +21,7 @@ import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathString;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPathStringImpl extends XPathElementImpl implements XPathString {
   public XPathStringImpl(ASTNode node) {

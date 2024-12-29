@@ -21,8 +21,8 @@ import org.intellij.lang.xpath.psi.XPath2ElementVisitor;
 import org.intellij.lang.xpath.psi.XPath2TypeElement;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class XPath2CastImpl extends XPath2ElementImpl implements XPath2Cast {
   public XPath2CastImpl(ASTNode node) {

@@ -21,7 +21,7 @@ import org.intellij.lang.xpath.psi.XPath2TreatAs;
 import org.intellij.lang.xpath.psi.XPath2TypeElement;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPath2TreatAsImpl extends XPath2ElementImpl implements XPath2TreatAs {
   public XPath2TreatAsImpl(ASTNode node) {

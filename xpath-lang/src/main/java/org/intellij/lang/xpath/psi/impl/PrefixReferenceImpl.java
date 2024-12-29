@@ -24,8 +24,8 @@ import org.intellij.lang.xpath.psi.PrefixReference;
 import org.intellij.lang.xpath.psi.QNameElement;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 class PrefixReferenceImpl extends ReferenceBase implements PrefixReference {
 

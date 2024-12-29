@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.context.functions;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import org.intellij.lang.xpath.psi.XPathType;
 

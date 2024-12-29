@@ -23,7 +23,7 @@ import org.jaxen.Context;
 import org.jaxen.Function;
 import org.jaxen.FunctionCallException;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.List;
 
 public abstract class BasicFileInfoFunction extends FunctionImplementation implements Function {

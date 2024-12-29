@@ -36,7 +36,7 @@ import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.validation.inspections.XPathInspection;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public interface XPathQuickFixFactory {
   Fix<XPathExpression>[] createImplicitTypeConversionFixes(XPathExpression expression, XPathType type, boolean explicit);

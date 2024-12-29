@@ -22,7 +22,7 @@ import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathVariable;
 import org.intellij.lang.xpath.psi.XPathVariableDeclaration;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /*
 * Created by IntelliJ IDEA.

@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /*
 * Created by IntelliJ IDEA.

@@ -24,7 +24,7 @@ import consulo.util.collection.ArrayUtil;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.xml.namespace.QName;
 
 public class XPath2TypeElementImpl extends XPath2ElementImpl implements XPath2TypeElement {

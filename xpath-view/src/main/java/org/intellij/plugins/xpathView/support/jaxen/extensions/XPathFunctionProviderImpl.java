@@ -26,7 +26,7 @@ import org.jaxen.function.ext.EndsWithFunction;
 import org.jaxen.function.ext.EvaluateFunction;
 import org.jaxen.function.ext.LowerFunction;
 import org.jaxen.function.ext.UpperFunction;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import javax.xml.namespace.QName;
 import java.util.Collections;

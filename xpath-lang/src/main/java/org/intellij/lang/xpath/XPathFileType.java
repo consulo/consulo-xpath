@@ -20,7 +20,7 @@ import consulo.language.file.LanguageFileType;
 import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public final class XPathFileType extends LanguageFileType {
   public static final XPathFileType XPATH = new XPathFileType(XPathLanguage.INSTANCE);

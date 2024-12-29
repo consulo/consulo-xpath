@@ -20,7 +20,7 @@ import org.intellij.lang.xpath.XPath2TokenTypes;
 import org.intellij.lang.xpath.XPathElementType;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPath2RangeExpressionImpl extends XPath2ElementImpl implements XPath2RangeExpression {
   public XPath2RangeExpressionImpl(ASTNode node) {

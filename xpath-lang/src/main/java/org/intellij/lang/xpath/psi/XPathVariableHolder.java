@@ -15,7 +15,7 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /*
 * Created by IntelliJ IDEA.

@@ -21,7 +21,7 @@ import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathPredicate;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class XPathPredicateImpl extends XPathElementImpl implements XPathPredicate {
   public XPathPredicateImpl(ASTNode node) {

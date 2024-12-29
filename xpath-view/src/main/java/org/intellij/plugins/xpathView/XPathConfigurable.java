@@ -23,8 +23,8 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xpath.view.XPathViewConfig;
 import org.intellij.plugins.xpathView.ui.ConfigUI;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javax.swing.*;
 
 @ExtensionImpl

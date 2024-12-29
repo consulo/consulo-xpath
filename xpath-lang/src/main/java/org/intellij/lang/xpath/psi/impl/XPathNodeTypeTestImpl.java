@@ -22,8 +22,8 @@ import org.intellij.lang.xpath.psi.XPathElementVisitor;
 import org.intellij.lang.xpath.psi.XPathNodeTypeTest;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class XPathNodeTypeTestImpl extends XPathFunctionCallImpl implements XPathNodeTypeTest {
     public XPathNodeTypeTestImpl(ASTNode node) {

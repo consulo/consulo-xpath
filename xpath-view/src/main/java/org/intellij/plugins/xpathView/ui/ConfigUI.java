@@ -20,7 +20,7 @@ import consulo.ui.ex.awt.IdeBorderFactory;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
 import org.intellij.plugins.xpathView.Config;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

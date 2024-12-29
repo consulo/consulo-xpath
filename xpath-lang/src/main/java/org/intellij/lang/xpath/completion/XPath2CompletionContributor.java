@@ -4,7 +4,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import org.intellij.lang.xpath.XPath2Language;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

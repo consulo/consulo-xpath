@@ -18,7 +18,7 @@ package org.intellij.lang.xpath.psi.impl;
 import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPath2SequenceImpl extends XPath2ElementImpl implements XPath2Sequence {
   public XPath2SequenceImpl(ASTNode node) {

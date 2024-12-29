@@ -23,8 +23,8 @@ import consulo.language.util.IncorrectOperationException;
 import consulo.util.lang.Comparing;
 import org.intellij.lang.xpath.psi.XPathElement;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public abstract class ReferenceBase implements PsiReference {
     private final XPathElement element;

@@ -10,7 +10,7 @@ import consulo.ide.ServiceManager;
 import jakarta.inject.Singleton;
 import org.intellij.plugins.xpathView.Config;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

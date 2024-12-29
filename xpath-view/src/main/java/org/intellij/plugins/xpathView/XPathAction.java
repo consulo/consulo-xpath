@@ -30,7 +30,7 @@ import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xpath.view.XPathViewConfig;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public abstract class XPathAction extends AnAction {
   protected XPathAction() {

@@ -18,8 +18,8 @@ package org.intellij.lang.xpath.psi.impl;
 import consulo.language.ast.ASTNode;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class XPath2CastableImpl extends XPath2ElementImpl implements XPath2Castable {
   public XPath2CastableImpl(ASTNode node) {

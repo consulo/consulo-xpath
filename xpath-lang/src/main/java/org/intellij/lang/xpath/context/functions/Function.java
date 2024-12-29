@@ -1,7 +1,7 @@
 package org.intellij.lang.xpath.context.functions;
 
 import org.intellij.lang.xpath.psi.XPathType;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /*
 * Created by IntelliJ IDEA.

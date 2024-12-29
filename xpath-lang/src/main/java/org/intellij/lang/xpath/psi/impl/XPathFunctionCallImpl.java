@@ -33,8 +33,8 @@ import org.intellij.lang.xpath.context.XPathVersion;
 import org.intellij.lang.xpath.context.functions.Function;
 import org.intellij.lang.xpath.psi.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javax.xml.namespace.QName;
 
 public class XPathFunctionCallImpl extends XPathElementImpl implements XPathFunctionCall {

@@ -22,7 +22,7 @@ import org.intellij.lang.xpath.psi.XPath2If;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class XPath2IfImpl extends XPath2ElementImpl implements XPath2If {
   public XPath2IfImpl(ASTNode node) {

@@ -18,7 +18,7 @@ package org.intellij.lang.xpath.context.functions;
 import consulo.util.lang.StringUtil;
 import org.intellij.lang.xpath.psi.XPathType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Arrays;
 
 public class FunctionImpl implements Function {

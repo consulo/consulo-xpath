@@ -7,7 +7,7 @@ import consulo.language.lexer.Lexer;
 import consulo.project.Project;
 import org.intellij.lang.xpath.completion.CompletionLists;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class XPathNamesValidator implements NamesValidator {

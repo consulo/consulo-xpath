@@ -15,10 +15,10 @@
  */
 package org.intellij.lang.xpath.psi;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import org.intellij.lang.xpath.XPathElementType;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public interface XPathBinaryExpression extends XPathExpression {
     @Nullable
