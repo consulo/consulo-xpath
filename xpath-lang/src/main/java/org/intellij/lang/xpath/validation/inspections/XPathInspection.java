@@ -23,17 +23,15 @@ import consulo.language.editor.intention.SuppressIntentionAction;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
-import consulo.language.psi.PsiRecursiveElementVisitor;
 import consulo.language.psi.util.PsiTreeUtil;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
 import org.intellij.lang.xpath.psi.XPathPredicate;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 public abstract class XPathInspection<S> extends LocalInspectionTool implements CustomSuppressableInspectionTool {
     @Nonnull
@@ -82,7 +80,7 @@ public abstract class XPathInspection<S> extends LocalInspectionTool implements 
         return language == XPathFileType.XPATH.getLanguage() || language == XPathFileType.XPATH2.getLanguage();
     }
 
-    protected static abstract class Visitor<S1> extends PsiRecursiveElementVisitor {
+    protected static abstract class Visitor<S1> extends PsiElementVisitor {
         protected final InspectionManager myManager;
         private final ProblemsHolder myProblemsHolder;
         protected boolean myOnTheFly;
