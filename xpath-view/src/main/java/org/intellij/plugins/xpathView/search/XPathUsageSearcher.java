@@ -15,10 +15,10 @@
  */
 package org.intellij.plugins.xpathView.search;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.application.ApplicationManager;
 import consulo.application.progress.ProgressIndicator;
 import consulo.application.progress.ProgressManager;
-import consulo.application.util.function.Processor;
 import consulo.find.FindBundle;
 import consulo.language.file.FileViewProvider;
 import consulo.language.psi.PsiElement;
@@ -47,6 +47,7 @@ import org.jaxen.pattern.PatternParser;
 import org.jaxen.saxpath.SAXPathException;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 class XPathUsageSearcher implements UsageSearcher {
     private final ProgressIndicator myIndicator;
@@ -67,34 +68,35 @@ class XPathUsageSearcher implements UsageSearcher {
         myManager = PsiManager.getInstance(myProject);
     }
 
-    public void generate(final Processor<Usage> processor) {
-        Runnable runnable = new Runnable() {
-            public void run() {
-                myIndicator.setIndeterminate(true);
-                myIndicator.setText2(findBundleMessage("find.searching.for.string.in.file.occurrences.progress", 0));
-                final CountProcessor counter = new CountProcessor();
-                myScope.iterateContent(myProject, counter);
+    @Override
+    public void generate(final Predicate<Usage> processor) {
+        Runnable runnable = () -> {
+            myIndicator.setIndeterminate(true);
+            myIndicator.setText2(findBundleMessage("find.searching.for.string.in.file.occurrences.progress", 0));
+            final CountProcessor counter = new CountProcessor();
+            myScope.iterateContent(myProject, counter);
 
-                myIndicator.setIndeterminate(false);
-                myIndicator.setFraction(0);
-                myScope.iterateContent(myProject, new MyProcessor(processor, counter.getFileCount()));
-            }
+            myIndicator.setIndeterminate(false);
+            myIndicator.setFraction(0);
+            myScope.iterateContent(myProject, new MyProcessor(processor, counter.getFileCount()));
         };
         ApplicationManager.getApplication().runReadAction(runnable);
     }
 
     private class MyProcessor extends BaseProcessor {
-        private final Processor<Usage> myProcessor;
+        private final Predicate<Usage> myProcessor;
         private final int myTotalFileCount;
 
         private int myFileCount;
         private int myMatchCount;
 
-        public MyProcessor(Processor<Usage> processor, int fileCount) {
+        public MyProcessor(Predicate<Usage> processor, int fileCount) {
             myProcessor = processor;
             myTotalFileCount = fileCount;
         }
 
+        @Override
+        @RequiredReadAction
         protected void processXmlFile(VirtualFile t) {
             myIndicator.setText(findBundleMessage("find.searching.for.string.in.file.progress", myExpression.expression, t.getPresentableUrl()));
 
@@ -155,25 +157,25 @@ class XPathUsageSearcher implements UsageSearcher {
                         if (myMatchRecursively) {
                             if (pattern.matches(psiElement, context)) {
                                 matchFound();
-                                myProcessor.process(new UsageInfo2UsageAdapter(new UsageInfo(psiElement)));
+                                myProcessor.test(new UsageInfo2UsageAdapter(new UsageInfo(psiElement)));
                             }
                         } else {
                             matchFound();
-                            myProcessor.process(new UsageInfo2UsageAdapter(new UsageInfo(psiElement)));
+                            myProcessor.test(new UsageInfo2UsageAdapter(new UsageInfo(psiElement)));
                         }
                     }
                 } else if (Boolean.TRUE.equals(o)) {
                     matchFound();
-                    myProcessor.process(new UsageInfo2UsageAdapter(new UsageInfo(psiFile)));
+                    myProcessor.test(new UsageInfo2UsageAdapter(new UsageInfo(psiFile)));
                 } else if (o instanceof Number) {
                     if (((Number)o).intValue() != 0) {
                         matchFound();
-                        myProcessor.process(new UsageInfo2UsageAdapter(new UsageInfo(psiFile)));
+                        myProcessor.test(new UsageInfo2UsageAdapter(new UsageInfo(psiFile)));
                     }
                 } else if (o instanceof String) {
                     if (((String)o).length() > 0) {
                         matchFound();
-                        myProcessor.process(new UsageInfo2UsageAdapter(new UsageInfo(psiFile)));
+                        myProcessor.test(new UsageInfo2UsageAdapter(new UsageInfo(psiFile)));
                     }
                 }
             } catch (JaxenException e) {
@@ -195,6 +197,7 @@ class XPathUsageSearcher implements UsageSearcher {
     static class CountProcessor extends BaseProcessor {
         private int myFileCount;
 
+        @Override
         protected void processXmlFile(VirtualFile t) {
             myFileCount++;
         }
