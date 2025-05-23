@@ -40,6 +40,7 @@ import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.xml.psi.xml.XmlElement;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xpath.view.XPathViewConfig;
+import org.intellij.lang.xpath.XPathHighlighter;
 import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.util.HighlighterUtil;
 
@@ -105,7 +106,7 @@ public class ShowXPathAction extends XPathAction {
         }
 
         final Config cfg = XPathViewConfig.getInstance().getState();
-        final RangeHighlighter h = HighlighterUtil.highlightNode(editor, node, cfg.getContextAttributes(), cfg);
+        final RangeHighlighter h = HighlighterUtil.highlightNode(editor, node, XPathHighlighter.XPATH_EVAL_CONTEXT_HIGHLIGHT, cfg);
 
         final String path = XPathSupport.getInstance().getUniquePath((XmlElement) node, null);
 

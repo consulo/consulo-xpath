@@ -15,11 +15,7 @@
  */
 package org.intellij.plugins.xpathView;
 
-import consulo.colorScheme.TextAttributes;
-import consulo.ui.color.RGBColor;
 import org.intellij.plugins.xpathView.search.SearchScope;
-
-import java.awt.*;
 
 /**
  * Class that holds the plugin's configuration. All customizable settings are accessible via property getters/setters.
@@ -35,8 +31,6 @@ public class Config {
   public SearchScope SEARCH_SCOPE = new SearchScope();
   public boolean MATCH_RECURSIVELY = false;
 
-  private final TextAttributes attributes = new TextAttributes(null, new RGBColor(255, 213, 120), null, null, Font.PLAIN);
-  private final TextAttributes contextAttributes = new TextAttributes(null, new RGBColor(194, 255, 212), null, null, Font.PLAIN);
   public boolean scrollToFirst = true;
   public boolean bUseContextAtCursor = true;
   public boolean bHighlightStartTagOnly = true;
@@ -44,14 +38,6 @@ public class Config {
 
   public boolean isScrollToFirst() {
     return scrollToFirst;
-  }
-
-  public TextAttributes getAttributes() {
-    return attributes;
-  }
-
-  public TextAttributes getContextAttributes() {
-    return contextAttributes;
   }
 
   public void setScrollToFirst(boolean b) {
@@ -119,10 +105,7 @@ public class Config {
     if (scrollToFirst != config.scrollToFirst) {
       return false;
     }
-    if (!attributes.equals(config.attributes)) {
-      return false;
-    }
-    return contextAttributes.equals(config.contextAttributes);
+    return true;
   }
 
   public int hashCode() {
@@ -131,8 +114,6 @@ public class Config {
     result = 29 * result + (OPEN_NEW_TAB ? 1 : 0);
     result = 29 * result + (HIGHLIGHT_RESULTS ? 1 : 0);
     result = 29 * result + (SHOW_USAGE_VIEW ? 1 : 0);
-    result = 29 * result + attributes.hashCode();
-    result = 29 * result + contextAttributes.hashCode();
     result = 29 * result + (scrollToFirst ? 1 : 0);
     result = 29 * result + (bUseContextAtCursor ? 1 : 0);
     result = 29 * result + (bHighlightStartTagOnly ? 1 : 0);

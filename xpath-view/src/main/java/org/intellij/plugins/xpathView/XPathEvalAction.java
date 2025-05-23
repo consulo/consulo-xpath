@@ -48,6 +48,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xpath.view.XPathViewConfig;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import org.intellij.lang.xpath.XPathHighlighter;
 import org.intellij.plugins.xpathView.eval.EvalExpressionDialog;
 import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.ui.InputExpressionDialog;
@@ -181,7 +182,7 @@ public class XPathEvalAction extends XPathAction {
                 // find out current context node
                 contextNode = MyPsiUtil.findContextNode(psiFile, editor);
                 if (contextNode != null) {
-                    contextHighlighter = HighlighterUtil.highlightNode(editor, contextNode, cfg.getContextAttributes(), cfg);
+                    contextHighlighter = HighlighterUtil.highlightNode(editor, contextNode, XPathHighlighter.XPATH_EVAL_CONTEXT_HIGHLIGHT, cfg);
                 }
             }
             if (contextNode == null) {
@@ -434,7 +435,7 @@ public class XPathEvalAction extends XPathAction {
     }
 
     private static int highlightElement(Editor editor, PsiElement element, Config cfg, int offset) {
-        final RangeHighlighter highlighter = HighlighterUtil.highlightNode(editor, element, cfg.getAttributes(), cfg);
+        final RangeHighlighter highlighter = HighlighterUtil.highlightNode(editor, element, XPathHighlighter.XPATH_EVAL_HIGHLIGHT, cfg);
         HighlighterUtil.addHighlighter(editor, highlighter);
 
         return Math.min(highlighter.getStartOffset(), offset);

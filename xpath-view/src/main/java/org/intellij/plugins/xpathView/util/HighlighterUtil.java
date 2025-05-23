@@ -18,7 +18,7 @@ package org.intellij.plugins.xpathView.util;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.LogicalPosition;
 import consulo.codeEditor.markup.RangeHighlighter;
-import consulo.colorScheme.TextAttributes;
+import consulo.colorScheme.TextAttributesKey;
 import consulo.document.util.TextRange;
 import consulo.language.codeStyle.CodeStyleSettingsManager;
 import consulo.language.editor.highlight.HighlightManager;
@@ -124,7 +124,7 @@ public class HighlighterUtil {
      * @param cfg the plugin configuration
      * @return The created highlighter object
      */
-    public static RangeHighlighter highlightNode(Editor editor, final PsiElement node, TextAttributes attrs, Config cfg) {
+    public static RangeHighlighter highlightNode(Editor editor, final PsiElement node, TextAttributesKey attrs, Config cfg) {
         TextRange range;
         final PsiElement realElement;
         if ((node instanceof XmlTag) && cfg.isHighlightStartTagOnly()) {
@@ -143,7 +143,7 @@ public class HighlighterUtil {
         final RangeHighlighter rangeHighlighter = highlighters.get(0);
 
         if (cfg.isAddErrorStripe()) {
-            rangeHighlighter.setErrorStripeMarkColor(attrs.getBackgroundColor());
+            //rangeHighlighter.setErrorStripeMarkColor(attrs.getBackgroundColor());
             rangeHighlighter.setErrorStripeTooltip(formatTooltip(editor, realElement));
         } else {
             rangeHighlighter.setErrorStripeMarkColor(null);

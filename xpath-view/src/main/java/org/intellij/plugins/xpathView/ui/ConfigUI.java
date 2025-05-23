@@ -15,16 +15,12 @@
  */
 package org.intellij.plugins.xpathView.ui;
 
-import consulo.ui.ColorBox;
 import consulo.ui.ex.awt.IdeBorderFactory;
-import consulo.ui.ex.awtUnsafe.TargetAWT;
+import jakarta.annotation.Nonnull;
 import org.intellij.plugins.xpathView.Config;
 
-import jakarta.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ConfigUI extends JPanel {
 
@@ -34,8 +30,6 @@ public class ConfigUI extends JPanel {
     private JCheckBox addErrorStripe;
     private JCheckBox showInToolbar;
     private JCheckBox showInMainMenu;
-    private ColorBox chooseHighlight;
-    private ColorBox chooseContext;
 
     public ConfigUI(Config configuration) {
         init();
@@ -51,11 +45,6 @@ public class ConfigUI extends JPanel {
 
         useContextAtCursor = new JCheckBox("Use node at cursor as context node");
         useContextAtCursor.setMnemonic('N');
-        useContextAtCursor.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                stateChanged();
-            }
-        });
 
         highlightStartTagOnly = new JCheckBox("Highlight only start tag instead of whole tag content");
         highlightStartTagOnly.setMnemonic('H');
@@ -87,32 +76,6 @@ public class ConfigUI extends JPanel {
         settings.add(settings = new JPanel(new BorderLayout()), BorderLayout.SOUTH);
         settings.add(showInMainMenu, BorderLayout.NORTH);
         settings.add(/*settings = */new JPanel(new BorderLayout()), BorderLayout.SOUTH);
-
-        JPanel colors = new JPanel(new GridBagLayout());
-        colors.setBorder(IdeBorderFactory.createTitledBorder("Colors", true));
-        c.add(c = new JPanel(new BorderLayout()), BorderLayout.SOUTH);
-        c.add(colors, BorderLayout.NORTH);
-
-        final GridBagConstraints constraints = new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0);
-
-        colors.add(new JLabel("Highlight color:"), constraints);
-        constraints.gridx = 1;
-        constraints.weightx = 1;
-
-        chooseHighlight = ColorBox.create();
-        colors.add(TargetAWT.to(chooseHighlight), constraints);
-
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        constraints.weightx = 0;
-        colors.add(new JLabel("Context node color:"), constraints);
-
-        constraints.gridx = 1;
-        constraints.gridy = 1;
-        constraints.weightx = 1;
-
-        chooseContext = ColorBox.create();
-        colors.add(TargetAWT.to(chooseContext), constraints);
     }
 
     @Nonnull
@@ -124,10 +87,6 @@ public class ConfigUI extends JPanel {
         config.setAddErrorStripe(addErrorStripe.isSelected());
         config.SHOW_IN_TOOLBAR = showInToolbar.isSelected();
         config.SHOW_IN_MAIN_MENU = showInMainMenu.isSelected();
-        config.getAttributes().setBackgroundColor(chooseHighlight.getValue());
-        if (useContextAtCursor.isSelected()) {
-            config.getContextAttributes().setBackgroundColor(chooseContext.getValue());
-        }
         return config;
     }
 
@@ -138,12 +97,5 @@ public class ConfigUI extends JPanel {
         addErrorStripe.setSelected(configuration.isAddErrorStripe());
         showInToolbar.setSelected(configuration.SHOW_IN_TOOLBAR);
         showInMainMenu.setSelected(configuration.SHOW_IN_MAIN_MENU);
-        chooseHighlight.setValue(configuration.getAttributes().getBackgroundColor());
-        chooseContext.setValue(configuration.getContextAttributes().getBackgroundColor());
-        stateChanged();
-    }
-
-    private void stateChanged() {
-        chooseContext.setEnabled(useContextAtCursor.isSelected());
     }
 }

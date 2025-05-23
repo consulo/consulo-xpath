@@ -36,11 +36,13 @@ import java.util.Map;
 
 @ExtensionImpl
 public class XPathColorSettingsPage implements ColorSettingsPage {
+    @Override
     @Nonnull
     public String getDisplayName() {
         return "XPath";
     }
 
+    @Override
     @Nonnull
     public AttributesDescriptor[] getAttributeDescriptors() {
         return new AttributesDescriptor[]{
@@ -55,22 +57,20 @@ public class XPathColorSettingsPage implements ColorSettingsPage {
                 new AttributesDescriptor("Variable", XPathHighlighter.XPATH_VARIABLE),
                 new AttributesDescriptor("Extension Prefix", XPathHighlighter.XPATH_PREFIX),
                 new AttributesDescriptor("Other", XPathHighlighter.XPATH_TEXT),
+                new AttributesDescriptor("Eval//Highlight", XPathHighlighter.XPATH_EVAL_HIGHLIGHT),
+                new AttributesDescriptor("Eval//Context Highlight", XPathHighlighter.XPATH_EVAL_CONTEXT_HIGHLIGHT),
         };
     }
 
+    @Override
     @Nonnull
     public SyntaxHighlighter getHighlighter() {
         return SyntaxHighlighterFactory.getSyntaxHighlighter(XPathFileType.XPATH.getLanguage(), null, null);
     }
 
-    @NonNls
+    @Override
     @Nonnull
     public String getDemoText() {
         return "//prefix:*[ext:name() = 'changes']/element[(position() mod 2) = $pos + 1]/parent::*";
-    }
-
-    @Nullable
-    public Map<String, TextAttributesKey> getAdditionalHighlightingTagToDescriptorMap() {
-        return null;
     }
 }
