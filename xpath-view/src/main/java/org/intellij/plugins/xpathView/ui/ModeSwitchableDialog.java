@@ -18,7 +18,7 @@ package org.intellij.plugins.xpathView.ui;
 import consulo.application.ApplicationPropertiesComponent;
 import consulo.application.ui.DimensionService;
 import consulo.project.Project;
-import consulo.ui.Size;
+import consulo.ui.Size2D;
 import consulo.ui.ex.awt.DialogWrapper;
 import consulo.ui.ex.awtUnsafe.TargetAWT;
 
@@ -60,9 +60,9 @@ public abstract class ModeSwitchableDialog extends DialogWrapper {
           dimensionService.setSize(getPrivateDimensionKey(), TargetAWT.from(getSize()));
 
           setMode(myMode.other());
-          final Size size = dimensionService.getSize(getPrivateDimensionKey());
+          final Size2D size = dimensionService.getSize(getPrivateDimensionKey());
           if (size != null) {
-            setSize(size.getWidth(), size.getHeight());
+            setSize(size.width(), size.height());
             validate();
           }
           else {
@@ -86,9 +86,9 @@ public abstract class ModeSwitchableDialog extends DialogWrapper {
     final Window window = SwingUtilities.windowForComponent(getContentPane());
     window.addWindowListener(new WindowAdapter() {
       public void windowOpened(WindowEvent e) {
-        final Size size = dimensionService.getSize(getPrivateDimensionKey());
+        final Size2D size = dimensionService.getSize(getPrivateDimensionKey());
         if (size != null) {
-          setSize(size.getWidth(), size.getHeight());
+          setSize(size.width(), size.height());
           validate();
         }
       }
