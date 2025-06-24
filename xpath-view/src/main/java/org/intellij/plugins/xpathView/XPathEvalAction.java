@@ -34,8 +34,6 @@ import consulo.language.template.TemplateLanguageFileViewProvider;
 import consulo.logging.Logger;
 import consulo.navigation.ItemPresentation;
 import consulo.project.Project;
-import consulo.project.ui.wm.StatusBar;
-import consulo.project.ui.wm.WindowManager;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.awt.Messages;
 import consulo.ui.ex.tree.PresentationData;
@@ -423,15 +421,6 @@ public class XPathEvalAction extends XPathAction {
             editor.getScrollingModel().scrollTo(editor.offsetToLogicalPosition(lowestOffset), ScrollType.MAKE_VISIBLE);
             editor.getCaretModel().moveToOffset(lowestOffset);
         }
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                final StatusBar statusBar = WindowManager.getInstance().getStatusBar(editor.getProject());
-                final String s = StringUtil.pluralize("match", list.size());
-                statusBar.setInfo(list.size() + " XPath " + s + " found (press Escape to remove the highlighting)");
-            }
-        });
     }
 
     private static int highlightElement(Editor editor, PsiElement element, Config cfg, int offset) {
