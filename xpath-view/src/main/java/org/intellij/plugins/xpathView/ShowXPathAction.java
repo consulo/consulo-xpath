@@ -50,7 +50,6 @@ import java.awt.datatransfer.StringSelection;
 
 public class ShowXPathAction extends XPathAction {
     @Override
-    @RequiredUIAccess
     public void update(AnActionEvent event) {
         super.update(event);
 

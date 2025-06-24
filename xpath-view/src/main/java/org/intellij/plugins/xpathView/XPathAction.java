@@ -15,13 +15,13 @@
  */
 package org.intellij.plugins.xpathView;
 
+import consulo.application.ReadAction;
 import consulo.codeEditor.Editor;
 import consulo.fileEditor.FileEditorManager;
 import consulo.language.editor.PlatformDataKeys;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
-import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.ActionPlaces;
 import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
@@ -29,14 +29,13 @@ import consulo.ui.ex.action.Presentation;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xpath.view.XPathViewConfig;
-
 import jakarta.annotation.Nonnull;
 
 public abstract class XPathAction extends AnAction {
   protected XPathAction() {
   }
 
-  @RequiredUIAccess
+  @Override
   public void update(@Nonnull AnActionEvent event) {
     super.update(event);
     final Presentation presentation = event.getPresentation();
@@ -83,12 +82,14 @@ public abstract class XPathAction extends AnAction {
 
     // do we have an xml file?
     final PsiDocumentManager cem = PsiDocumentManager.getInstance(project);
-    final PsiFile psiFile = cem.getPsiFile(editor.getDocument());
+
+    final Editor finalEditor = editor;
+    final PsiFile psiFile = ReadAction.compute(() -> cem.getPsiFile(finalEditor.getDocument()));
     // this is also true for DTD documents...
     if (!(psiFile instanceof XmlFile)) {
       return false;
     }
-    else if (psiFile.getLanguage() == DTDLanguage.INSTANCE) {
+    else if (ReadAction.compute(psiFile::getLanguage) == DTDLanguage.INSTANCE) {
       return false;
     }
 
