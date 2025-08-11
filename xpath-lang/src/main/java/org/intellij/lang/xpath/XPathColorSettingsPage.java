@@ -23,23 +23,19 @@
 package org.intellij.lang.xpath;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.colorScheme.TextAttributesKey;
 import consulo.colorScheme.setting.AttributesDescriptor;
 import consulo.language.editor.colorScheme.setting.ColorSettingsPage;
 import consulo.language.editor.highlight.SyntaxHighlighter;
 import consulo.language.editor.highlight.SyntaxHighlighterFactory;
-import org.jetbrains.annotations.NonNls;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-import java.util.Map;
 
 @ExtensionImpl
 public class XPathColorSettingsPage implements ColorSettingsPage {
     @Override
     @Nonnull
-    public String getDisplayName() {
-        return "XPath";
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.localizeTODO("XPath");
     }
 
     @Override

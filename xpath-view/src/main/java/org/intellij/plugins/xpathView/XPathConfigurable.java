@@ -19,6 +19,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.configurable.ApplicationConfigurable;
 import consulo.configurable.ConfigurationException;
 import consulo.configurable.SearchableConfigurable;
+import consulo.localize.LocalizeValue;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.xpath.view.XPathViewConfig;
 import org.intellij.plugins.xpathView.ui.ConfigUI;
@@ -32,8 +33,8 @@ public class XPathConfigurable implements SearchableConfigurable, ApplicationCon
   private ConfigUI configUI;
 
   @Nonnull
-  public String getDisplayName() {
-    return "XPath";
+  public LocalizeValue getDisplayName() {
+    return LocalizeValue.localizeTODO("XPath");
   }
 
   @Nullable
