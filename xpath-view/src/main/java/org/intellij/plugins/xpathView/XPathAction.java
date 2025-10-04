@@ -93,7 +93,7 @@ public abstract class XPathAction extends AnAction {
       return false;
     }
 
-    return !checkAvailable || isEnabledAt((XmlFile)psiFile, editor.getCaretModel().getOffset());
+    return !checkAvailable || isEnabledAt((XmlFile)psiFile, ReadAction.compute(() -> finalEditor.getCaretModel().getOffset()));
   }
 
   protected abstract boolean isEnabledAt(XmlFile xmlFile, int offset);
