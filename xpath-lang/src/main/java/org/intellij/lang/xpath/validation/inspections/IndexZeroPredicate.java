@@ -15,35 +15,38 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.localize.LocalizeValue;
+import jakarta.annotation.Nonnull;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.psi.*;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
-import org.jetbrains.annotations.NonNls;
-
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class IndexZeroPredicate extends XPathInspection<Object> {
+    @Override
     protected Visitor createVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, Object state) {
         return new MyVisitor(manager, holder, isOnTheFly, state);
     }
 
     @Nonnull
-    public String getDisplayName() {
-        return "Use of index 0 in XPath predicates";
+    @Override
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.localizeTODO("Use of index 0 in XPath predicates");
     }
 
     @Nonnull
-    @NonNls
+    @Override
     public String getShortName() {
         return "IndexZeroUsage";
     }
 
+    @Override
     public boolean isEnabledByDefault() {
         return true;
     }
@@ -53,8 +56,10 @@ public class IndexZeroPredicate extends XPathInspection<Object> {
             super(manager, holder, isOnTheFly, state);
         }
 
+        @Override
+        @RequiredReadAction
         protected void checkPredicate(XPathPredicate predicate) {
-            final XPathExpression expr = predicate.getPredicateExpression();
+            XPathExpression expr = predicate.getPredicateExpression();
             if (expr != null) {
                 if (expr.getType() == XPathType.NUMBER) {
                     if (isZero(expr)) {
@@ -63,14 +68,13 @@ public class IndexZeroPredicate extends XPathInspection<Object> {
                                 ProblemHighlightType.GENERIC_ERROR_OR_WARNING, myOnTheFly));
                     }
                 }
-                else if (expr instanceof XPathBinaryExpression && expr.getType() == XPathType.BOOLEAN) {
-                    final XPathBinaryExpression expression = (XPathBinaryExpression) expr;
+                else if (expr instanceof XPathBinaryExpression expression && expr.getType() == XPathType.BOOLEAN) {
                     if (!XPathTokenTypes.BOOLEAN_OPERATIONS.contains(expression.getOperator())) {
                         return;
                     }
 
-                    final XPathExpression lOp = expression.getLOperand();
-                    final XPathExpression rOp = expression.getROperand();
+                    XPathExpression lOp = expression.getLOperand();
+                    XPathExpression rOp = expression.getROperand();
 
                     if (isZero(lOp)) {
                         assert lOp != null;
@@ -97,18 +101,15 @@ public class IndexZeroPredicate extends XPathInspection<Object> {
         private static boolean isPosition(XPathExpression expression) {
             expression = ExpectedTypeUtil.unparenthesize(expression);
 
-            if (!(expression instanceof XPathFunctionCall)) {
+            if (!(expression instanceof XPathFunctionCall call)) {
                 return false;
             }
 
-            final XPathFunctionCall call = (XPathFunctionCall) expression;
-            final PrefixedName qName = call.getQName();
-            if (qName.getPrefix() != null) {
-                return false;
-            }
-            return "position".equals(qName.getLocalName());
+            PrefixedName qName = call.getQName();
+            return qName.getPrefix() == null && "position".equals(qName.getLocalName());
         }
 
+        @RequiredReadAction
         private static boolean isZero(XPathExpression op) {
             op = ExpectedTypeUtil.unparenthesize(op);
 

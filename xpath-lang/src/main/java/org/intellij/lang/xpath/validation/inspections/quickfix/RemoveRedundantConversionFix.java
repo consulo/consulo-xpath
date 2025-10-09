@@ -15,23 +15,19 @@
  */
 package org.intellij.lang.xpath.validation.inspections.quickfix;
 
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 import org.intellij.lang.xpath.psi.XPathExpression;
 
 public class RemoveRedundantConversionFix extends RemoveExplicitConversionFix {
-
     public RemoveRedundantConversionFix(XPathExpression expression) {
         super(expression);
     }
 
     @Nonnull
-    public String getText() {
-        return "Remove Redundant Conversion";
-    }
-
-    @Nonnull
-    public String getFamilyName() {
-        return "RemoveRedundantConversion";
+    @Override
+    public LocalizeValue getText() {
+        return LocalizeValue.localizeTODO("Remove Redundant Conversion");
     }
 }

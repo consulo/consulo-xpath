@@ -15,11 +15,14 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.localize.LocalizeValue;
+import jakarta.annotation.Nonnull;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.psi.XPath2SequenceType;
 import org.intellij.lang.xpath.psi.XPathExpression;
@@ -27,78 +30,84 @@ import org.intellij.lang.xpath.psi.XPathFunctionCall;
 import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import org.intellij.lang.xpath.validation.inspections.quickfix.XPathQuickFixFactory;
-import org.jetbrains.annotations.NonNls;
-
-import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class RedundantTypeConversion extends XPathInspection<Object> {
-    @NonNls
     private static final String SHORT_NAME = "RedundantTypeConversion";
 
     public boolean CHECK_ANY = false;
 
     @Nonnull
-    public String getDisplayName() {
-        return "Redundant Type Conversion";
+    @Override
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.localizeTODO("Redundant Type Conversion");
     }
 
     @Nonnull
-    @NonNls
+    @Override
     public String getShortName() {
         return SHORT_NAME;
     }
 
+    @Override
     public boolean isEnabledByDefault() {
         return true;
     }
 
+    @Override
     protected Visitor createVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, Object state) {
         return new MyElementVisitor(manager, holder, isOnTheFly, state);
     }
 
     final class MyElementVisitor extends Visitor<Object> {
-
-        MyElementVisitor(InspectionManager manager, ProblemsHolder holder,boolean isOnTheFly, Object state) {
+        MyElementVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, Object state) {
             super(manager, holder, isOnTheFly, state);
         }
 
-        protected void checkExpression(final @Nonnull XPathExpression expr) {
+        @Override
+        @RequiredReadAction
+        protected void checkExpression(@Nonnull XPathExpression expr) {
             if (ExpectedTypeUtil.isExplicitConversion(expr)) {
-                final XPathExpression expression = ExpectedTypeUtil.unparenthesize(expr);
+                XPathExpression expression = ExpectedTypeUtil.unparenthesize(expr);
                 assert expression != null;
-                
-                final XPathType convertedType = ((XPathFunctionCall)expression).getArgumentList()[0].getType();
+
+                XPathType convertedType = ((XPathFunctionCall) expression).getArgumentList()[0].getType();
                 if (isSameType(expression, convertedType)) {
-                    final XPathQuickFixFactory fixFactory = ContextProvider.getContextProvider(expression).getQuickFixFactory();
+                    XPathQuickFixFactory fixFactory = ContextProvider.getContextProvider(expression).getQuickFixFactory();
                     LocalQuickFix[] fixes = fixFactory.createRedundantTypeConversionFixes(expression);
 
-                    addProblem(myManager.createProblemDescriptor(expression,
-                                                                 "Redundant conversion to type '" + convertedType.getName() + "'", myOnTheFly, fixes,
-                                                                 ProblemHighlightType.GENERIC_ERROR_OR_WARNING));
-                } else if (CHECK_ANY) {
-                    final XPathType expectedType = ExpectedTypeUtil.getExpectedType(expression);
+                    addProblem(myManager.createProblemDescriptor(
+                        expression,
+                        "Redundant conversion to type '" + convertedType.getName() + "'",
+                        myOnTheFly,
+                        fixes,
+                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING
+                    ));
+                }
+                else if (CHECK_ANY) {
+                    XPathType expectedType = ExpectedTypeUtil.getExpectedType(expression);
                     if (expectedType == XPathType.ANY) {
-                        final XPathQuickFixFactory fixFactory = ContextProvider.getContextProvider(expression).getQuickFixFactory();
+                        XPathQuickFixFactory fixFactory = ContextProvider.getContextProvider(expression).getQuickFixFactory();
                         LocalQuickFix[] fixes = fixFactory.createRedundantTypeConversionFixes(expression);
 
                         addProblem(myManager.createProblemDescriptor(expression,
-                                "Redundant conversion to type '" + expectedType.getName() + "'", myOnTheFly, fixes,
-                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING));
+                            "Redundant conversion to type '" + expectedType.getName() + "'", myOnTheFly, fixes,
+                            ProblemHighlightType.GENERIC_ERROR_OR_WARNING
+                        ));
                     }
                 }
             }
         }
 
-      private boolean isSameType(XPathExpression expression, XPathType convertedType) {
-        XPathType type = ExpectedTypeUtil.mapType(expression, expression.getType());
-        while (type instanceof XPath2SequenceType) {
-          type = ((XPath2SequenceType)type).getType();
+        private boolean isSameType(XPathExpression expression, XPathType convertedType) {
+            XPathType type = ExpectedTypeUtil.mapType(expression, expression.getType());
+            while (type instanceof XPath2SequenceType xPath2SequenceType) {
+                type = xPath2SequenceType.getType();
+            }
+            while (convertedType instanceof XPath2SequenceType xPath2SequenceType) {
+                convertedType = xPath2SequenceType.getType();
+            }
+            return ExpectedTypeUtil.mapType(expression, convertedType) == type;
         }
-        while (convertedType instanceof XPath2SequenceType) {
-          convertedType = ((XPath2SequenceType)convertedType).getType();
-        }
-        return ExpectedTypeUtil.mapType(expression, convertedType) == type;
-      }
     }
 }

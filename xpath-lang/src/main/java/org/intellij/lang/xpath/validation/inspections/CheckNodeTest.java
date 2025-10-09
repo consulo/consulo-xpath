@@ -15,20 +15,21 @@
  */
 package org.intellij.lang.xpath.validation.inspections;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.localize.LocalizeValue;
 import consulo.xml.psi.xml.XmlElement;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.intellij.lang.xpath.context.ContextProvider;
 import org.intellij.lang.xpath.context.NamespaceContext;
 import org.intellij.lang.xpath.psi.PrefixedName;
 import org.intellij.lang.xpath.psi.XPathNodeTest;
-import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import javax.xml.namespace.QName;
 import java.text.MessageFormat;
 import java.util.Set;
@@ -37,21 +38,24 @@ import java.util.Set;
 public class CheckNodeTest extends XPathInspection<Object> {
     private static final String SHORT_NAME = "CheckNodeTest";
 
+    @Override
     protected Visitor createVisitor(InspectionManager manager, ProblemsHolder holder, boolean isOnTheFly, Object state) {
         return new MyVisitor(manager, isOnTheFly, holder, state);
     }
 
     @Nonnull
-    public String getDisplayName() {
-        return "Check Node Test";
+    @Override
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.localizeTODO("Check Node Test");
     }
 
     @Nonnull
-    @NonNls
+    @Override
     public String getShortName() {
         return SHORT_NAME;
     }
 
+    @Override
     public boolean isEnabledByDefault() {
         return true;
     }
@@ -61,22 +65,24 @@ public class CheckNodeTest extends XPathInspection<Object> {
             super(manager, holder, isOnTheFly, state);
         }
 
+        @Override
+        @RequiredReadAction
         protected void checkNodeTest(XPathNodeTest nodeTest) {
-            final ContextProvider contextProvider = ContextProvider.getContextProvider(nodeTest.getContainingFile());
-            final XmlElement contextNode = contextProvider.getContextElement();
-            final NamespaceContext namespaceContext = contextProvider.getNamespaceContext();
+            ContextProvider contextProvider = ContextProvider.getContextProvider(nodeTest.getContainingFile());
+            XmlElement contextNode = contextProvider.getContextElement();
+            NamespaceContext namespaceContext = contextProvider.getNamespaceContext();
             if (namespaceContext == null) {
                 return;
             }
 
             if (nodeTest.isNameTest() && contextNode != null) {
-                final PrefixedName prefixedName = nodeTest.getQName();
+                PrefixedName prefixedName = nodeTest.getQName();
                 assert prefixedName != null;
                 if (!"*".equals(prefixedName.getLocalName()) && !"*".equals(prefixedName.getPrefix())) {
                     boolean found;
 
                     if (nodeTest.getPrincipalType() == XPathNodeTest.PrincipalType.ELEMENT) {
-                        final Set<QName> elementNames = contextProvider.getElements(true);
+                        Set<QName> elementNames = contextProvider.getElements(true);
                         if (elementNames != null) {
                             found = false;
                             for (QName pair : elementNames) {
@@ -91,7 +97,7 @@ public class CheckNodeTest extends XPathInspection<Object> {
                         }
                     }
                     else if (nodeTest.getPrincipalType() == XPathNodeTest.PrincipalType.ATTRIBUTE) {
-                        final Set<QName> attributeNames = contextProvider.getAttributes(true);
+                        Set<QName> attributeNames = contextProvider.getAttributes(true);
                         if (attributeNames != null) {
                             found = false;
                             for (QName pair : attributeNames) {
@@ -109,51 +115,54 @@ public class CheckNodeTest extends XPathInspection<Object> {
             }
         }
 
+        @RequiredReadAction
         private void registerProblem(ContextProvider contextProvider, PrefixedName prefixedName, XPathNodeTest nodeTest, String type) {
-            final QName qName = contextProvider.getQName(prefixedName, nodeTest);
-            final String name;
+            QName qName = contextProvider.getQName(prefixedName, nodeTest);
+            String name;
             if (qName != null) {
-                final String pattern;
-                if (!"".equals(qName.getNamespaceURI())) {
-                    pattern = "''<b>{0}</b>'' (<i>{1}</i>)";
-                }
-                else {
-                    pattern = "''<b>{0}</b>''";
-                }
+                String pattern = qName.getNamespaceURI().isEmpty() ? "''<b>{0}</b>''" : "''<b>{0}</b>'' (<i>{1}</i>)";
                 name = MessageFormat.format(pattern, qName.getLocalPart(), qName.getNamespaceURI());
             }
             else {
                 name = MessageFormat.format("''<b>{0}</b>''", prefixedName.getLocalName());
             }
 
-            final LocalQuickFix[] fixes = contextProvider.getQuickFixFactory().createUnknownNodeTestFixes(nodeTest);
-            addProblem(myManager.createProblemDescriptor(nodeTest, "<html>Unknown " + type + " name " + name + "</html>", myOnTheFly, fixes, ProblemHighlightType.GENERIC_ERROR_OR_WARNING));
+            LocalQuickFix[] fixes = contextProvider.getQuickFixFactory().createUnknownNodeTestFixes(nodeTest);
+            addProblem(myManager.createProblemDescriptor(
+                nodeTest,
+                "<html>Unknown " + type + " name " + name + "</html>",
+                myOnTheFly,
+                fixes,
+                ProblemHighlightType.GENERIC_ERROR_OR_WARNING
+            ));
         }
 
-        private static boolean matches(@Nullable PrefixedName prefixedName,
-                                       QName element,
-                                       NamespaceContext namespaceContext,
-                                       XmlElement context,
-                                       boolean allowDefaultNamespace) {
+        private static boolean matches(
+            @Nullable PrefixedName prefixedName,
+            QName element,
+            NamespaceContext namespaceContext,
+            XmlElement context,
+            boolean allowDefaultNamespace
+        ) {
             if (prefixedName == null) {
                 return false;
             }
 
             boolean b = prefixedName.getLocalName().equals(element.getLocalPart()) || "*".equals(element.getLocalPart());
 
-            final String prefix = prefixedName.getPrefix();
+            String prefix = prefixedName.getPrefix();
             if (prefix != null) {
                 if (!"*".equals(prefix)) {
-                    final String namespaceURI = namespaceContext.getNamespaceURI(prefix, context);
+                    String namespaceURI = namespaceContext.getNamespaceURI(prefix, context);
                     b = b && element.getNamespaceURI().equals(namespaceURI);
                 }
             }
             else if (allowDefaultNamespace) {
-                final String namespaceURI = namespaceContext.getDefaultNamespace(context);
-                b = b && (element.getNamespaceURI().equals(namespaceURI) || (element.getNamespaceURI().length() == 0 && namespaceURI == null));
+                String namespaceURI = namespaceContext.getDefaultNamespace(context);
+                b = b && (element.getNamespaceURI().equals(namespaceURI) || element.getNamespaceURI().isEmpty() && namespaceURI == null);
             }
             else {
-                b = b && element.getNamespaceURI().length() == 0;
+                b = b && element.getNamespaceURI().isEmpty();
             }
             return b;
         }

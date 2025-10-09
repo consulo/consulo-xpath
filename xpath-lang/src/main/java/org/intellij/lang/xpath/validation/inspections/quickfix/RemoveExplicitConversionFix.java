@@ -15,10 +15,12 @@
  */
 package org.intellij.lang.xpath.validation.inspections.quickfix;
 
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import org.intellij.lang.xpath.psi.XPathBinaryExpression;
 import org.intellij.lang.xpath.psi.XPathExpression;
@@ -28,38 +30,38 @@ import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 import jakarta.annotation.Nonnull;
 
 public class RemoveExplicitConversionFix extends ReplaceElementFix<XPathExpression> {
-
     public RemoveExplicitConversionFix(XPathExpression expression) {
         super(ExpectedTypeUtil.unparenthesize(expression));
     }
 
     @Nonnull
-    public String getText() {
-        return "Remove Explicit Type Conversion";
+    @Override
+    public LocalizeValue getText() {
+        return LocalizeValue.localizeTODO("Remove Explicit Type Conversion");
     }
 
-    @Nonnull
-    public String getFamilyName() {
-        return "ImplicitTypeConversion";
+    @Override
+    public boolean isAvailable(
+        @Nonnull Project project,
+        @Nonnull PsiFile file,
+        @Nonnull PsiElement startElement,
+        @Nonnull PsiElement endElement
+    ) {
+        return super.isAvailable(project, file, startElement, endElement)
+            && ((XPathFunctionCall) startElement).getArgumentList().length == 1;
     }
 
-  @Override
-  public boolean isAvailable(@Nonnull Project project,
-                             @Nonnull PsiFile file,
-                             @Nonnull PsiElement startElement,
-                             @Nonnull PsiElement endElement) {
-    return super.isAvailable(project, file, startElement, endElement)
-        && ((XPathFunctionCall)startElement).getArgumentList().length == 1;
-    }
-
+    @Override
+    @RequiredWriteAction
     public void invokeImpl(Project project, PsiFile file) throws IncorrectOperationException {
-      PsiElement myElement = getStartElement();
-      final XPathExpression arg0 = ((XPathFunctionCall)myElement).getArgumentList()[0];
-        final XPathExpression outer = PsiTreeUtil.getParentOfType(myElement, XPathExpression.class);
+        PsiElement myElement = getStartElement();
+        XPathExpression arg0 = ((XPathFunctionCall) myElement).getArgumentList()[0];
+        XPathExpression outer = PsiTreeUtil.getParentOfType(myElement, XPathExpression.class);
         if (arg0 instanceof XPathBinaryExpression && outer instanceof XPathBinaryExpression) {
             // TODO make this smarter by determining operator precedence
             replace("(" + arg0.getText() + ")");
-        } else {
+        }
+        else {
             replace(arg0.getText());
         }
     }

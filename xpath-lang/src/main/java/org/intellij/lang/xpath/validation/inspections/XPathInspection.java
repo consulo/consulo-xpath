@@ -18,12 +18,14 @@ package org.intellij.lang.xpath.validation.inspections;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.language.Language;
 import consulo.language.editor.inspection.*;
+import consulo.language.editor.inspection.localize.InspectionLocalize;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.intention.SuppressIntentionAction;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.intellij.lang.xpath.XPathFileType;
@@ -35,8 +37,9 @@ import org.intellij.lang.xpath.psi.XPathPredicate;
 
 public abstract class XPathInspection<S> extends LocalInspectionTool implements CustomSuppressableInspectionTool {
     @Nonnull
-    public String getGroupDisplayName() {
-        return "General";
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        return InspectionLocalize.inspectionGeneralToolsGroupName();
     }
 
     @Nullable
@@ -51,11 +54,13 @@ public abstract class XPathInspection<S> extends LocalInspectionTool implements 
         return HighlightDisplayLevel.WARNING;
     }
 
+    @Override
     public SuppressIntentionAction[] getSuppressActions(@Nullable PsiElement element) {
-        final XPathElement e = PsiTreeUtil.getContextOfType(element, XPathElement.class, false);
+        XPathElement e = PsiTreeUtil.getContextOfType(element, XPathElement.class, false);
         return ContextProvider.getContextProvider(e != null ? e : element).getQuickFixFactory().getSuppressActions(this);
     }
 
+    @Override
     public boolean isSuppressedFor(@Nonnull PsiElement element) {
         return ContextProvider.getContextProvider(element.getContainingFile()).getQuickFixFactory().isSuppressedFor(element, this);
     }
@@ -66,10 +71,12 @@ public abstract class XPathInspection<S> extends LocalInspectionTool implements 
     @Override
     @SuppressWarnings("unchecked")
     @RequiredReadAction
-    public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder,
-                                          boolean isOnTheFly,
-                                          @Nonnull LocalInspectionToolSession session,
-                                          @Nonnull Object state) {
+    public PsiElementVisitor buildVisitor(
+        @Nonnull ProblemsHolder holder,
+        boolean isOnTheFly,
+        @Nonnull LocalInspectionToolSession session,
+        @Nonnull Object state
+    ) {
         if (!acceptsLanguage(holder.getFile().getLanguage())) {
             return PsiElementVisitor.EMPTY_VISITOR;
         }
@@ -93,17 +100,18 @@ public abstract class XPathInspection<S> extends LocalInspectionTool implements 
             myOnTheFly = isOnTheFly;
         }
 
+        @Override
         public void visitElement(PsiElement psiElement) {
             super.visitElement(psiElement);
 
-            if (psiElement instanceof XPathExpression) {
-                checkExpression(((XPathExpression) psiElement));
+            if (psiElement instanceof XPathExpression expr) {
+                checkExpression(expr);
             }
-            else if (psiElement instanceof XPathNodeTest) {
-                checkNodeTest(((XPathNodeTest) psiElement));
+            else if (psiElement instanceof XPathNodeTest nodeTest) {
+                checkNodeTest(nodeTest);
             }
-            else if (psiElement instanceof XPathPredicate) {
-                checkPredicate((XPathPredicate) psiElement);
+            else if (psiElement instanceof XPathPredicate predicate) {
+                checkPredicate(predicate);
             }
         }
 
@@ -116,6 +124,7 @@ public abstract class XPathInspection<S> extends LocalInspectionTool implements 
         protected void checkNodeTest(XPathNodeTest nodeTest) {
         }
 
+        @RequiredReadAction
         protected void addProblem(ProblemDescriptor problem) {
             myProblemsHolder.registerProblem(problem);
         }
