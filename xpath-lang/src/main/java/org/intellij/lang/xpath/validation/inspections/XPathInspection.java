@@ -18,6 +18,7 @@ package org.intellij.lang.xpath.validation.inspections;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.language.Language;
 import consulo.language.editor.inspection.*;
+import consulo.language.editor.inspection.localize.InspectionLocalize;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.intention.SuppressIntentionAction;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
@@ -38,7 +39,7 @@ public abstract class XPathInspection<S> extends LocalInspectionTool implements 
     @Nonnull
     @Override
     public LocalizeValue getGroupDisplayName() {
-        return LocalizeValue.localizeTODO("General");
+        return InspectionLocalize.inspectionGeneralToolsGroupName();
     }
 
     @Nullable
@@ -55,7 +56,7 @@ public abstract class XPathInspection<S> extends LocalInspectionTool implements 
 
     @Override
     public SuppressIntentionAction[] getSuppressActions(@Nullable PsiElement element) {
-        final XPathElement e = PsiTreeUtil.getContextOfType(element, XPathElement.class, false);
+        XPathElement e = PsiTreeUtil.getContextOfType(element, XPathElement.class, false);
         return ContextProvider.getContextProvider(e != null ? e : element).getQuickFixFactory().getSuppressActions(this);
     }
 
@@ -103,14 +104,14 @@ public abstract class XPathInspection<S> extends LocalInspectionTool implements 
         public void visitElement(PsiElement psiElement) {
             super.visitElement(psiElement);
 
-            if (psiElement instanceof XPathExpression) {
-                checkExpression(((XPathExpression) psiElement));
+            if (psiElement instanceof XPathExpression expr) {
+                checkExpression(expr);
             }
-            else if (psiElement instanceof XPathNodeTest) {
-                checkNodeTest(((XPathNodeTest) psiElement));
+            else if (psiElement instanceof XPathNodeTest nodeTest) {
+                checkNodeTest(nodeTest);
             }
-            else if (psiElement instanceof XPathPredicate) {
-                checkPredicate((XPathPredicate) psiElement);
+            else if (psiElement instanceof XPathPredicate predicate) {
+                checkPredicate(predicate);
             }
         }
 
