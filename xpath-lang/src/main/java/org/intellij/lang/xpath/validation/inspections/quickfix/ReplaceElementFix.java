@@ -15,19 +15,20 @@
  */
 package org.intellij.lang.xpath.validation.inspections.quickfix;
 
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.IncorrectOperationException;
 import org.intellij.lang.xpath.psi.XPathElement;
 import org.intellij.lang.xpath.psi.impl.XPathChangeUtil;
 
 public abstract class ReplaceElementFix<TYPE extends XPathElement> extends XPathQuickFixFactory.Fix<TYPE> {
-
     protected ReplaceElementFix(TYPE element) {
         super(element);
     }
 
+    @RequiredWriteAction
     protected void replace(String expressionText) throws IncorrectOperationException {
-      PsiElement myElement = getStartElement();
-      myElement.replace(XPathChangeUtil.createExpression(myElement, expressionText));
+        PsiElement myElement = getStartElement();
+        myElement.replace(XPathChangeUtil.createExpression(myElement, expressionText));
     }
 }

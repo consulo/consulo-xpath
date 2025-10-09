@@ -13,25 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/*
- * Created by IntelliJ IDEA.
- * User: sweinreuter
- * Date: 10.04.2006
- * Time: 23:07:47
- */
 package org.intellij.lang.xpath.validation.inspections.quickfix;
 
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import jakarta.annotation.Nonnull;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.XPathFunctionCall;
 import org.intellij.lang.xpath.psi.XPathType;
 import org.intellij.lang.xpath.validation.ExpectedTypeUtil;
 
-import jakarta.annotation.Nonnull;
-
+/**
+ * @author sweinreuter
+ * @since 2006-04-10
+ */
 public class MakeTypeExplicitFix extends ReplaceElementFix<XPathExpression> {
     private final XPathType myType;
 
@@ -41,37 +39,35 @@ public class MakeTypeExplicitFix extends ReplaceElementFix<XPathExpression> {
     }
 
     @Nonnull
-    public String getText() {
-        return "Make Type Conversion Explicit";
+    @Override
+    public LocalizeValue getText() {
+        return LocalizeValue.localizeTODO("Make Type Conversion Explicit");
     }
 
-    @Nonnull
-    public String getFamilyName() {
-        return "ImplicitTypeConversion";
-    }
-
+    @Override
+    @RequiredWriteAction
     public void invokeImpl(Project project, PsiFile file) throws IncorrectOperationException {
-      XPathExpression myElement = (XPathExpression)getStartElement();
-      if (myType == XPathType.BOOLEAN) {
-        if (myElement.getType() == XPathType.STRING) {
-          final String text;
-          if (ExpectedTypeUtil.isExplicitConversion(myElement)) {
-            final XPathExpression expr = ExpectedTypeUtil.unparenthesize(myElement);
-            assert expr != null;
+        XPathExpression myElement = (XPathExpression) getStartElement();
+        if (myType == XPathType.BOOLEAN) {
+            if (myElement.getType() == XPathType.STRING) {
+                String text;
+                if (ExpectedTypeUtil.isExplicitConversion(myElement)) {
+                    XPathExpression expr = ExpectedTypeUtil.unparenthesize(myElement);
+                    assert expr != null;
 
-            text = ((XPathFunctionCall)expr).getArgumentList()[0].getText();
-          }
-          else {
-            text = myElement.getText();
-          }
-          replace("string-length(" + text + ") > 0");
-          return;
+                    text = ((XPathFunctionCall) expr).getArgumentList()[0].getText();
+                }
+                else {
+                    text = myElement.getText();
+                }
+                replace("string-length(" + text + ") > 0");
+                return;
+            }
+            else if (myElement.getType() == XPathType.NODESET) {
+                replace("count(" + myElement.getText() + ") > 0");
+                return;
+            }
         }
-        else if (myElement.getType() == XPathType.NODESET) {
-          replace("count(" + myElement.getText() + ") > 0");
-          return;
-        }
-      }
-      replace(myType.getName() + "(" + myElement.getText() + ")");
+        replace(myType.getName() + "(" + myElement.getText() + ")");
     }
 }

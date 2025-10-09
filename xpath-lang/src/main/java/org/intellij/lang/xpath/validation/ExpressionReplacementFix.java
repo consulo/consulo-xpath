@@ -15,50 +15,53 @@
  */
 package org.intellij.lang.xpath.validation;
 
+import consulo.annotation.access.RequiredReadAction;
+import consulo.annotation.access.RequiredWriteAction;
 import consulo.codeEditor.Editor;
-import consulo.language.editor.intention.IntentionAction;
 import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import jakarta.annotation.Nonnull;
 import org.intellij.lang.xpath.psi.XPathExpression;
 import org.intellij.lang.xpath.psi.impl.XPathChangeUtil;
 
-import jakarta.annotation.Nonnull;
-
 class ExpressionReplacementFix implements SyntheticIntentionAction {
-  private final String myReplacement;
-  private final String myDisplay;
-  private final XPathExpression myExpr;
+    private final String myReplacement;
+    private final String myDisplay;
+    private final XPathExpression myExpr;
 
-  public ExpressionReplacementFix(String replacement, XPathExpression expr) {
-    this(replacement, replacement, expr);
-  }
+    public ExpressionReplacementFix(String replacement, XPathExpression expr) {
+        this(replacement, replacement, expr);
+    }
 
-  public ExpressionReplacementFix(String replacement, String display, XPathExpression expression) {
-    myReplacement = replacement;
-    myDisplay = display;
-    myExpr = expression;
-  }
+    public ExpressionReplacementFix(String replacement, String display, XPathExpression expression) {
+        myReplacement = replacement;
+        myDisplay = display;
+        myExpr = expression;
+    }
 
-  @Nonnull
-  @Override
-  public String getText() {
-    return "Replace with '" + myDisplay + "'";
-  }
+    @Nonnull
+    @Override
+    public LocalizeValue getText() {
+        return LocalizeValue.localizeTODO("Replace with '" + myDisplay + "'");
+    }
 
-  @Override
-  public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
-    return myExpr.isValid();
-  }
+    @Override
+    @RequiredReadAction
+    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+        return myExpr.isValid();
+    }
 
-  @Override
-  public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
-    myExpr.replace(XPathChangeUtil.createExpression(myExpr, myReplacement));
-  }
+    @Override
+    @RequiredWriteAction
+    public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException {
+        myExpr.replace(XPathChangeUtil.createExpression(myExpr, myReplacement));
+    }
 
-  @Override
-  public boolean startInWriteAction() {
-    return true;
-  }
+    @Override
+    public boolean startInWriteAction() {
+        return true;
+    }
 }
