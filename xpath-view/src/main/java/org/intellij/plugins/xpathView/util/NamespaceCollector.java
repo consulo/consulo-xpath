@@ -16,11 +16,7 @@
 package org.intellij.plugins.xpathView.util;
 
 import consulo.logging.Logger;
-import consulo.xml.psi.XmlRecursiveElementVisitor;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.*;
 
 import javax.xml.namespace.QName;
 import java.util.*;

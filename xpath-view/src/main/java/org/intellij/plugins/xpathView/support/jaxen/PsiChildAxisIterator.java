@@ -17,9 +17,9 @@ package org.intellij.plugins.xpathView.support.jaxen;
 
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiWhiteSpace;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlToken;
 
 class PsiChildAxisIterator extends NodeIterator {
     public PsiChildAxisIterator(Object contextNode) {

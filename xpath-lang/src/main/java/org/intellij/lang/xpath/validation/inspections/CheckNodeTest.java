@@ -22,7 +22,7 @@ import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.localize.LocalizeValue;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.intellij.lang.xpath.context.ContextProvider;

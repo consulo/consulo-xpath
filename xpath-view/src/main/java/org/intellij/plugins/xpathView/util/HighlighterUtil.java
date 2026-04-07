@@ -27,7 +27,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import org.intellij.plugins.xpathView.Config;
 
 import java.util.*;

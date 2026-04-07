@@ -15,7 +15,7 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen;
 
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import org.jaxen.BaseXPath;
 import org.jaxen.JaxenException;
 

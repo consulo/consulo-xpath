@@ -15,12 +15,11 @@
  */
 package org.intellij.plugins.xpathView;
 
-import com.intellij.xml.XmlAttributeDescriptor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.logging.Logger;
-import consulo.xml.psi.XmlElementVisitor;
-import consulo.xml.psi.xml.*;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.language.psi.*;
 import org.intellij.plugins.xpathView.support.XPathSupport;
 import org.intellij.plugins.xpathView.support.jaxen.PsiDocumentNavigator;
 import org.intellij.plugins.xpathView.util.MyPsiUtil;

@@ -29,7 +29,7 @@ import consulo.ui.ex.awt.table.JBTable;
 import consulo.util.collection.BidirectionalMap;
 import consulo.util.lang.Pair;
 import consulo.xml.javaee.ExternalResourceManager;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import org.intellij.lang.xpath.XPathFileType;
 import org.intellij.lang.xpath.context.*;
 import org.intellij.lang.xpath.psi.XPathElement;

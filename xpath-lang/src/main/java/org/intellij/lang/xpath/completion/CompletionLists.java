@@ -23,7 +23,7 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.Pair;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import org.intellij.lang.xpath.XPathFile;
 import org.intellij.lang.xpath.XPathTokenTypes;
 import org.intellij.lang.xpath.context.ContextProvider;

@@ -15,9 +15,9 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen;
 
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlTag;
 
 import java.util.ArrayList;
 import java.util.Iterator;

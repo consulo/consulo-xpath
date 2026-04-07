@@ -22,8 +22,8 @@ import consulo.language.editor.annotation.AnnotatorUtil;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.psi.*;
 import consulo.logging.Logger;
-import consulo.xml.psi.xml.*;
 
+import consulo.xml.language.psi.*;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.List;

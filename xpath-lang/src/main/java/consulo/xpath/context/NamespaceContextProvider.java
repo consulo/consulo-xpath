@@ -2,7 +2,7 @@ package consulo.xpath.context;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import org.intellij.lang.xpath.context.NamespaceContext;
 
 import jakarta.annotation.Nonnull;

@@ -15,7 +15,6 @@
  */
 package org.intellij.plugins.xpathView.support.jaxen;
 
-import com.intellij.xml.XmlAttributeDescriptor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiWhiteSpace;
@@ -24,9 +23,9 @@ import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.XmlRecursiveElementVisitor;
-import consulo.xml.psi.xml.*;
+import consulo.xml.descriptor.XmlAttributeDescriptor;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.*;
 import org.intellij.plugins.xpathView.util.MyPsiUtil;
 import org.jaxen.DefaultNavigator;
 import org.jaxen.FunctionCallException;

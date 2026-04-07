@@ -18,8 +18,8 @@ package org.intellij.lang.xpath.context;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
-import consulo.xml.psi.xml.XmlElement;
 
+import consulo.xml.language.psi.XmlElement;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.Collection;

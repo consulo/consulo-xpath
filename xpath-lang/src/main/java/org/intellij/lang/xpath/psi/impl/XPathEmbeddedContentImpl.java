@@ -20,9 +20,9 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.resolve.PsiElementProcessor;
 import consulo.language.psi.resolve.PsiScopeProcessor;
 import consulo.language.psi.resolve.ResolveState;
-import consulo.xml.psi.xml.XmlTag;
-import consulo.xml.psi.xml.XmlTagChild;
+import consulo.xml.language.psi.XmlTag;
 
+import consulo.xml.language.psi.XmlTagChild;
 import jakarta.annotation.Nonnull;
 
 @SuppressWarnings({"ConstantConditions"})
