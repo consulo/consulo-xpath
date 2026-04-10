@@ -40,7 +40,7 @@ import consulo.ui.ex.tree.PresentationData;
 import consulo.usage.*;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.ide.highlighter.XmlFileType;
+import consulo.xml.language.XmlFileType;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xpath.view.XPathViewConfig;

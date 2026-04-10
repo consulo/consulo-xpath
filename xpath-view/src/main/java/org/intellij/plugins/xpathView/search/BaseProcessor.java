@@ -20,7 +20,7 @@ import consulo.application.progress.ProgressManager;
 import consulo.application.util.function.Processor;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.ide.highlighter.XmlLikeFileType;
+import consulo.xml.language.XmlLikeFileType;
 
 public abstract class BaseProcessor implements Processor<VirtualFile> {
     private final ProgressIndicator myIndicator = ProgressManager.getInstance().getProgressIndicator();
