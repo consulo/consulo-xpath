@@ -17,7 +17,7 @@ package org.intellij.plugins.xpathView.support;
 
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ServiceAPI;
-import consulo.ide.ServiceManager;
+import consulo.application.Application;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
@@ -43,6 +43,6 @@ public abstract class XPathSupport {
     public abstract String getUniquePath(XmlElement element, XmlTag context);
 
     public static XPathSupport getInstance() {
-        return ServiceManager.getService(XPathSupport.class);
+        return Application.get().getInstance(XPathSupport.class);
     }
 }

@@ -7,6 +7,8 @@ open module com.intellij.xpath.lang {
   requires transitive consulo.language.impl;
 
   requires transitive com.intellij.xml;
+  requires consulo.language.editor.refactoring.api;
+  requires consulo.ui.ex.awt.api;
 
   // TODO [VISTALL] remove in future
   requires java.desktop;

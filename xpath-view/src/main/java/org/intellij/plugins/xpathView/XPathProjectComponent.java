@@ -22,7 +22,7 @@ import consulo.component.persist.PersistentStateComponent;
 import consulo.component.persist.State;
 import consulo.component.persist.Storage;
 import consulo.component.persist.StoragePathMacros;
-import consulo.ide.ServiceManager;
+import consulo.application.Application;
 import consulo.project.Project;
 import jakarta.inject.Singleton;
 import org.intellij.plugins.xpathView.util.Namespace;
@@ -165,6 +165,6 @@ public class XPathProjectComponent implements PersistentStateComponent<Element> 
   }
 
   public static XPathProjectComponent getInstance(Project project) {
-    return ServiceManager.getService(project, XPathProjectComponent.class);
+    return project.getInstance(XPathProjectComponent.class);
   }
 }

@@ -13,6 +13,11 @@ open module com.intellij.xpath.view {
   requires java.desktop;
   // TODO [VISTALL] remove in future
   requires consulo.ide.impl;
+  requires consulo.ui.ex.awt.api;
+  requires consulo.language.editor.ui.api;
+  requires consulo.module.ui.api;
+  requires consulo.find.api;
+  requires consulo.usage.api;
 
   exports consulo.xpath.view;
   exports org.intellij.plugins.xpathView;
