@@ -22,22 +22,18 @@ import consulo.language.editor.PlatformDataKeys;
 import consulo.language.psi.PsiDocumentManager;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
-import consulo.ui.ex.action.ActionPlaces;
-import consulo.ui.ex.action.AnAction;
-import consulo.ui.ex.action.AnActionEvent;
-import consulo.ui.ex.action.Presentation;
+import consulo.ui.ex.action.*;
 import consulo.xml.lang.dtd.DTDLanguage;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xpath.view.XPathViewConfig;
 import jakarta.annotation.Nonnull;
 
-public abstract class XPathAction extends AnAction {
+public abstract class XPathAction extends AnAction implements AnActionWithSyncUpdate {
   protected XPathAction() {
   }
 
   @Override
   public void update(@Nonnull AnActionEvent event) {
-    super.update(event);
     final Presentation presentation = event.getPresentation();
 
     // keep track of enabled status
