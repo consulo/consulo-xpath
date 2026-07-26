@@ -94,13 +94,13 @@ public class ShowXPathAction extends XPathAction {
 
         final PsiElement element = psiFile.findElementAt(editor.getCaretModel().getOffset());
         if (!(element instanceof XmlElement || element instanceof PsiWhiteSpace)) {
-            XPathAppComponent.showEditorHint("No suitable context for an XPath-expression selected.", editor);
+            XPathActionCustomizer.showEditorHint("No suitable context for an XPath-expression selected.", editor);
             return;
         }
 
         final PsiElement node = XPathExpressionGenerator.transformToValidShowPathNode(element);
         if (node == null) {
-            XPathAppComponent.showEditorHint("No suitable context for an XPath-expression selected.", editor);
+            XPathActionCustomizer.showEditorHint("No suitable context for an XPath-expression selected.", editor);
             return;
         }
 

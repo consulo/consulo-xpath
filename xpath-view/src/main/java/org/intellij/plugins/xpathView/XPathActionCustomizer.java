@@ -15,9 +15,7 @@
  */
 package org.intellij.plugins.xpathView;
 
-import consulo.annotation.component.ComponentScope;
-import consulo.annotation.component.ServiceAPI;
-import consulo.annotation.component.ServiceImpl;
+import consulo.annotation.component.ExtensionImpl;
 import consulo.application.dumb.DumbAware;
 import consulo.codeEditor.Editor;
 import consulo.codeEditor.ScrollType;
@@ -36,8 +34,6 @@ import consulo.ui.ex.keymap.util.KeymapUtil;
 import consulo.util.concurrent.coroutine.Coroutine;
 import consulo.util.concurrent.coroutine.step.CodeExecution;
 import jakarta.annotation.Nonnull;
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 import org.intellij.plugins.xpathView.util.HighlighterUtil;
 
 import javax.swing.*;
@@ -46,29 +42,26 @@ import java.awt.*;
 import java.util.List;
 
 /**
- * Application component.<br>
- * This component holds the application-level configuration and registers an own handler for
+ * This extension holds the application-level configuration and registers an own handler for
  * ESC-Action to clear highlighters.<br>
  */
-@Singleton
-@ServiceAPI(value = ComponentScope.APPLICATION, lazy = false)
-@ServiceImpl
-public class XPathAppComponent {
+@ExtensionImpl
+public class XPathActionCustomizer implements ActionCustomizer {
     private static final String ACTION_FIND_NEXT = "FindNext";
     private static final String ACTION_FIND_PREVIOUS = "FindPrevious";
 
     private AnAction nextAction;
     private AnAction prevAction;
 
-    @Inject
-    XPathAppComponent(ActionManager actionManager) {
-        nextAction = actionManager.getAction(ACTION_FIND_NEXT);
-        prevAction = actionManager.getAction(ACTION_FIND_PREVIOUS);
+    @Override
+    public void customize(Session session) {
+        nextAction = session.getAction(ACTION_FIND_NEXT);
+        prevAction = session.getAction(ACTION_FIND_PREVIOUS);
 
-        actionManager.unregisterAction(ACTION_FIND_NEXT);
-        actionManager.unregisterAction(ACTION_FIND_PREVIOUS);
-        actionManager.registerAction(ACTION_FIND_NEXT, new MyFindAction(nextAction, false));
-        actionManager.registerAction(ACTION_FIND_PREVIOUS, new MyFindAction(prevAction, true));
+        session.unregisterAction(ACTION_FIND_NEXT);
+        session.unregisterAction(ACTION_FIND_PREVIOUS);
+        session.registerAction(ACTION_FIND_NEXT, new MyFindAction(nextAction, false));
+        session.registerAction(ACTION_FIND_PREVIOUS, new MyFindAction(prevAction, true));
     }
 
     class MyFindAction extends AnAction implements DumbAware, AnActionWithAsyncUpdate {
@@ -147,7 +140,8 @@ public class XPathAppComponent {
                 }).toCoroutine();
             }
 
-            return CodeExecution.run(() -> {}).toCoroutine();
+            return CodeExecution.run(() -> {
+            }).toCoroutine();
         }
 
         @Override

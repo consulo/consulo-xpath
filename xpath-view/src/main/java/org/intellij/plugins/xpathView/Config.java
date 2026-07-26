@@ -19,7 +19,7 @@ import org.intellij.plugins.xpathView.search.SearchScope;
 
 /**
  * Class that holds the plugin's configuration. All customizable settings are accessible via property getters/setters.
- * The configuration itself can be acquired with {@code getConfig()} in {@link XPathAppComponent}.
+ * The configuration itself can be acquired with {@code getConfig()} in {@link XPathActionCustomizer}.
  */
 public class Config {
   public boolean SHOW_IN_TOOLBAR = true;
