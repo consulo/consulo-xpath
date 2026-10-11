@@ -1,5 +1,6 @@
 package org.intellij.lang.xpath;
 
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.Language;
 import consulo.language.cacheBuilder.SimpleWordsScanner;
@@ -7,6 +8,7 @@ import consulo.language.cacheBuilder.WordsScanner;
 import consulo.language.findUsage.FindUsagesProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiNamedElement;
+import consulo.localize.LocalizeValue;
 import consulo.navigation.ItemPresentation;
 import consulo.navigation.NavigationItem;
 import org.intellij.lang.xpath.psi.XPathFunction;
@@ -17,69 +19,73 @@ import jakarta.annotation.Nullable;
 
 @ExtensionImpl
 public class XPathFindUsagesProvider implements FindUsagesProvider {
-  @Nullable
-  public WordsScanner getWordsScanner() {
-    return new SimpleWordsScanner();
-  }
-
-  public boolean canFindUsagesFor(@Nonnull PsiElement psiElement) {
-    return psiElement instanceof XPathFunction || psiElement instanceof XPathVariable;
-  }
-
-  @Nonnull
-  public String getType(@Nonnull PsiElement element) {
-    if (element instanceof XPathFunction) {
-      return "function";
+    @Nullable
+    @Override
+    public WordsScanner getWordsScanner() {
+        return new SimpleWordsScanner();
     }
-    else if (element instanceof XPathVariable) {
-      return "variable";
-    }
-    else {
-      return "unknown";
-    }
-  }
 
-  @Nonnull
-  public String getDescriptiveName(@Nonnull PsiElement element) {
-    if (element instanceof PsiNamedElement) {
-      final String name = ((PsiNamedElement)element).getName();
-      if (name != null) {
-        return name;
-      }
+    @Override
+    public boolean canFindUsagesFor(@Nonnull PsiElement psiElement) {
+        return psiElement instanceof XPathFunction || psiElement instanceof XPathVariable;
     }
-    return element.toString();
-  }
 
-  @Nonnull
-  public String getNodeText(@Nonnull PsiElement element, boolean useFullName) {
-    if (useFullName) {
-      if (element instanceof NavigationItem) {
-        final NavigationItem navigationItem = ((NavigationItem)element);
-        final ItemPresentation presentation = navigationItem.getPresentation();
-        if (presentation != null) {
-          final String text = presentation.getPresentableText();
-          if (text != null) {
-            return text;
-          }
+    @Nonnull
+    @Override
+    public String getType(@Nonnull PsiElement element) {
+        if (element instanceof XPathFunction) {
+            return "function";
         }
-        final String name = navigationItem.getName();
-        if (name != null) {
-          return name;
+        else if (element instanceof XPathVariable) {
+            return "variable";
         }
-      }
+        else {
+            return "unknown";
+        }
     }
-    if (element instanceof PsiNamedElement) {
-      final String name = ((PsiNamedElement)element).getName();
-      if (name != null) {
-        return name;
-      }
-    }
-    return element.toString();
-  }
 
-  @Nonnull
-  @Override
-  public Language getLanguage() {
-    return XPathFileType.XPATH.getLanguage();
-  }
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public String getDescriptiveName(@Nonnull PsiElement element) {
+        if (element instanceof PsiNamedElement namedElem) {
+            String name = namedElem.getName();
+            if (name != null) {
+                return name;
+            }
+        }
+        return element.toString();
+    }
+
+    @Nonnull
+    @Override
+    @RequiredReadAction
+    public String getNodeText(@Nonnull PsiElement element, boolean useFullName) {
+        if (useFullName && element instanceof NavigationItem navItem) {
+            ItemPresentation presentation = navItem.getPresentation();
+            if (presentation != null) {
+                LocalizeValue text = presentation.getPresentableText();
+                if (text.isNotEmpty()) {
+                    return text.get();
+                }
+            }
+            String name = navItem.getName();
+            if (name != null) {
+                return name;
+            }
+        }
+        if (element instanceof PsiNamedElement namedElem) {
+            String name = namedElem.getName();
+            if (name != null) {
+                return name;
+            }
+        }
+        return element.toString();
+    }
+
+    @Nonnull
+    @Override
+    public Language getLanguage() {
+        return XPathFileType.XPATH.getLanguage();
+    }
 }
