@@ -19,8 +19,11 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.configurable.ApplicationConfigurable;
 import consulo.configurable.ConfigurationException;
 import consulo.configurable.SearchableConfigurable;
+import consulo.disposer.Disposable;
 import consulo.localize.LocalizeValue;
+import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
+import consulo.ui.ex.awtUnsafe.TargetAWT;
 import consulo.xpath.view.XPathViewConfig;
 import org.intellij.plugins.xpathView.ui.ConfigUI;
 
@@ -54,10 +57,10 @@ public class XPathConfigurable implements SearchableConfigurable, ApplicationCon
   }
 
   @RequiredUIAccess
-  public JComponent createComponent() {
+  public Component createUIComponent(Disposable parentDisposable) {
     configUI = new ConfigUI(XPathViewConfig.getInstance().getState());
 
-    return configUI;
+    return TargetAWT.wrap(configUI);
   }
 
   @RequiredUIAccess
